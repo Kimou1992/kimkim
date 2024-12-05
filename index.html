@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عرض المنتجات</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid black;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>لائحة المنتجات والأسعار</h1>
+  <table id="productsTable">
+    <thead>
+      <tr>
+        <th>اسم المنتج</th>
+        <th>السعر</th>
+        <th>الكمية</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- سيتم إدراج البيانات هنا -->
+    </tbody>
+  </table>
+
+  <script>
+    // رابط Web App من Google Apps Script
+    const googleScriptUrl = "https://script.google.com/macros/s/AKfycbylJOZaVX4p0dDSMeeXTccXWdys8lVyA92QM_FPI_gk/dev";  // استبدل بهذا الرابط
+
+    // جلب البيانات من Google Apps Script باستخدام AJAX
+    fetch(googleScriptUrl)
+      .then(response => response.json())
+      .then(data => {
+        let tableBody = document.getElementById("productsTable").getElementsByTagName("tbody")[0];
+        
+        // تخطي العنوان الأول في الورقة (إذا كان موجوداً)
+        data.forEach((row, index) => {
+          if (index === 0) return; // تخطي العنوان الأول في الورقة
+          let newRow = tableBody.insertRow();
+          
+          // إضافة الخلايا للصف الجديد
+          row.forEach(cell => {
+            let newCell = newRow.insertCell();
+            newCell.textContent = cell;
+          });
+        });
+      })
+      .catch(error => console.error("Error loading data: ", error));
+  </script>
+</body>
+</html>
