@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0078d7;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Telegram Information</h1>
+    </header>
+    <div class="container">
+        <h2>Welcome!</h2>
+        <p>Here are your details from Telegram:</p>
+        <p id="user-name"></p>
+        <p id="user-id"></p>
+    </div>
+    <script>
+        // Retrieve the user data passed from the Telegram Login
+        function onTelegramAuth(user) {
+            document.getElementById('user-name').textContent = `Name: ${user.first_name} ${user.last_name || ''}`;
+            document.getElementById('user-id').textContent = `Telegram ID: ${user.id}`;
+        }
+    </script>
+</body>
+</html>
