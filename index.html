@@ -3,49 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #0078d7;
-            color: white;
-            padding: 20px;
-        }
-        .container {
-            margin: 20px auto;
-            max-width: 500px;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .telegram-login {
-            margin-top: 20px;
-        }
-    </style>
+    <title>Telegram Login Widget</title>
 </head>
 <body>
-    <header>
-        <h1>Login via Telegram</h1>
-    </header>
-    <div class="container">
-        <h2>Welcome to P2P Marketplace</h2>
-        <p>Click the button below to log in with your Telegram account:</p>
-        <!-- Telegram Login Widget -->
-        <script async src="https://telegram.org/js/telegram-widget.js?21" 
-            data-telegram-login="Tonhakimbot" 
-            data-size="large" 
-            data-radius="10" 
-            data-auth-url="https://kimkim.github.io/user_data.html" <!-- الرابط المعدل هنا -->
-            data-request-access="write" 
-            data-lang="en">
-        </script>
-    </div>
+
+    <!-- Telegram Login Widget -->
+    <script async src="https://telegram.org/js/telegram-widget.js?22"
+        data-telegram-login="Tonhakimbot" 
+        data-size="large" 
+        data-onauth="onTelegramAuth(user)" 
+        data-request-access="write"></script>
+
+    <script type="text/javascript">
+        function onTelegramAuth(user) {
+            alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + 
+                  (user.username ? ', @' + user.username : '') + ')');
+        }
+    </script>
+
 </body>
 </html>
