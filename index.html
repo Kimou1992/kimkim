@@ -1,120 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login with Telegram and Product Form</title>
-    <style>
-        /* نفس تنسيق الصفحة كما هو في السابق */
-    </style>
+    <title>Telegram User Data Form</title>
 </head>
 <body>
-    <div id="login-container">
-        <h1>Login with Telegram</h1>
-        <p>Click the button below to log in with Telegram:</p>
-        <script async 
-            src="https://telegram.org/js/telegram-widget.js?22" 
-            data-telegram-login="Tonhakimbot" 
-            data-size="large" 
-            data-onauth="onTelegramAuth(user)" 
-            data-request-access="write">
-        </script>
-    </div>
+    <h2>Enter Product Information</h2>
+    <form id="productForm">
+        <label for="product">Product:</label><br>
+        <input type="text" id="product" name="product" required><br><br>
 
-    <div id="user-data-container">
-        <div id="user-data"></div>
-    </div>
+        <label for="price">Price:</label><br>
+        <input type="text" id="price" name="price" required><br><br>
 
-    <div id="product-form-container" class="product-form" style="display:none;">
-        <h2>Enter Product Details</h2>
-        <form id="product-form">
-            <input type="text" id="product" placeholder="Product Name" required>
-            <input type="number" id="price" placeholder="Price" required>
-            <input type="number" id="quantity" placeholder="Quantity" required>
-            <button type="submit">Submit</button>
-        </form>
-        <div id="product-output"></div>
-    </div>
+        <label for="quantity">Quantity:</label><br>
+        <input type="text" id="quantity" name="quantity" required><br><br>
 
-    <script type="text/javascript">
-        // التحقق من وجود بيانات المستخدم في LocalStorage عند تحميل الصفحة
-        window.onload = function() {
-            const userData = JSON.parse(localStorage.getItem('user'));
-            if (userData) {
-                displayUserData(userData); // إذا كانت البيانات موجودة، اعرضها مباشرة
-            }
-        };
+        <input type="submit" value="Submit">
+    </form>
 
-        // عند المصادقة عبر Telegram
-        function onTelegramAuth(user) {
-            if (user) {
-                // تخزين بيانات المستخدم في LocalStorage
-                localStorage.setItem('user', JSON.stringify(user)); // حفظ البيانات
-                displayUserData(user);
-            } else {
-                console.error("No user data received.");
-            }
-        }
-
-        // عرض بيانات المستخدم في الصفحة
-        function displayUserData(user) {
-            // إخفاء قسم تسجيل الدخول
-            document.getElementById('login-container').style.display = 'none';
-            // إظهار قسم بيانات المستخدم
-            document.getElementById('user-data-container').style.display = 'block';
-            // إظهار نموذج إدخال المنتج
-            document.getElementById('product-form-container').style.display = 'block';
-
-            const userDataDiv = document.getElementById('user-data');
-            userDataDiv.innerHTML = `
-                <h2>Welcome, ${user.first_name} ${user.last_name || ''}</h2>
-                <p><strong>Username:</strong> ${user.username || 'N/A'}</p>
-                <p><strong>User ID:</strong> ${user.id}</p>
-                <p><strong>Auth Date:</strong> ${new Date(user.auth_date * 1000).toLocaleString()}</p>
-                ${user.photo_url ? `<img src="${user.photo_url}" alt="User Photo" class="user-photo" width="100">` : '<p>No photo available</p>'}
-                <p><strong>Phone Number:</strong> ${user.phone_number || 'N/A'}</p>
-            `;
-            
-            // استرجاع بيانات المنتج الخاصة بالمستخدم من LocalStorage
-            const userProducts = JSON.parse(localStorage.getItem(user.id)) || [];
-            displayUserProducts(userProducts);
-        }
-
-        // معالجة البيانات المدخلة في نموذج المنتج
-        document.getElementById('product-form').addEventListener('submit', function(event) {
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function (event) {
             event.preventDefault();
 
+            // الحصول على البيانات المدخلة
             const product = document.getElementById('product').value;
             const price = document.getElementById('price').value;
             const quantity = document.getElementById('quantity').value;
 
-            if (product && price && quantity) {
-                const userData = JSON.parse(localStorage.getItem('user'));
-                const userId = userData.id;
-                const userProducts = JSON.parse(localStorage.getItem(userId)) || [];
+            // بيانات مستخدم Telegram
+            const telegramId = "7119877516"; // معرف Telegram الخاص بك
 
-                const newProduct = {
-                    product: product,
-                    price: price,
-                    quantity: quantity,
-                    telegram_id: userId
-                };
+            const data = {
+                telegram_id: telegramId,
+                product: product,
+                price: price,
+                quantity: quantity
+            };
 
-                userProducts.push(newProduct);
-                localStorage.setItem(userId, JSON.stringify(userProducts));
+            // إرسال البيانات إلى Web App
+            const url = 'https://script.google.com/macros/s/AKfycbylJOZaVX4p0dDSMeeXTccXWdys8lVyA92QM_FPI_gk/dev'; // رابط Web App الخاص بك
 
-                // إرسال البيانات إلى Google Sheets
-                sendToGoogleSheets(newProduct);
-
-                // عرض البيانات المدخلة
-                displayUserProducts(userProducts);
-            }
-        });
-
-        // إرسال البيانات إلى Google Sheets باستخدام API
-        function sendToGoogleSheets(data) {
-            const url = 'https://script.google.com/macros/s/AKfycbxnjxebVuxXk2o1ruOo86tQc6Zl8Ij36oT9j-utOHzSAJbE57-dZB4wixox43dZkgg6jg/exec'; 
-// ضع هنا URL الخاص بـ Web App
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -123,30 +48,15 @@
                 body: JSON.stringify(data),
             })
             .then(response => response.text())
-            .then(responseText => console.log('Data sent successfully:', responseText))
-            .catch(error => console.error('Error sending data:', error));
-        }
-
-        // عرض منتجات المستخدم
-        function displayUserProducts(products) {
-            const productOutput = document.getElementById('product-output');
-            if (products.length > 0) {
-                let productHtml = '<h3>Your Products:</h3>';
-                products.forEach((product, index) => {
-                    productHtml += `
-                        <p><strong>Product ${index + 1}:</strong></p>
-                        <p>Name: ${product.product}</p>
-                        <p>Price: ${product.price}</p>
-                        <p>Quantity: ${product.quantity}</p>
-                        <hr>
-                    `;
-                });
-                productOutput.innerHTML = productHtml;
-            } else {
-                productOutput.innerHTML = '<p>No products added yet.</p>';
-            }
-        }
+            .then(responseText => {
+                console.log('Response:', responseText);
+                alert('Data sent successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending data!');
+            });
+        });
     </script>
 </body>
 </html>
-
