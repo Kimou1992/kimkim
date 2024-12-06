@@ -8,10 +8,10 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          telegram_id: '7119877516',  // Telegram ID
-          product: 'Test Product',   // Product Name
-          price: '100',              // Product Price
-          quantity: '2'              // Product Quantity
+          telegram_id: '7119877516', // Telegram ID (تجربة)
+          product: 'Test Product',  // اسم المنتج
+          price: '100',             // السعر
+          quantity: '2'             // الكمية
         })
       })
       .then(response => response.json())
@@ -21,7 +21,7 @@
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('Failed to send data');
+        alert('Failed to send data: ' + error.message);
       });
     }
   </script>
