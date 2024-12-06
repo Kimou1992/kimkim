@@ -6,34 +6,39 @@
   <title>Telegram ID Sender</title>
 </head>
 <body>
-  <h2>Sending Telegram ID to Google Apps Script</h2>
+  <h2>Send Telegram ID to Google Apps Script</h2>
+
+  <!-- نموذج لإدخال بيانات Telegram ID -->
+  <label for="telegramId">Enter Telegram ID:</label>
+  <input type="text" id="telegramId" name="telegramId">
+  <button onclick="sendData()">Send</button>
+
+  <div id="response"></div>
 
   <script>
-    // إرسال رقم Telegram ID فور دخول الصفحة
-    window.onload = async function() {
-      const telegramId = '7119877516';  // رقم Telegram ID الذي تريد إرساله
+    function sendData() {
+      var telegramId = document.getElementById('telegramId').value;  // أخذ Telegram ID من النموذج
 
-      // بيانات المرسل
-      const data = { telegram_id: telegramId };
-
-      try {
-        // إرسال البيانات إلى Google Apps Script
-        const response = await fetch("https://script.google.com/macros/s/AKfycbylJOZaVX4p0dDSMeeXTccXWdys8lVyA92QM_FPI_gk/dev", {
-          method: "POST",
+      if (telegramId) {
+        // إرسال البيانات إلى Google Apps Script عبر POST
+        fetch('https://script.google.com/macros/s/AKfycbylJOZaVX4p0dDSMeeXTccXWdys8lVyA92QM_FPI_gk/dev', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify({ telegram_id: telegramId })
+        })
+        .then(response => response.text())
+        .then(result => {
+          document.getElementById('response').innerText = result;  // عرض الرد
+        })
+        .catch(error => {
+          document.getElementById('response').innerText = 'Error: ' + error;
         });
-
-        // طباعة النتيجة بعد الإرسال
-        const result = await response.text();
-        console.log(result);  // ستظهر هنا الاستجابة من Apps Script
-      } catch (error) {
-        console.log("Error:", error);
+      } else {
+        alert('Please enter a Telegram ID');
       }
-    };
+    }
   </script>
-
 </body>
 </html>
