@@ -40,7 +40,21 @@
     <div id="user-data"></div>
 
     <script type="text/javascript">
+        // التحقق من وجود بيانات المستخدم في LocalStorage
+        window.onload = function() {
+            const userData = JSON.parse(localStorage.getItem('user'));
+            if (userData) {
+                displayUserData(userData); // إذا كانت البيانات موجودة، اعرضها مباشرة
+            }
+        };
+
         function onTelegramAuth(user) {
+            // تخزين بيانات المستخدم في LocalStorage
+            localStorage.setItem('user', JSON.stringify(user));
+            displayUserData(user);
+        }
+
+        function displayUserData(user) {
             const userDataDiv = document.getElementById('user-data');
             userDataDiv.innerHTML = `
                 <h2>Welcome, ${user.first_name} ${user.last_name || ''}</h2>
