@@ -1,43 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Send Telegram Data</title>
+  <title>Test Fetch with JSONPlaceholder</title>
   <script>
     function sendData() {
-      var xhr = new XMLHttpRequest();
-      var url = "https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec";
+      const url = 'https://jsonplaceholder.typicode.com/posts';
       
-      xhr.open("POST", url, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-
-      // Data to send
-      var data = JSON.stringify({
-        telegram_id: "7119877516", // Telegram ID للتجربة
-        product: "Test Product",  // اسم المنتج
-        price: "100",             // السعر
-        quantity: "2"             // الكمية
-      });
-
-      // Response handler
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) { // Request is done
-          if (xhr.status === 200) { // Successful
-            console.log("Response:", xhr.responseText);
-            alert("Data Sent Successfully: " + xhr.responseText);
-          } else { // Error occurred
-            console.error("Error:", xhr.statusText);
-            alert("Failed to send data: " + xhr.statusText);
-          }
-        }
+      const data = {
+        title: 'foo',
+        body: 'bar',
+        userId: 1
       };
 
-      // Send data
-      xhr.send(data);
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(json => {
+        console.log('Response:', json);
+        alert('Data Sent Successfully: ' + JSON.stringify(json));
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to send data: ' + error);
+      });
     }
   </script>
 </head>
 <body>
-  <h1>Send Telegram Data</h1>
+  <h1>Test Fetch with JSONPlaceholder</h1>
   <button onclick="sendData()">Send Data</button>
 </body>
 </html>
