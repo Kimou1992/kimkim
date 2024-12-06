@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Test Fetch with JSONPlaceholder</title>
+  <title>Test Axios</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     function sendData() {
-      const url = 'https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec';
-      
+      const url = 'https://jsonplaceholder.typicode.com/posts'; // رابط API
+
       const data = {
         title: 'foo',
         body: 'bar',
         userId: 1
       };
 
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(json => {
-        console.log('Response:', json);
-        alert('Data Sent Successfully: ' + JSON.stringify(json));
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to send data: ' + error);
-      });
+      axios.post(url, data)
+        .then(function (response) {
+          console.log('Response:', response.data);
+          alert('Data Sent Successfully: ' + JSON.stringify(response.data));
+        })
+        .catch(function (error) {
+          console.error('Error:', error);
+          alert('Failed to send data: ' + error);
+        });
     }
   </script>
 </head>
 <body>
-  <h1>Test Fetch with JSONPlaceholder</h1>
+  <h1>Test Axios</h1>
   <button onclick="sendData()">Send Data</button>
 </body>
 </html>
