@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Login Widget</title>
+    <title>Telegram Login</title>
+    <script async src="https://telegram.org/js/telegram-widget.js?15"
+        data-telegram-login="Tonhakimbot"
+        data-size="large"
+        data-userpic="false"
+        data-auth-url=""
+        data-request-access="write"
+        onAuth="onTelegramAuth(user)"></script>
 </head>
 <body>
+    <h1>Telegram Login Example</h1>
+    <p>Click the Telegram button below to log in:</p>
+    <div id="telegram-login"></div>
+    <div id="user-data" style="margin-top: 20px;"></div>
 
-    <!-- Telegram Login Widget -->
-    <script async src="https://telegram.org/js/telegram-widget.js?22"
-        data-telegram-login="Tonhakimbot" 
-        data-size="large" 
-        data-onauth="onTelegramAuth(user)" 
-        data-request-access="write"></script>
-
-    <script type="text/javascript">
+    <script>
         function onTelegramAuth(user) {
-            // Store user data in localStorage for use in page2.html
-            localStorage.setItem('user', JSON.stringify(user));
-
-            // Redirect to page2.html
-            window.location.href = 'page2.html';
+            const userDataDiv = document.getElementById('user-data');
+            userDataDiv.innerHTML = `
+                <h2>User Details:</h2>
+                <p><strong>First Name:</strong> ${user.first_name}</p>
+                <p><strong>Last Name:</strong> ${user.last_name || 'N/A'}</p>
+                <p><strong>Username:</strong> ${user.username || 'N/A'}</p>
+                <p><strong>User ID:</strong> ${user.id}</p>
+                <p><strong>Photo:</strong></p>
+                ${user.photo_url ? `<img src="${user.photo_url}" alt="User Photo" width="100">` : '<p>No photo available</p>'}
+            `;
         }
     </script>
-
 </body>
 </html>
