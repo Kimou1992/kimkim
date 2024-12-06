@@ -9,8 +9,8 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
-            background-color: #f5f5f5; /* خلفية خفيفة لزيادة التباين */
-            color: #333; /* لون النص أسود أو غامق لزيادة الوضوح */
+            background-color: #f5f5f5;
+            color: #333;
         }
         #user-data {
             margin-top: 20px;
@@ -60,7 +60,6 @@
     </style>
 </head>
 <body>
-    <!-- قسم تسجيل الدخول فقط سيظهر قبل الدخول -->
     <div id="login-container">
         <h1>Login with Telegram</h1>
         <p>Click the button below to log in with Telegram:</p>
@@ -75,12 +74,10 @@
         </script>
     </div>
 
-    <!-- قسم عرض بيانات المستخدم فقط بعد تسجيل الدخول -->
     <div id="user-data-container">
         <div id="user-data"></div>
     </div>
 
-    <!-- نموذج إدخال البيانات -->
     <div id="product-form-container" class="product-form" style="display:none;">
         <h2>Enter Product Details</h2>
         <form id="product-form">
@@ -130,6 +127,10 @@
                 ${user.photo_url ? `<img src="${user.photo_url}" alt="User Photo" class="user-photo" width="100">` : '<p>No photo available</p>'}
                 <p><strong>Phone Number:</strong> ${user.phone_number || 'N/A'}</p>
             `;
+            
+            // استرجاع بيانات المنتج الخاصة بالمستخدم من LocalStorage
+            const userProducts = JSON.parse(localStorage.getItem(user.id)) || [];
+            displayUserProducts(userProducts);
         }
 
         // معالجة البيانات المدخلة في نموذج المنتج
@@ -141,15 +142,46 @@
             const quantity = document.getElementById('quantity').value;
 
             if (product && price && quantity) {
-                const productOutput = `
-                    <h3>Product Details</h3>
-                    <p><strong>Product Name:</strong> ${product}</p>
-                    <p><strong>Price:</strong> ${price}</p>
-                    <p><strong>Quantity:</strong> ${quantity}</p>
-                `;
-                document.getElementById('product-output').innerHTML = productOutput;
+                // استرجاع بيانات المنتجات الخاصة بالمستخدم
+                const userData = JSON.parse(localStorage.getItem('user'));
+                const userId = userData.id;
+                const userProducts = JSON.parse(localStorage.getItem(userId)) || [];
+
+                // إضافة المنتج الجديد إلى بيانات المستخدم
+                const newProduct = {
+                    product: product,
+                    price: price,
+                    quantity: quantity
+                };
+                userProducts.push(newProduct);
+
+                // حفظ البيانات مرة أخرى في LocalStorage
+                localStorage.setItem(userId, JSON.stringify(userProducts));
+
+                // عرض البيانات المدخلة
+                displayUserProducts(userProducts);
             }
         });
+
+        // عرض منتجات المستخدم
+        function displayUserProducts(products) {
+            const productOutput = document.getElementById('product-output');
+            if (products.length > 0) {
+                let productHtml = '<h3>Your Products:</h3>';
+                products.forEach((product, index) => {
+                    productHtml += `
+                        <p><strong>Product ${index + 1}:</strong></p>
+                        <p>Name: ${product.product}</p>
+                        <p>Price: ${product.price}</p>
+                        <p>Quantity: ${product.quantity}</p>
+                        <hr>
+                    `;
+                });
+                productOutput.innerHTML = productHtml;
+            } else {
+                productOutput.innerHTML = '<p>No products added yet.</p>';
+            }
+        }
     </script>
 </body>
 </html>
