@@ -1,44 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram ID Sender</title>
-</head>
-<body>
-  <h2>Send Telegram ID to Google Apps Script</h2>
-
-  <!-- نموذج لإدخال بيانات Telegram ID -->
-  <label for="telegramId">Enter Telegram ID:</label>
-  <input type="text" id="telegramId" name="telegramId">
-  <button onclick="sendData()">Send</button>
-
-  <div id="response"></div>
-
+  <title>Send Telegram Data</title>
   <script>
     function sendData() {
-      var telegramId = document.getElementById('telegramId').value;  // أخذ Telegram ID من النموذج
-
-      if (telegramId) {
-        // إرسال البيانات إلى Google Apps Script عبر POST
-        fetch('https://script.google.com/macros/s/AKfycbylJOZaVX4p0dDSMeeXTccXWdys8lVyA92QM_FPI_gk/dev', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ telegram_id: telegramId })
+      fetch('https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          telegram_id: '7119877516',  // Telegram ID
+          product: 'Test Product',   // Product Name
+          price: '100',              // Product Price
+          quantity: '2'              // Product Quantity
         })
-        .then(response => response.text())
-        .then(result => {
-          document.getElementById('response').innerText = result;  // عرض الرد
-        })
-        .catch(error => {
-          document.getElementById('response').innerText = 'Error: ' + error;
-        });
-      } else {
-        alert('Please enter a Telegram ID');
-      }
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Response:', data);
+        alert('Data Sent: ' + JSON.stringify(data));
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to send data');
+      });
     }
   </script>
+</head>
+<body>
+  <h1>Send Telegram Data</h1>
+  <button onclick="sendData()">Send Data</button>
 </body>
 </html>
