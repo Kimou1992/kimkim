@@ -28,10 +28,6 @@
         .telegram-login {
             margin-top: 20px;
         }
-        #user-info {
-            display: none;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -46,26 +42,10 @@
             data-telegram-login="Tonhakimbot" 
             data-size="large" 
             data-radius="10" 
-            data-auth-url="https://github.com/kimou1992/my-mini-app" 
+            data-auth-url="https://kimkim.github.io/user_data.html" <!-- الرابط المعدل هنا -->
             data-request-access="write" 
             data-lang="en">
         </script>
-        <!-- User Information -->
-        <div id="user-info">
-            <h3>Login Successful</h3>
-            <p>You have logged in as:</p>
-            <p id="user-name"></p>
-            <p id="user-id"></p>
-        </div>
     </div>
-    <script>
-        // Handle Telegram Login Data
-        function onTelegramAuth(user) {
-            const userInfoDiv = document.getElementById('user-info');
-            userInfoDiv.style.display = 'block';
-            document.getElementById('user-name').textContent = `Name: ${user.first_name} ${user.last_name || ''}`;
-            document.getElementById('user-id').textContent = `Telegram ID: ${user.id}`;
-        }
-    </script>
 </body>
 </html>
