@@ -4,25 +4,35 @@
   <title>Send Telegram Data</title>
   <script>
     function sendData() {
-      fetch('https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          telegram_id: '7119877516', // Telegram ID (تجربة)
-          product: 'Test Product',  // اسم المنتج
-          price: '100',             // السعر
-          quantity: '2'             // الكمية
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Response:', data);
-        alert('Data Sent: ' + JSON.stringify(data));
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Failed to send data: ' + error.message);
+      var xhr = new XMLHttpRequest();
+      var url = "https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec";
+      
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+
+      // Data to send
+      var data = JSON.stringify({
+        telegram_id: "7119877516", // Telegram ID للتجربة
+        product: "Test Product",  // اسم المنتج
+        price: "100",             // السعر
+        quantity: "2"             // الكمية
       });
+
+      // Response handler
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) { // Request is done
+          if (xhr.status === 200) { // Successful
+            console.log("Response:", xhr.responseText);
+            alert("Data Sent Successfully: " + xhr.responseText);
+          } else { // Error occurred
+            console.error("Error:", xhr.statusText);
+            alert("Failed to send data: " + xhr.statusText);
+          }
+        }
+      };
+
+      // Send data
+      xhr.send(data);
     }
   </script>
 </head>
