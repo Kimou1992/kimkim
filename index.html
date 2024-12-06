@@ -16,8 +16,11 @@
 
     <script type="text/javascript">
         function onTelegramAuth(user) {
-            alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + 
-                  (user.username ? ', @' + user.username : '') + ')');
+            // Store user data in localStorage for use in page2.html
+            localStorage.setItem('user', JSON.stringify(user));
+
+            // Redirect to page2.html
+            window.location.href = 'page2.html';
         }
     </script>
 
