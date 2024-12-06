@@ -9,13 +9,18 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            background-color: #f5f5f5; /* خلفية خفيفة لزيادة التباين */
+            color: #333; /* لون النص أسود أو غامق لزيادة الوضوح */
         }
         #user-data {
             margin-top: 20px;
-            padding: 15px;
+            padding: 20px;
             border: 1px solid #ddd;
             display: inline-block;
             text-align: left;
+            background-color: white; /* خلفية بيضاء لزيادة الوضوح */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* إضافة تأثير الظل */
+            border-radius: 8px; /* تحديد الزوايا */
         }
         .user-photo {
             border-radius: 50%;
@@ -26,6 +31,20 @@
         }
         #user-data-container {
             display: none;
+        }
+        /* تحسين وضوح الزر */
+        .telegram-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .telegram-button:hover {
+            background-color: #006fa6;
         }
     </style>
 </head>
