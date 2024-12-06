@@ -1,21 +1,61 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار Cache على Telegram Mini App</title>
+    <title>Mini App Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0078d7;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            margin: 20px auto;
+            max-width: 500px;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #0078d7;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #005fa3;
+        }
+    </style>
 </head>
 <body>
-    <h1>مرحبا بك!</h1>
-    <p>هذا اختبار بسيط لفحص الـ Cache على Telegram Mini App.</p>
-    <button onclick="updateContent()">تحديث المحتوى</button>
-    <div id="content">المحتوى الحالي: <b>الإصر 1</b></div>
-
+    <header>
+        <h1>Welcome to P2P Marketplace</h1>
+    </header>
+    <div class="container">
+        <h2>Select an Action</h2>
+        <a href="#" class="button" onclick="buy()">Buy</a>
+        <a href="#" class="button" onclick="sell()">Sell</a>
+    </div>
     <script>
-        function updateContent() {
-            const contentDiv = document.getElementById("content");
-            const timestamp = new Date().toLocaleString();
-            contentDiv.innerHTML = `المحتوى الحالي: <b>تم التحديث عند ${timestamp}</b>`;
+        function buy() {
+            alert("You chose to buy!");
+        }
+
+        function sell() {
+            alert("You chose to sell!");
         }
     </script>
 </body>
