@@ -21,23 +21,34 @@
             border-radius: 50%;
             margin-bottom: 10px;
         }
+        #login-container {
+            display: block;
+        }
+        #user-data-container {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <h1>Login with Telegram</h1>
-    <p>Click the button below to log in with Telegram:</p>
+    <!-- قسم تسجيل الدخول فقط سيظهر قبل الدخول -->
+    <div id="login-container">
+        <h1>Login with Telegram</h1>
+        <p>Click the button below to log in with Telegram:</p>
 
-    <!-- زر تسجيل الدخول -->
-    <script async 
-        src="https://telegram.org/js/telegram-widget.js?22" 
-        data-telegram-login="Tonhakimbot" 
-        data-size="large" 
-        data-onauth="onTelegramAuth(user)" 
-        data-request-access="write">
-    </script>
+        <!-- زر تسجيل الدخول -->
+        <script async 
+            src="https://telegram.org/js/telegram-widget.js?22" 
+            data-telegram-login="Tonhakimbot" 
+            data-size="large" 
+            data-onauth="onTelegramAuth(user)" 
+            data-request-access="write">
+        </script>
+    </div>
 
-    <!-- عرض بيانات المستخدم -->
-    <div id="user-data"></div>
+    <!-- قسم عرض بيانات المستخدم فقط بعد تسجيل الدخول -->
+    <div id="user-data-container">
+        <div id="user-data"></div>
+    </div>
 
     <script type="text/javascript">
         // التحقق من وجود بيانات المستخدم في LocalStorage عند تحميل الصفحة
@@ -61,6 +72,11 @@
 
         // عرض بيانات المستخدم في الصفحة
         function displayUserData(user) {
+            // إخفاء قسم تسجيل الدخول
+            document.getElementById('login-container').style.display = 'none';
+            // إظهار قسم بيانات المستخدم
+            document.getElementById('user-data-container').style.display = 'block';
+
             const userDataDiv = document.getElementById('user-data');
             userDataDiv.innerHTML = `
                 <h2>Welcome, ${user.first_name} ${user.last_name || ''}</h2>
@@ -68,7 +84,7 @@
                 <p><strong>User ID:</strong> ${user.id}</p>
                 <p><strong>Auth Date:</strong> ${new Date(user.auth_date * 1000).toLocaleString()}</p>
                 ${user.photo_url ? `<img src="${user.photo_url}" alt="User Photo" class="user-photo" width="100">` : '<p>No photo available</p>'}
-                <p><strong>Phone Number:</strong> ${user.phone_number || 'N/A'}</p> <!-- إضافة رقم الهاتف إن وجد -->
+                <p><strong>Phone Number:</strong> ${user.phone_number || 'N/A'}</p>
             `;
         }
     </script>
