@@ -40,7 +40,7 @@
     <div id="user-data"></div>
 
     <script type="text/javascript">
-        // التحقق من وجود بيانات المستخدم في LocalStorage
+        // التحقق من وجود بيانات المستخدم في LocalStorage عند تحميل الصفحة
         window.onload = function() {
             const userData = JSON.parse(localStorage.getItem('user'));
             if (userData) {
@@ -48,12 +48,18 @@
             }
         };
 
+        // عند المصادقة عبر Telegram
         function onTelegramAuth(user) {
             // تخزين بيانات المستخدم في LocalStorage
-            localStorage.setItem('user', JSON.stringify(user));
-            displayUserData(user);
+            if (user) {
+                localStorage.setItem('user', JSON.stringify(user)); // حفظ البيانات
+                displayUserData(user);
+            } else {
+                console.error("No user data received.");
+            }
         }
 
+        // عرض بيانات المستخدم في الصفحة
         function displayUserData(user) {
             const userDataDiv = document.getElementById('user-data');
             userDataDiv.innerHTML = `
