@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login with Telegram</title>
+    <title>Login with Telegram and Product Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,9 +18,9 @@
             border: 1px solid #ddd;
             display: inline-block;
             text-align: left;
-            background-color: white; /* خلفية بيضاء لزيادة الوضوح */
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* إضافة تأثير الظل */
-            border-radius: 8px; /* تحديد الزوايا */
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
         .user-photo {
             border-radius: 50%;
@@ -32,18 +32,29 @@
         #user-data-container {
             display: none;
         }
-        /* تحسين وضوح الزر */
-        .telegram-button {
-            margin-top: 20px;
-            padding: 10px 20px;
+        .product-form {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 30px auto;
+        }
+        .product-form input,
+        .product-form button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .product-form button {
             background-color: #0088cc;
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
         }
-        .telegram-button:hover {
+        .product-form button:hover {
             background-color: #006fa6;
         }
     </style>
@@ -67,6 +78,18 @@
     <!-- قسم عرض بيانات المستخدم فقط بعد تسجيل الدخول -->
     <div id="user-data-container">
         <div id="user-data"></div>
+    </div>
+
+    <!-- نموذج إدخال البيانات -->
+    <div id="product-form-container" class="product-form" style="display:none;">
+        <h2>Enter Product Details</h2>
+        <form id="product-form">
+            <input type="text" id="product" placeholder="Product Name" required>
+            <input type="number" id="price" placeholder="Price" required>
+            <input type="number" id="quantity" placeholder="Quantity" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="product-output"></div>
     </div>
 
     <script type="text/javascript">
@@ -95,6 +118,8 @@
             document.getElementById('login-container').style.display = 'none';
             // إظهار قسم بيانات المستخدم
             document.getElementById('user-data-container').style.display = 'block';
+            // إظهار نموذج إدخال المنتج
+            document.getElementById('product-form-container').style.display = 'block';
 
             const userDataDiv = document.getElementById('user-data');
             userDataDiv.innerHTML = `
@@ -106,6 +131,25 @@
                 <p><strong>Phone Number:</strong> ${user.phone_number || 'N/A'}</p>
             `;
         }
+
+        // معالجة البيانات المدخلة في نموذج المنتج
+        document.getElementById('product-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const product = document.getElementById('product').value;
+            const price = document.getElementById('price').value;
+            const quantity = document.getElementById('quantity').value;
+
+            if (product && price && quantity) {
+                const productOutput = `
+                    <h3>Product Details</h3>
+                    <p><strong>Product Name:</strong> ${product}</p>
+                    <p><strong>Price:</strong> ${price}</p>
+                    <p><strong>Quantity:</strong> ${quantity}</p>
+                `;
+                document.getElementById('product-output').innerHTML = productOutput;
+            }
+        });
     </script>
 </body>
 </html>
