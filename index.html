@@ -50,8 +50,8 @@
 
         // عند المصادقة عبر Telegram
         function onTelegramAuth(user) {
-            // تخزين بيانات المستخدم في LocalStorage
             if (user) {
+                // تخزين بيانات المستخدم في LocalStorage
                 localStorage.setItem('user', JSON.stringify(user)); // حفظ البيانات
                 displayUserData(user);
             } else {
@@ -68,6 +68,7 @@
                 <p><strong>User ID:</strong> ${user.id}</p>
                 <p><strong>Auth Date:</strong> ${new Date(user.auth_date * 1000).toLocaleString()}</p>
                 ${user.photo_url ? `<img src="${user.photo_url}" alt="User Photo" class="user-photo" width="100">` : '<p>No photo available</p>'}
+                <p><strong>Phone Number:</strong> ${user.phone_number || 'N/A'}</p> <!-- إضافة رقم الهاتف إن وجد -->
             `;
         }
     </script>
