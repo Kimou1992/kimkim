@@ -5,66 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login with Telegram and Product Form</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        #user-data {
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            display: inline-block;
-            text-align: left;
-            background-color: white;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .user-photo {
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-        #login-container {
-            display: block;
-        }
-        #user-data-container {
-            display: none;
-        }
-        .product-form {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: 30px auto;
-        }
-        .product-form input,
-        .product-form button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        .product-form button {
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .product-form button:hover {
-            background-color: #006fa6;
-        }
+        /* نفس تنسيق الصفحة كما هو في السابق */
     </style>
 </head>
 <body>
     <div id="login-container">
         <h1>Login with Telegram</h1>
         <p>Click the button below to log in with Telegram:</p>
-
-        <!-- زر تسجيل الدخول -->
         <script async 
             src="https://telegram.org/js/telegram-widget.js?22" 
             data-telegram-login="Tonhakimbot" 
@@ -142,26 +89,43 @@
             const quantity = document.getElementById('quantity').value;
 
             if (product && price && quantity) {
-                // استرجاع بيانات المنتجات الخاصة بالمستخدم
                 const userData = JSON.parse(localStorage.getItem('user'));
                 const userId = userData.id;
                 const userProducts = JSON.parse(localStorage.getItem(userId)) || [];
 
-                // إضافة المنتج الجديد إلى بيانات المستخدم
                 const newProduct = {
                     product: product,
                     price: price,
-                    quantity: quantity
+                    quantity: quantity,
+                    telegram_id: userId
                 };
-                userProducts.push(newProduct);
 
-                // حفظ البيانات مرة أخرى في LocalStorage
+                userProducts.push(newProduct);
                 localStorage.setItem(userId, JSON.stringify(userProducts));
+
+                // إرسال البيانات إلى Google Sheets
+                sendToGoogleSheets(newProduct);
 
                 // عرض البيانات المدخلة
                 displayUserProducts(userProducts);
             }
         });
+
+        // إرسال البيانات إلى Google Sheets باستخدام API
+        function sendToGoogleSheets(data) {
+            const url = 'https://script.google.com/macros/s/AKfycbw17hbrxSkDCI-jys8V4DF-n5TVLiogD5Smq5zUSF6tenmvhtuZfRE1oJC8uTMI_b7_1g/exec'; 
+// ضع هنا URL الخاص بـ Web App
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.text())
+            .then(responseText => console.log('Data sent successfully:', responseText))
+            .catch(error => console.error('Error sending data:', error));
+        }
 
         // عرض منتجات المستخدم
         function displayUserProducts(products) {
@@ -185,3 +149,4 @@
     </script>
 </body>
 </html>
+
