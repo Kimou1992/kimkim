@@ -1,54 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Data Entry</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Data to Google Sheets</title>
 </head>
 <body>
+    <h2>Send Data to Google Sheets</h2>
+    <form id="dataForm">
+        <label for="telegramId">Telegram ID:</label>
+        <input type="text" id="telegramId" name="telegramId"><br><br>
+        <label for="product">Product:</label>
+        <input type="text" id="product" name="product"><br><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price"><br><br>
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity"><br><br>
+        <button type="submit">Submit</button>
+    </form>
 
-<h2>Enter Product Details</h2>
-
-<form id="productForm">
-  <label for="product">Product:</label>
-  <input type="text" id="product" name="product" required><br><br>
-  
-  <label for="price">Price:</label>
-  <input type="number" id="price" name="price" required><br><br>
-  
-  <label for="quantity">Quantity:</label>
-  <input type="number" id="quantity" name="quantity" required><br><br>
-  
-  <button type="button" onclick="sendData()">Submit</button>
-</form>
-
-<script>
-function sendData() {
-  var product = document.getElementById("product").value;
-  var price = document.getElementById("price").value;
-  var quantity = document.getElementById("quantity").value;
-
-  var data = {
-    telegramId: '7119877516',  // Your Telegram ID
-    product: product,
-    price: price,
-    quantity: quantity
-  };
-
-  var url = "https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec"; // Your Script URL
-  
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => response.text())
-  .then(result => alert(result))
-  .catch(error => alert("Error: " + error));
-}
-</script>
-
+    <script>
+        document.getElementById("dataForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            var telegramId = document.getElementById("telegramId").value;
+            var product = document.getElementById("product").value;
+            var price = document.getElementById("price").value;
+            var quantity = document.getElementById("quantity").value;
+            
+            // Constructing the URL with query parameters
+            var url = "https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec";
+            url += "?data[]=" + telegramId + "&data[]=" + product + "&data[]=" + price + "&data[]=" + quantity;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    alert("Data sent successfully: " + xhr.responseText);
+                } else if (xhr.readyState == 4) {
+                    alert("Error: " + xhr.responseText);
+                }
+            };
+            xhr.send();
+        });
+    </script>
 </body>
 </html>
