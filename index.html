@@ -14,64 +14,54 @@
         </div>
       </div>
     </section>
-
-    <!-- نموذج إدخال البيانات -->
     <form id="form" class="container m-4 pl-4" method="POST">
-      <!-- حقل Client Name -->
       <div class="field">
         <label class="label">Client Name</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            placeholder="Your Client Name"
-            name="Client Name"
-            required
+            placeholder="Enter Client Name"
+            name="client_name"
           />
         </div>
       </div>
 
-      <!-- حقل Email -->
       <div class="field">
         <label class="label">Email</label>
         <div class="control">
           <input
             class="input"
             type="email"
-            placeholder="Your Email"
-            name="Email"
-            required
+            placeholder="Enter Email"
+            name="email"
           />
         </div>
       </div>
 
-      <!-- حقل Gender -->
       <div class="field">
-        <label class="label">Gender</label>
+        <label class="label">Genre</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            placeholder="Your Gender (e.g., Male or Female)"
-            name="Gender"
-            required
+            placeholder="Enter Genre"
+            name="genre"
           />
         </div>
       </div>
 
-      <!-- حقل Notes -->
       <div class="field">
         <label class="label">Notes</label>
         <div class="control">
           <textarea
             class="textarea"
-            placeholder="Additional Notes"
-            name="Notes"
+            placeholder="Enter any additional notes"
+            name="notes"
           ></textarea>
         </div>
       </div>
 
-      <!-- زر الإرسال -->
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-primary" type="submit" id="submit-button">
@@ -79,12 +69,10 @@
           </button>
         </div>
         <div class="control">
-          <button class="button is-danger" type="reset">Cancel</button>
+          <button class="button is-danger">Cancel</button>
         </div>
       </div>
     </form>
-
-    <!-- رسالة نجاح أو خطأ -->
     <div
       id="message"
       style="
@@ -99,15 +87,14 @@
       "
     ></div>
 
-    <!-- سكربت التعامل مع النموذج -->
     <script>
       document.getElementById("form").addEventListener("submit", function (e) {
-        e.preventDefault(); // منع السلوك الافتراضي للنموذج
+        e.preventDefault(); // Prevent the default form submission
         document.getElementById("message").textContent = "Submitting..";
         document.getElementById("message").style.display = "block";
         document.getElementById("submit-button").disabled = true;
 
-        // جمع البيانات من النموذج
+        // Collect the form data
         var formData = new FormData(this);
         var keyValuePairs = [];
         for (var pair of formData.entries()) {
@@ -116,11 +103,10 @@
 
         var formDataString = keyValuePairs.join("&");
 
-        // إرسال البيانات إلى Google Apps Script
+        // Send a POST request to your Google Apps Script
         fetch(
-          "https://script.google.com/macros/s/AKfycbz5fiZPHP-nT5kJocBZX02RL6VT1YX2UAKl_TmRoFzcClyX7JJwanYGRd1ohjYVt2Fu/exec",
+          "https://script.google.com/macros/s/AKfycbwGsQRLhQAqwrTjFhoejZZvb60io770APrY8i0QjUj6vJuo7WW-s0KBnrF5emn-3ga6/exec",
           {
-            redirect: "follow",
             method: "POST",
             body: formDataString,
             headers: {
@@ -130,15 +116,15 @@
         )
           .then(function (response) {
             if (response.ok) {
-              return response; // التحقق من نجاح الإرسال
+              return response.json();
             } else {
               throw new Error("Failed to submit the form.");
             }
           })
           .then(function (data) {
-            // رسالة النجاح
             document.getElementById("message").textContent =
               "Data submitted successfully!";
+            document.getElementById("message").style.display = "block";
             document.getElementById("message").style.backgroundColor = "green";
             document.getElementById("message").style.color = "beige";
             document.getElementById("submit-button").disabled = false;
@@ -153,7 +139,7 @@
             console.error(error);
             document.getElementById("message").textContent =
               "An error occurred while submitting the form.";
-            document.getElementById("message").style.color = "red";
+            document.getElementById("message").style.display = "block";
           });
       });
     </script>
