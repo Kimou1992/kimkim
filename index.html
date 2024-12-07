@@ -1,49 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Data to Google Sheets</title>
-</head>
-<body>
-    <h2>Send Data to Google Sheets</h2>
-    <form id="dataForm">
-        <label for="telegramId">Telegram ID:</label>
-        <input type="text" id="telegramId" name="telegramId"><br><br>
-        <label for="product">Product:</label>
-        <input type="text" id="product" name="product"><br><br>
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price"><br><br>
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity"><br><br>
-        <button type="submit">Submit</button>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+  </head>
+  <body>
+    <section class="hero is-primary is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">P2P Telegram Bot Form</h1>
+        </div>
+      </div>
+    </section>
+
+    <form id="form" class="container m-4 pl-4" method="POST">
+      <div class="field">
+        <label class="label">Product Name</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="Product Name"
+            name="Product Name"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Quantity</label>
+        <div class="control">
+          <input
+            class="input"
+            type="number"
+            placeholder="Quantity"
+            name="Quantity"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Price</label>
+        <div class="control">
+          <input
+            class="input"
+            type="number"
+            placeholder="Price"
+            name="Price"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary" type="submit" id="submit-button">
+            Submit
+          </button>
+        </div>
+      </div>
     </form>
 
+    <div
+      id="message"
+      style="
+        display: none;
+        margin: 20px;
+        font-weight: bold;
+        color: green;
+        padding: 8px;
+        background-color: beige;
+        border-radius: 4px;
+        border-color: aquamarine;
+      "
+    ></div>
+
     <script>
-        document.getElementById("dataForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            var telegramId = document.getElementById("telegramId").value;
-            var product = document.getElementById("product").value;
-            var price = document.getElementById("price").value;
-            var quantity = document.getElementById("quantity").value;
-            
-            // Constructing the URL with query parameters
-            var url = "https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec";
-            url += "?data[]=" + telegramId + "&data[]=" + product + "&data[]=" + price + "&data[]=" + quantity;
-            
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    alert("Data sent successfully: " + xhr.responseText);
-                } else if (xhr.readyState == 4) {
-                    alert("Error: " + xhr.responseText);
-                }
-            };
-            xhr.send();
-        });
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        document.getElementById("message").textContent = "Submitting..";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("submit-button").disabled = true;
+
+        // Collect the form data
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+          keyValuePairs.push(pair[0] + "=" + encodeURIComponent(pair[1]));
+        }
+
+        var formDataString = keyValuePairs.join("&");
+
+        // Send a POST request to your Google Apps Script
+        fetch(
+          "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", // ضع رابط السكربت هنا
+          {
+            redirect: "follow",
+            method: "POST",
+            body: formDataString,
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("message").textContent =
+              "Data submitted successfully!";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("form").reset();
+            document.getElementById("submit-button").disabled = false;
+
+            setTimeout(() => {
+              document.getElementById("message").style.display = "none";
+            }, 2600);
+          })
+          .catch((error) => {
+            console.error(error);
+            document.getElementById("message").textContent =
+              "An error occurred while submitting the form.";
+            document.getElementById("message").style.backgroundColor = "red";
+            document.getElementById("submit-button").disabled = false;
+          });
+      });
     </script>
-</body>
+  </body>
 </html>
