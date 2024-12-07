@@ -3,59 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Send Data to Sheets</title>
+  <title>Data Entry</title>
 </head>
 <body>
-  <h1>Send Product Data to Google Sheets</h1>
+
+<h2>Enter Product Details</h2>
+
+<form id="productForm">
+  <label for="product">Product:</label>
+  <input type="text" id="product" name="product" required><br><br>
   
-  <!-- نموذج لإدخال البيانات -->
-  <form id="productForm">
-    <label for="telegramId">Telegram ID:</label>
-    <input type="text" id="telegramId" name="telegramId" required><br><br>
-    
-    <label for="product">Product:</label>
-    <input type="text" id="product" name="product" required><br><br>
-    
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" required><br><br>
-    
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" required><br><br>
-    
-    <button type="submit">Submit</button>
-  </form>
+  <label for="price">Price:</label>
+  <input type="number" id="price" name="price" required><br><br>
+  
+  <label for="quantity">Quantity:</label>
+  <input type="number" id="quantity" name="quantity" required><br><br>
+  
+  <button type="button" onclick="sendData()">Submit</button>
+</form>
 
-  <script>
-    // عند إرسال النموذج، إرسال البيانات إلى Google Apps Script عبر fetch
-    document.getElementById('productForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // منع إرسال النموذج بشكل تقليدي
-      
-      // جمع البيانات من النموذج
-      var telegramId = document.getElementById('telegramId').value;
-      var product = document.getElementById('product').value;
-      var price = document.getElementById('price').value;
-      var quantity = document.getElementById('quantity').value;
+<script>
+function sendData() {
+  var product = document.getElementById("product").value;
+  var price = document.getElementById("price").value;
+  var quantity = document.getElementById("quantity").value;
 
-      // إنشاء array من البيانات
-      var data = [telegramId, product, price, quantity];
+  var data = {
+    telegramId: '7119877516',  // Your Telegram ID
+    product: product,
+    price: price,
+    quantity: quantity
+  };
 
-      // إرسال البيانات عبر fetch إلى Google Apps Script
-      fetch('https://jsonplaceholder.typicode.com/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ data: data }) // إرسال البيانات على شكل JSON
-      })
-      .then(response => response.json())
-      .then(data => {
-        alert('Data sent successfully: ' + JSON.stringify(data)); // عرض البيانات المرسلة في التنبيه
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error sending data');
-      });
-    });
-  </script>
+  var url = "https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec"; // Your Script URL
+  
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.text())
+  .then(result => alert(result))
+  .catch(error => alert("Error: " + error));
+}
+</script>
+
 </body>
 </html>
