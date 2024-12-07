@@ -14,7 +14,10 @@
         </div>
       </div>
     </section>
+
+    <!-- نموذج إدخال البيانات -->
     <form id="form" class="container m-4 pl-4" method="POST">
+      <!-- حقل Client Name -->
       <div class="field">
         <label class="label">Client Name</label>
         <div class="control">
@@ -23,22 +26,12 @@
             type="text"
             placeholder="Your Client Name"
             name="Client Name"
+            required
           />
         </div>
       </div>
 
-      <!-- <div class="field">
-        <label class="label">Last Name</label>
-        <div class="control">
-          <input
-            class="input"
-            type="text"
-            placeholder="Your Last Name"
-            name="Last Name"
-          />
-        </div>
-      </div> -->
-
+      <!-- حقل Email -->
       <div class="field">
         <label class="label">Email</label>
         <div class="control">
@@ -47,78 +40,51 @@
             type="email"
             placeholder="Your Email"
             name="Email"
+            required
           />
         </div>
       </div>
 
-      <div class="field">
-        <label class="label">Password</label>
-        <div class="control">
-          <input
-            class="input"
-            type="password"
-            placeholder="Your Password"
-            name="Password"
-          />
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Date of Birth</label>
-        <div class="control">
-          <input
-            class="input"
-            type="date"
-            placeholder="Your Date of Birth"
-            name="DOB"
-          />
-        </div>
-      </div>
-
+      <!-- حقل Gender -->
       <div class="field">
         <label class="label">Gender</label>
         <div class="control">
-          <label class="radio">
-            <input type="radio" name="Gender" value="male" /> Male
-          </label>
-          <label class="radio">
-            <input type="radio" name="Gender" value="female" /> Female
-          </label>
+          <input
+            class="input"
+            type="text"
+            placeholder="Your Gender (e.g., Male or Female)"
+            name="Gender"
+            required
+          />
         </div>
       </div>
 
+      <!-- حقل Notes -->
       <div class="field">
-        <label class="label">Agree to Terms</label>
-        <div class="control">
-          <label class="checkbox">
-            <input type="checkbox" name="Agree To Terms" value="yes" /> I agree
-            to the terms and conditions
-          </label>
-        </div>
-      </div>
-
-      <div class="field">
-        <label class="label">Additional Information</label>
+        <label class="label">Notes</label>
         <div class="control">
           <textarea
             class="textarea"
-            placeholder="Any additional information"
+            placeholder="Additional Notes"
             name="Notes"
           ></textarea>
         </div>
       </div>
 
+      <!-- زر الإرسال -->
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-primary" type="submit" id="submit-button">
-            Sign Up
+            Submit
           </button>
         </div>
         <div class="control">
-          <button class="button is-danger">Cancel</button>
+          <button class="button is-danger" type="reset">Cancel</button>
         </div>
       </div>
     </form>
+
+    <!-- رسالة نجاح أو خطأ -->
     <div
       id="message"
       style="
@@ -133,14 +99,15 @@
       "
     ></div>
 
+    <!-- سكربت التعامل مع النموذج -->
     <script>
       document.getElementById("form").addEventListener("submit", function (e) {
-        e.preventDefault(); // Prevent the default form submission
+        e.preventDefault(); // منع السلوك الافتراضي للنموذج
         document.getElementById("message").textContent = "Submitting..";
         document.getElementById("message").style.display = "block";
         document.getElementById("submit-button").disabled = true;
 
-        // Collect the form data
+        // جمع البيانات من النموذج
         var formData = new FormData(this);
         var keyValuePairs = [];
         for (var pair of formData.entries()) {
@@ -149,9 +116,9 @@
 
         var formDataString = keyValuePairs.join("&");
 
-        // Send a POST request to your Google Apps Script
+        // إرسال البيانات إلى Google Apps Script
         fetch(
-          "https://script.google.com/macros/s/AKfycbzCk7OZ2fP64ryQIMDTAxIyHxyj9PTle6BXkpsnEH2Nbg1QFdN9d87F112nqGd8HRgB/exec",
+          "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec",
           {
             redirect: "follow",
             method: "POST",
@@ -162,18 +129,16 @@
           }
         )
           .then(function (response) {
-            // Check if the request was successful
-            if (response) {
-              return response; // Assuming your script returns JSON response
+            if (response.ok) {
+              return response; // التحقق من نجاح الإرسال
             } else {
               throw new Error("Failed to submit the form.");
             }
           })
           .then(function (data) {
-            // Display a success message
+            // رسالة النجاح
             document.getElementById("message").textContent =
               "Data submitted successfully!";
-            document.getElementById("message").style.display = "block";
             document.getElementById("message").style.backgroundColor = "green";
             document.getElementById("message").style.color = "beige";
             document.getElementById("submit-button").disabled = false;
@@ -185,11 +150,10 @@
             }, 2600);
           })
           .catch(function (error) {
-            // Handle errors, you can display an error message here
             console.error(error);
             document.getElementById("message").textContent =
               "An error occurred while submitting the form.";
-            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.color = "red";
           });
       });
     </script>
