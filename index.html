@@ -40,7 +40,7 @@
       var data = [telegramId, product, price, quantity];
 
       // إرسال البيانات عبر fetch إلى Google Apps Script
-      fetch('https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec', {
+      fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
