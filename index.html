@@ -14,54 +14,60 @@
         </div>
       </div>
     </section>
+
     <form id="form" class="container m-4 pl-4" method="POST">
+      <!-- Client Name Field -->
       <div class="field">
         <label class="label">Client Name</label>
         <div class="control">
           <input
             class="input"
             type="text"
-            placeholder="Enter Client Name"
-            name="client_name"
+            placeholder="Your Client Name"
+            name="Client Name"
           />
         </div>
       </div>
 
+      <!-- Email Field -->
       <div class="field">
         <label class="label">Email</label>
         <div class="control">
           <input
             class="input"
             type="email"
-            placeholder="Enter Email"
-            name="email"
+            placeholder="Your Email"
+            name="Email"
           />
         </div>
       </div>
 
+      <!-- Gender Field -->
       <div class="field">
-        <label class="label">Genre</label>
+        <label class="label">Gender</label>
         <div class="control">
-          <input
-            class="input"
-            type="text"
-            placeholder="Enter Genre"
-            name="genre"
-          />
+          <label class="radio">
+            <input type="radio" name="Gender" value="male" /> Male
+          </label>
+          <label class="radio">
+            <input type="radio" name="Gender" value="female" /> Female
+          </label>
         </div>
       </div>
 
+      <!-- Note Field -->
       <div class="field">
-        <label class="label">Notes</label>
+        <label class="label">Additional Note</label>
         <div class="control">
           <textarea
             class="textarea"
-            placeholder="Enter any additional notes"
-            name="notes"
+            placeholder="Any additional information"
+            name="Note"
           ></textarea>
         </div>
       </div>
 
+      <!-- Submit Button -->
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-primary" type="submit" id="submit-button">
@@ -73,6 +79,7 @@
         </div>
       </div>
     </form>
+
     <div
       id="message"
       style="
@@ -105,8 +112,9 @@
 
         // Send a POST request to your Google Apps Script
         fetch(
-          "https://script.google.com/macros/s/AKfycbwGsQRLhQAqwrTjFhoejZZvb60io770APrY8i0QjUj6vJuo7WW-s0KBnrF5emn-3ga6/exec",
+          "https://script.google.com/macros/s/AKfycbzP4ZbTtjVgo6-b9lPAJBgRE7AbQyT-Lg2OAokeaWuR3dJrAM8vfoFgFfPca5SVmsC1/exec",
           {
+            redirect: "follow",
             method: "POST",
             body: formDataString,
             headers: {
@@ -115,13 +123,15 @@
           }
         )
           .then(function (response) {
-            if (response.ok) {
-              return response.json();
+            // Check if the request was successful
+            if (response) {
+              return response; // Assuming your script returns JSON response
             } else {
               throw new Error("Failed to submit the form.");
             }
           })
           .then(function (data) {
+            // Display a success message
             document.getElementById("message").textContent =
               "Data submitted successfully!";
             document.getElementById("message").style.display = "block";
@@ -136,6 +146,7 @@
             }, 2600);
           })
           .catch(function (error) {
+            // Handle errors, you can display an error message here
             console.error(error);
             document.getElementById("message").textContent =
               "An error occurred while submitting the form.";
