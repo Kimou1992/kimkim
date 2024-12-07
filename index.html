@@ -1,131 +1,195 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Form with Bootstrap</title>
     <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
-    <style>
-      .form-container {
-        max-width: 500px;
-        margin: auto;
-        margin-top: 50px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background-color: #fff;
-      }
-    </style>
   </head>
-  <body class="bg-light">
-    <div class="container">
-      <div class="form-container">
-        <h4 class="text-center mb-4">Form Submission to Google Sheet</h4>
-        <form id="submit-to-google-sheet">
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input
-              class="form-control"
-              type="text"
-              name="name"
-              id="name"
-              placeholder="Name"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input
-              class="form-control"
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="slip">Contact Number:</label>
-            <input
-              class="form-control"
-              type="text"
-              name="contact_number"
-              id="contact_number"
-              placeholder="Contact Number"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="loc">Gender:</label>
-            <select class="form-control" name="gender" id="gender" required>
-              <option value="" disabled selected hidden>Choose...</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="loc">Message:</label>
-            <textarea
-              class="form-control"
-              name="message"
-              id="message"
-              placeholder="Message"
-              required
-            ></textarea>
-          <div class="form-group form-check mt-2">
-            <input class="form-check-input" type="checkbox" id="age" />
-            <label class="form-check-label" for="age"
-              >Check if you are over 18 years old</label
-            >
-          </div>
-          <div class="form-group form-check">
-            <input class="form-check-input" type="checkbox" id="ex" required />
-            <label class="form-check-label" for="ex"
-              >By checking this box I certify that I am agree with the data
-              terms and policies.
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary btn-block">
-            Submit
-          </button>
-        </form>
+  <body>
+    <section class="hero is-primary is-bold">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">Data Entry Form</h1>
+        </div>
       </div>
-    </div>
+    </section>
+    <form id="form" class="container m-4 pl-4" method="POST">
+      <div class="field">
+        <label class="label">Client Name</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="Your Client Name"
+            name="Client Name"
+          />
+        </div>
+      </div>
+
+      <!-- <div class="field">
+        <label class="label">Last Name</label>
+        <div class="control">
+          <input
+            class="input"
+            type="text"
+            placeholder="Your Last Name"
+            name="Last Name"
+          />
+        </div>
+      </div> -->
+
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input
+            class="input"
+            type="email"
+            placeholder="Your Email"
+            name="Email"
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control">
+          <input
+            class="input"
+            type="password"
+            placeholder="Your Password"
+            name="Password"
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Date of Birth</label>
+        <div class="control">
+          <input
+            class="input"
+            type="date"
+            placeholder="Your Date of Birth"
+            name="DOB"
+          />
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Gender</label>
+        <div class="control">
+          <label class="radio">
+            <input type="radio" name="Gender" value="male" /> Male
+          </label>
+          <label class="radio">
+            <input type="radio" name="Gender" value="female" /> Female
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Agree to Terms</label>
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" name="Agree To Terms" value="yes" /> I agree
+            to the terms and conditions
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Additional Information</label>
+        <div class="control">
+          <textarea
+            class="textarea"
+            placeholder="Any additional information"
+            name="Notes"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-primary" type="submit" id="submit-button">
+            Sign Up
+          </button>
+        </div>
+        <div class="control">
+          <button class="button is-danger">Cancel</button>
+        </div>
+      </div>
+    </form>
+    <div
+      id="message"
+      style="
+        display: none;
+        margin: 20px;
+        font-weight: bold;
+        color: green;
+        padding: 8px;
+        background-color: beige;
+        border-radius: 4px;
+        border-color: aquamarine;
+      "
+    ></div>
 
     <script>
-      const scriptURL =                       
-      "https://script.google.com/macros/s/AKfycbxyv4ijv7azb3Me-hWfx3LJM9CHdPaNhCSzFHZL7SngfXI67LnJR7vhK2bKgHH43W8IyA/exec";
-      const form = document.forms["submit-to-google-sheet"];
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        var formData = new FormData(form);
-        var ex = document.getElementById("ex").checked;
-        var age = document.getElementById("age").checked;
+      document.getElementById("form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the default form submission
+        document.getElementById("message").textContent = "Submitting..";
+        document.getElementById("message").style.display = "block";
+        document.getElementById("submit-button").disabled = true;
 
-        if (age) {
-          formData.append("age", "Yes");
-        } else {
-          formData.append("age", "No");
-        }
-        if (ex) {
-          formData.append("ex", "Yes");
-        } else {
-          formData.append("ex", "No");
+        // Collect the form data
+        var formData = new FormData(this);
+        var keyValuePairs = [];
+        for (var pair of formData.entries()) {
+          keyValuePairs.push(pair[0] + "=" + pair[1]);
         }
 
-        fetch(scriptURL, { method: "POST", body: formData })
-          .then((response) => {
-            swal("Done", "Submitted Successfully.", "success");
+        var formDataString = keyValuePairs.join("&");
+
+        // Send a POST request to your Google Apps Script
+        fetch(
+          "https://script.google.com/macros/s/AKfycbz_aHKLvz6LO3NT9y9HS9FuIlQ8NZadn2fHcn66HBaT7nheUKF3jJ6eaUN9piFKiD4l/exec",
+          {
+            redirect: "follow",
+            method: "POST",
+            body: formDataString,
+            headers: {
+              "Content-Type": "text/plain;charset=utf-8",
+            },
+          }
+        )
+          .then(function (response) {
+            // Check if the request was successful
+            if (response) {
+              return response; // Assuming your script returns JSON response
+            } else {
+              throw new Error("Failed to submit the form.");
+            }
           })
-          .catch((error) => {
-            swal("Error", "Something went wrong. please try again!", "error");
+          .then(function (data) {
+            // Display a success message
+            document.getElementById("message").textContent =
+              "Data submitted successfully!";
+            document.getElementById("message").style.display = "block";
+            document.getElementById("message").style.backgroundColor = "green";
+            document.getElementById("message").style.color = "beige";
+            document.getElementById("submit-button").disabled = false;
+            document.getElementById("form").reset();
+
+            setTimeout(function () {
+              document.getElementById("message").textContent = "";
+              document.getElementById("message").style.display = "none";
+            }, 2600);
+          })
+          .catch(function (error) {
+            // Handle errors, you can display an error message here
+            console.error(error);
+            document.getElementById("message").textContent =
+              "An error occurred while submitting the form.";
+            document.getElementById("message").style.display = "block";
           });
       });
     </script>
