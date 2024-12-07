@@ -1,31 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Test Axios</title>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-    function sendData() {
-      const url = 'https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec'; // رابط API
-
-      const data = {
-        title: 'foo',
-        hakim: 'bar'
-      };
-
-      axios.post(url, data)
-        .then(function (response) {
-          console.log('Response:', response.data);
-          alert('Data Sent Successfully: ' + JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-          console.error('Error:', error);
-          alert('Failed to send data: ' + error);
-        });
-    }
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Send Data to Sheets</title>
 </head>
 <body>
-  <h1>Test Axios</h1>
-  <button onclick="sendData()">Send Data</button>
+  <h1>Send Product Data to Google Sheets</h1>
+  
+  <!-- نموذج لإدخال البيانات -->
+  <form id="productForm">
+    <label for="telegramId">Telegram ID:</label>
+    <input type="text" id="telegramId" name="telegramId" required><br><br>
+    
+    <label for="product">Product:</label>
+    <input type="text" id="product" name="product" required><br><br>
+    
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" required><br><br>
+    
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" required><br><br>
+    
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    // عند إرسال النموذج، إرسال البيانات إلى Google Apps Script عبر fetch
+    document.getElementById('productForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // منع إرسال النموذج بشكل تقليدي
+      
+      // جمع البيانات من النموذج
+      var telegramId = document.getElementById('telegramId').value;
+      var product = document.getElementById('product').value;
+      var price = document.getElementById('price').value;
+      var quantity = document.getElementById('quantity').value;
+
+      // إنشاء array من البيانات
+      var data = [telegramId, product, price, quantity];
+
+      // إرسال البيانات عبر fetch إلى Google Apps Script
+      fetch('https://script.google.com/macros/s/AKfycbzU4ZR1z427LJDVwSh74os2AiOXm9xAPZyTWWXntinJnF_Aknv-ZRWt1Kr14KQgj_dA/exec', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: data }) // إرسال البيانات على شكل JSON
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('Data sent successfully: ' + JSON.stringify(data)); // عرض البيانات المرسلة في التنبيه
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error sending data');
+      });
+    });
+  </script>
 </body>
 </html>
