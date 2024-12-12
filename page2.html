@@ -3,35 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram User Data</title>
+    <title>Fetch JSON Data</title>
 </head>
 <body>
-
-    <h1>Welcome toPage 2!</h1>
-
-    <h2>User Information:</h2>
-    <div id="user-info">
-        <!-- User data will be displayed here -->
-    </div>
-
-    <script type="text/javascript">
-        // Retrieve user data from localStorage
-        const user = JSON.parse(localStorage.getItem('user'));
-
-        if (user) {
-            // Display user data
-            const userInfoDiv = document.getElementById('user-info');
-            userInfoDiv.innerHTML = `
-                <p><strong>First Name:</strong> ${user.first_name}</p>
-                <p><strong>Last Name:</strong> ${user.last_name}</p>
-                <p><strong>Username:</strong> ${user.username ? '@' + user.username : 'N/A'}</p>
-                <p><strong>User ID:</strong> ${user.id}</p>
-            `;
-        } else {
-            // If no user data is found
-            document.getElementById('user-info').innerText = 'No user data found. Please log in.';
-        }
+    <h1>Fetch Data from JSON API</h1>
+    
+    <button onclick="fetchData()">Fetch Data</button>
+    
+    <pre id="dataOutput"></pre>
+    
+    <script>
+      function fetchData() {
+        const url = "https://script.google.com/macros/s/AKfycbwVtEix3BXgBtrsKk7Z8JJmugsy9c7WpYeG1Wcz1PL6/exec"; // رابط الـ API الخاص بك
+        
+        fetch(url)
+          .then(response => response.json()) // تحويل الرد إلى JSON
+          .then(data => {
+            const output = document.getElementById("dataOutput");
+            if (data && data.length > 0) {
+                // عرض البيانات بشكل جيد في الصفحة
+                const formattedData = data.map(item => {
+                    return `ID: ${item.ID}, Token Name: ${item["Token Name"]}, Amount: ${item.Amount}`;
+                }).join("\n");
+                output.innerHTML = formattedData;
+            } else {
+                output.innerHTML = "No data available.";
+            }
+          })
+          .catch(error => {
+            document.getElementById("dataOutput").innerText = "Unable to fetch data: " + error;
+          });
+      }
     </script>
-
 </body>
 </html>
