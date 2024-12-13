@@ -3,37 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fetch JSON Data</title>
+    <title>Telegram Mini App - Wallet Connect</title>
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.6.6/dist/umd/index.min.js"></script>
 </head>
 <body>
-    <h1>Fetch Data from JSON API</h1>
-    
-    <button onclick="fetchData()">Fetch Data</button>
-    
-    <pre id="dataOutput"></pre>
+    <button id="connectBtn">Connect Wallet</button>
+    <div id="walletAddress"></div> <!-- لعرض العنوان هنا -->
     
     <script>
-      function fetchData() {
-        const url = "https://script.google.com/macros/s/AKfycbwVtEix3BXgBtrsKk7Z8JJmugsy9c7WpYeG1Wcz1PL6/exec"; // رابط الـ API الخاص بك
-        
-        fetch(url)
-          .then(response => response.json()) // تحويل الرد إلى JSON
-          .then(data => {
-            const output = document.getElementById("dataOutput");
-            if (data && data.length > 0) {
-                // عرض البيانات بشكل جيد في الصفحة
-                const formattedData = data.map(item => {
-                    return `ID: ${item.ID}, Token Name: ${item["Token Name"]}, Amount: ${item.Amount}`;
-                }).join("\n");
-                output.innerHTML = formattedData;
-            } else {
-                output.innerHTML = "No data available.";
-            }
-          })
-          .catch(error => {
-            document.getElementById("dataOutput").innerText = "Unable to fetch data: " + error;
-          });
-      }
+        const provider = new WalletConnectProvider({
+            infuraId: "YOUR_INFURA_PROJECT_ID"
+        });
+
+        document.getElementById('connectBtn').addEventListener('click', () => {
+            console.log("Button clicked, attempting to connect...");
+            
+            provider.enable().then(accounts => {
+                console.log("Connected wallet accounts: ", accounts);
+                document.getElementById("walletAddress").innerText = `Wallet connected: ${accounts[0]}`;
+            }).catch(error => {
+                console.error("Error connecting wallet: ", error);
+            });
+        });
     </script>
 </body>
 </html>
