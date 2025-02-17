@@ -1,12 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Bot</title>
+    <title>ربط محفظة TON Space</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
 </head>
 <body>
-    <h1>Welcome to the Telegram Bot</h1>
-    <p>This bot interacts with Render to store and update user data.</p>
+    <h2>ربط محفظة TON Space داخل Telegram</h2>
+    <p>مرحبًا <span id="username">...</span></p>
+    <button id="connect-wallet">ربط محفظة TON</button>
+    <p>عنوان المحفظة: <span id="wallet-address">غير مرتبط</span></p>
+
+    <script>
+        // استخراج بيانات المستخدم من Telegram Mini App
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // توسيع الواجهة
+        document.getElementById("username").innerText = tg.initDataUnsafe.user?.first_name || "مجهول";
+
+        // إعداد TonConnect
+        const tonConnect = new TonConnect({
+            manifestUrl: "https://YOUR_DOMAIN.com/tonconnect-manifest.json"
+        });
+
+        async function connectTonWallet() {
+            try {
+                const wallets = await tonConnect.getWallets();
+                const tonSpaceWallet = wallets.find(wallet => wallet.name === "TON Space");
+
+                if (!tonSpaceWallet) {
+                    alert("محفظة TON Space غير متاحة داخل Telegram.");
+                    return;
+                }
+
+                await tonConnect.connect({ jsBridgeKey: tonSpaceWallet.jsBridgeKey });
+
+                const walletInfo = tonConnect.wallet;
+                if (walletInfo) {
+                    document.getElementById("wallet-address").innerText = walletInfo.account.address;
+                } else {
+                    alert("لم يتمكن من جلب عنوان المحفظة.");
+                }
+            } catch (error) {
+                console.error("خطأ في الاتصال بمحفظة TON Space:", error);
+            }
+        }
+
+        document.getElementById("connect-wallet").addEventListener("click", connectTonWallet);
+    </script>
 </body>
 </html>
