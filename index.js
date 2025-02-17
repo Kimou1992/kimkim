@@ -1,71 +1,52 @@
-const { useState, useEffect } = React;
+document.addEventListener("DOMContentLoaded", async () => {
+    const webApp = window.Telegram.WebApp;
 
-function App() {
-    const [tonConnect, setTonConnect] = useState(null);
-    const [walletAddress, setWalletAddress] = useState("");
-    const [isConnected, setIsConnected] = useState(false);
-
-    useEffect(() => {
-        async function initTonConnect() {
-            try {
-                const tc = new TonConnect({
-                    manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json",
-                });
-                setTonConnect(tc);
-                console.log("TonConnect Initialized");
-
-                const account = await tc.getConnectedWallet();
-                if (account) {
-                    setWalletAddress(account.account.address);
-                    setIsConnected(true);
-                }
-            } catch (error) {
-                console.error("Error initializing TonConnect:", error);
-            }
-        }
-        initTonConnect();
-    }, []);
-
-    const connectWallet = async () => {
-        try {
-            if (!tonConnect) return;
-            console.log("Connecting to wallet...");
-
-            const wallets = await tonConnect.getWallets();
-            if (wallets.length === 0) {
-                alert("لم يتم العثور على محافظ متاحة.");
-                return;
-            }
-
-            const wallet = wallets[0];
-            await tonConnect.connect(wallet);
-            console.log("Connected to wallet:", wallet);
-
-            const account = await tonConnect.getConnectedWallet();
-            if (account) {
-                setWalletAddress(account.account.address);
-                setIsConnected(true);
-            }
-        } catch (error) {
-            console.error("Error connecting to wallet:", error);
-            alert("حدث خطأ أثناء الاتصال بالمحفظة.");
-        }
-    };
-
-    return React.createElement(
-        "div",
-        null,
-        React.createElement("h1", null, "ربط محفظة TON Space"),
-        !isConnected
-            ? React.createElement("button", { onClick: connectWallet }, "ربط المحفظة")
-            : React.createElement(
-                "div",
-                { id: "wallet-info" },
-                React.createElement("p", null, "تم الاتصال بنجاح!"),
-                React.createElement("p", null, `العنوان: ${walletAddress}`)
-            )
+    document.documentElement.style.setProperty(
+      "--tg-viewport-stable-height",
+      `${webApp.viewportStableHeight}px`
     );
-}
 
-ReactDOM.createRoot(document.getElementById("root")).render(React.createElement(App));
+    webApp.onEvent("viewportChanged", (event) => {
+      if (event.isStateStable) {
+        document.documentElement.style.setProperty(
+          "--tg-viewport-stable-height",
+          `${webApp.viewportStableHeight}px`
+        );
+      }
+    });
 
+    webApp.expand();
+    webApp.lockOrientation();
+    webApp.disableVerticalSwipes();
+    webApp.setHeaderColor("#000000");
+    webApp.setBackgroundColor("#000000");
+    webApp.ready();
+
+    const tonConnect = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json",
+    });
+
+    const connectButton = document.getElementById("connectWallet");
+
+    document.fonts.ready.then(() => {
+      connectButton.style.visibility = "visible";
+      connectButton.style.opacity = "1";
+    });
+
+    connectButton.addEventListener("click", async () => {
+        try {
+            webApp.HapticFeedback.impactOccurred("light");
+            await tonConnect.openModal();
+        } catch (error) {
+            console.error("Ошибка при открытии модального окна:", error);
+        }
+    });
+
+    tonConnect.onStatusChange((wallet) => {
+        if (wallet) {
+            console.log("Подключенный кошелек:", wallet);
+            localStorage.setItem("ton_wallet", wallet.account.address);
+            walletAddressEl.textContent = "Подключенный кошелек: " + wallet.account.address;
+        }
+    });
+});
