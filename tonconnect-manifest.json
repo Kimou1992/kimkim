@@ -1,5 +1,5 @@
-[
-  { "id": 1, "username": "hakim" },
-  { "id": 2, "username": "asmaa" },
-  { "id": 3, "username": "chaimaa" }
-]
+{
+  "name": "My Telegram Mini App",
+  "url": "https://kimou1992.github.io/kimkim/",
+  "iconUrl": "https://i.ibb.co/crhnJYW/IMG-20241213-051319.png"
+}
