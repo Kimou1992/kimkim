@@ -4,51 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ربط محفظة TON Space</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
+    <script src="https://unpkg.com/@telegram-apps/sdk@latest"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            background-color: #0088cc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0077b6;
+        }
+        #wallet-info {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h2>ربط محفظة TON Space داخل Telegram</h2>
-    <p>مرحبًا <span id="username">...</span></p>
-    <button id="connect-wallet">ربط محفظة TON</button>
-    <p>عنوان المحفظة: <span id="wallet-address">غير مرتبط</span></p>
+
+    <h1>ربط محفظة TON Space</h1>
+    <button id="connect-button">ربط المحفظة</button>
+    <div id="wallet-info"></div>
 
     <script>
-        // استخراج بيانات المستخدم من Telegram Mini App
-        const tg = window.Telegram.WebApp;
-        tg.expand(); // توسيع الواجهة
-        document.getElementById("username").innerText = tg.initDataUnsafe.user?.first_name || "مجهول";
-
-        // إعداد TonConnect
-        const tonConnect = new TonConnect({
-    manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json"
-});
-
-
-        async function connectTonWallet() {
+        document.addEventListener("DOMContentLoaded", async function() {
             try {
-                const wallets = await tonConnect.getWallets();
-                const tonSpaceWallet = wallets.find(wallet => wallet.name === "TON Space");
+                // تهيئة TonConnect
+                const tonConnect = new TonConnect({
+                    manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json"
+                });
 
-                if (!tonSpaceWallet) {
-                    alert("محفظة TON Space غير متاحة داخل Telegram.");
-                    return;
-                }
+                // زر الاتصال بالمحفظة
+                const connectButton = document.getElementById("connect-button");
+                const walletInfoDiv = document.getElementById("wallet-info");
 
-                await tonConnect.connect({ jsBridgeKey: tonSpaceWallet.jsBridgeKey });
+                connectButton.addEventListener("click", async () => {
+                    try {
+                        const wallets = await tonConnect.getWallets();
+                        
+                        if (wallets.length === 0) {
+                            alert("لم يتم العثور على محافظ متاحة.");
+                            return;
+                        }
 
-                const walletInfo = tonConnect.wallet;
-                if (walletInfo) {
-                    document.getElementById("wallet-address").innerText = walletInfo.account.address;
-                } else {
-                    alert("لم يتمكن من جلب عنوان المحفظة.");
-                }
+                        const wallet = wallets[0]; // اختيار أول محفظة متاحة
+                        await tonConnect.connect(wallet);
+
+                        // عرض عنوان المحفظة
+                        const account = await tonConnect.getConnectedWallet();
+                        if (account) {
+                            walletInfoDiv.innerHTML = `تم الاتصال بنجاح!<br> العنوان: ${account.account.address}`;
+                        } else {
+                            walletInfoDiv.innerHTML = "لم يتم العثور على عنوان المحفظة.";
+                        }
+                    } catch (error) {
+                        console.error("فشل الاتصال بالمحفظة:", error);
+                        alert("حدث خطأ أثناء الاتصال بالمحفظة.");
+                    }
+                });
+
             } catch (error) {
-                console.error("خطأ في الاتصال بمحفظة TON Space:", error);
+                console.error("خطأ أثناء تهيئة التطبيق:", error);
             }
-        }
-
-        document.getElementById("connect-wallet").addEventListener("click", connectTonWallet);
+        });
     </script>
+
 </body>
 </html>
