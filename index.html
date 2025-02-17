@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ربط محفظة TON Space</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
-    <script src="https://unpkg.com/@telegram-apps/sdk@latest"></script>
+    <script defer src="index.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,66 +26,15 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
-            margin-top: 20px;
         }
         button:hover {
             background-color: #0077b6;
-        }
-        #wallet-info {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
         }
     </style>
 </head>
 <body>
 
-    <h1>ربط محفظة TON Space</h1>
-    <button id="connect-button">ربط المحفظة</button>
-    <div id="wallet-info"></div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", async function() {
-            try {
-                // تهيئة TonConnect
-                const tonConnect = new TonConnect({
-                    manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json"
-                });
-
-                // زر الاتصال بالمحفظة
-                const connectButton = document.getElementById("connect-button");
-                const walletInfoDiv = document.getElementById("wallet-info");
-
-                connectButton.addEventListener("click", async () => {
-                    try {
-                        const wallets = await tonConnect.getWallets();
-                        
-                        if (wallets.length === 0) {
-                            alert("لم يتم العثور على محافظ متاحة.");
-                            return;
-                        }
-
-                        const wallet = wallets[0]; // اختيار أول محفظة متاحة
-                        await tonConnect.connect(wallet);
-
-                        // عرض عنوان المحفظة
-                        const account = await tonConnect.getConnectedWallet();
-                        if (account) {
-                            walletInfoDiv.innerHTML = `تم الاتصال بنجاح!<br> العنوان: ${account.account.address}`;
-                        } else {
-                            walletInfoDiv.innerHTML = "لم يتم العثور على عنوان المحفظة.";
-                        }
-                    } catch (error) {
-                        console.error("فشل الاتصال بالمحفظة:", error);
-                        alert("حدث خطأ أثناء الاتصال بالمحفظة.");
-                    }
-                });
-
-            } catch (error) {
-                console.error("خطأ أثناء تهيئة التطبيق:", error);
-            }
-        });
-    </script>
+    <div id="root"></div>
 
 </body>
 </html>
