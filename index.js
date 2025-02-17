@@ -1,6 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const webApp = window.Telegram.WebApp;
 
+    // مسح البيانات عند تحميل الصفحة
+    localStorage.removeItem("ton_wallet");
+    sessionStorage.clear();
+
     document.documentElement.style.setProperty(
       "--tg-viewport-stable-height",
       `${webApp.viewportStableHeight}px`
@@ -45,8 +49,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     tonConnect.onStatusChange((wallet) => {
         if (wallet) {
             console.log("Подключенный кошелек:", wallet);
-            localStorage.setItem("ton_wallet", wallet.account.address);
+            // لا تخزن البيانات في localStorage إذا كنت لا تريد الاحتفاظ بها بين الجلسات
+            // localStorage.setItem("ton_wallet", wallet.account.address); 
+            const walletAddressEl = document.getElementById("walletAddress");
             walletAddressEl.textContent = "Подключенный кошелек: " + wallet.account.address;
         }
+    });
+
+    // حذف البيانات عند فصل الاتصال
+    tonConnect.onDisconnect(() => {
+        localStorage.removeItem("ton_wallet");
+        sessionStorage.clear();
     });
 });
