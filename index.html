@@ -1,77 +1,22 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ربط محفظة TON Space</title>
-    <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        button {
-            background-color: #0088cc;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0077b6;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ton Connect Test</title>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preload" href="https://fonts.gstatic.com/s/onest/v1/Onest-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="data:,">
+    <script src="index.js" defer></script>
 </head>
 <body>
-
-    <h1>ربط محفظة TON Space</h1>
-    <button id="connectBtn">ربط المحفظة</button>
-    <div id="walletInfo" style="display:none;">
-        <p>تم الاتصال بنجاح!</p>
-        <p id="walletAddress"></p>
+    <div class="container">
+        <button id="connectWallet" class="connect-button">
+            Подключить кошелек
+            <img src="wallet.png" alt="wallet">
+        </button>
     </div>
-
-    <script>
-        const connectBtn = document.getElementById('connectBtn');
-        const walletInfo = document.getElementById('walletInfo');
-        const walletAddressElement = document.getElementById('walletAddress');
-
-        const tonConnect = new TonConnect({
-            manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json"
-        });
-
-        async function connectWallet() {
-            try {
-                const wallets = await tonConnect.getWallets();
-                if (wallets.length === 0) {
-                    alert("لم يتم العثور على محافظ متاحة.");
-                    return;
-                }
-
-                const wallet = wallets[0];
-                await tonConnect.connect(wallet);
-                console.log("Connected to wallet:", wallet);
-
-                const account = await tonConnect.getConnectedWallet();
-                if (account) {
-                    walletAddressElement.innerText = `العنوان: ${account.account.address}`;
-                    walletInfo.style.display = 'block';
-                    connectBtn.style.display = 'none';
-                }
-            } catch (error) {
-                console.error("Error connecting to wallet:", error);
-                alert("حدث خطأ أثناء الاتصال بالمحفظة.");
-            }
-        }
-
-        connectBtn.addEventListener('click', connectWallet);
-    </script>
 </body>
 </html>
