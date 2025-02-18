@@ -1,22 +1,19 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const webApp = window.Telegram.WebApp;
 
-    // مسح البيانات عند تحميل الصفحة
-    localStorage.removeItem("ton_wallet");
-    sessionStorage.clear();
-
+    // إعداد الواجهة
     document.documentElement.style.setProperty(
-      "--tg-viewport-stable-height",
-      `${webApp.viewportStableHeight}px`
+        "--tg-viewport-stable-height",
+        `${webApp.viewportStableHeight}px`
     );
 
     webApp.onEvent("viewportChanged", (event) => {
-      if (event.isStateStable) {
-        document.documentElement.style.setProperty(
-          "--tg-viewport-stable-height",
-          `${webApp.viewportStableHeight}px`
-        );
-      }
+        if (event.isStateStable) {
+            document.documentElement.style.setProperty(
+                "--tg-viewport-stable-height",
+                `${webApp.viewportStableHeight}px`
+            );
+        }
     });
 
     webApp.expand();
@@ -31,10 +28,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     const connectButton = document.getElementById("connectWallet");
+    const walletAddressEl = document.getElementById("walletAddress");
+
+    // التحقق عند تحميل الصفحة إذا كان هناك عنوان محفظة محفوظ
+    const savedWallet = localStorage.getItem("ton_wallet");
+    if (savedWallet) {
+        walletAddressEl.textContent = "Подключенный кошелек: " + savedWallet;
+    }
 
     document.fonts.ready.then(() => {
-      connectButton.style.visibility = "visible";
-      connectButton.style.opacity = "1";
+        connectButton.style.visibility = "visible";
+        connectButton.style.opacity = "1";
     });
 
     connectButton.addEventListener("click", async () => {
@@ -48,17 +52,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tonConnect.onStatusChange((wallet) => {
         if (wallet) {
-            console.log("Подключенный кошелек:", wallet);
-            // لا تخزن البيانات في localStorage إذا كنت لا تريد الاحتفاظ بها بين الجلسات
-            // localStorage.setItem("ton_wallet", wallet.account.address); 
-            const walletAddressEl = document.getElementById("walletAddress");
-            walletAddressEl.textContent = "Подключенный кошелек: " + wallet.account.address;
+            const walletAddress = wallet.account.address;
+            localStorage.setItem("ton_wallet", walletAddress); // حفظ العنوان في localStorage
+            walletAddressEl.textContent = "Подключенный кошелек: " + walletAddress;
         }
     });
 
     // حذف البيانات عند فصل الاتصال
     tonConnect.onDisconnect(() => {
         localStorage.removeItem("ton_wallet");
-        sessionStorage.clear();
+        walletAddressEl.textContent = ""; // إزالة النص من الصفحة
     });
 });
