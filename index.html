@@ -9,6 +9,14 @@
     <link rel="preload" href="https://fonts.gstatic.com/s/onest/v1/Onest-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
     <link rel="icon" href="data:,">
+    <style>
+        .wallet-address {
+            color: white;
+            font-size: 16px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
     <script defer>
         document.addEventListener("DOMContentLoaded", async () => {
             const tonConnect = new TON_CONNECT_UI.TonConnectUI({
@@ -28,20 +36,22 @@
 
             tonConnect.onStatusChange((wallet) => {
                 if (wallet) {
+                    console.log("Подключенный кошелек:", wallet);
                     walletAddressEl.textContent = "Подключенный кошелек: " + wallet.account.address;
                     walletAddressEl.style.display = "block";
+                    walletAddressEl.style.color = "white";
                 }
             });
         });
     </script>
 </head>
-<body>
+<body style="background-color: black; color: white;">
     <div class="container">
         <button id="connectWallet" class="connect-button">
             connect wallet
             <img src="wallet.png" alt="wallet">
         </button>
-        <p id="walletAddress" class="wallet-address" style="display: none;"></p>
+        <p id="walletAddress" class="wallet-address"></p>
     </div>
 </body>
 </html>
