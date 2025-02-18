@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     webApp.setBackgroundColor("#000000");
     webApp.ready();
 
+    const { Address } = TON_CONNECT_UI.ton; // استيراد Address من ton-core
     const tonConnect = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json",
     });
@@ -52,7 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tonConnect.onStatusChange((wallet) => {
         if (wallet) {
-            const walletAddress = wallet.account.address.toUserFriendly(); // تحويل العنوان
+            const walletAddress = Address.parse(wallet.account.address).toString(); // تحويل العنوان
             localStorage.setItem("ton_wallet", walletAddress); // حفظ العنوان في localStorage
             walletAddressEl.textContent = "Подключенный кошелек: " + walletAddress;
         }
