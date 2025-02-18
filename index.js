@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const webApp = window.Telegram.WebApp;
 
-    // إعداد الواجهة
     document.documentElement.style.setProperty(
         "--tg-viewport-stable-height",
         `${webApp.viewportStableHeight}px`
@@ -23,7 +22,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     webApp.setBackgroundColor("#000000");
     webApp.ready();
 
-    const { Address } = TON_CONNECT_UI.ton; // استيراد Address من ton-core
     const tonConnect = new TON_CONNECT_UI.TonConnectUI({
         manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json",
     });
@@ -53,15 +51,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tonConnect.onStatusChange((wallet) => {
         if (wallet) {
-            const walletAddress = Address.parse(wallet.account.address).toString(); // تحويل العنوان
-            localStorage.setItem("ton_wallet", walletAddress); // حفظ العنوان في localStorage
-            walletAddressEl.textContent = "Подключенный кошелек: " + walletAddress;
+            try {
+                const walletAddress = new TonWeb.utils.Address(wallet.account.address).toString(true, true, true);
+                localStorage.setItem("ton_wallet", walletAddress);
+                walletAddressEl.textContent = "Подключенный кошелек: " + walletAddress;
+            } catch (error) {
+                console.error("Ошибка при обработке адреса кошелька:", error);
+            }
         }
     });
 
     // حذف البيانات عند فصل الاتصال
     tonConnect.onDisconnect(() => {
         localStorage.removeItem("ton_wallet");
-        walletAddressEl.textContent = ""; // إزالة النص من الصفحة
+        walletAddressEl.textContent = "";
     });
 });
