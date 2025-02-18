@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tonConnect.onStatusChange((wallet) => {
         if (wallet) {
-            const walletAddress = wallet.account.address;
+            const walletAddress = wallet.account.address.toUserFriendly(); // تحويل العنوان
             localStorage.setItem("ton_wallet", walletAddress); // حفظ العنوان في localStorage
             walletAddressEl.textContent = "Подключенный кошелек: " + walletAddress;
         }
