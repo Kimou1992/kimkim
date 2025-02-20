@@ -67,3 +67,41 @@ document.addEventListener("DOMContentLoaded", async () => {
         walletAddressEl.textContent = "";
     });
 });
+const payButton = document.getElementById("payWithTON");
+
+// إظهار زر الدفع فقط بعد الاتصال بالمحفظة
+tonConnect.onStatusChange((wallet) => {
+    if (wallet) {
+        payButton.style.visibility = "visible";
+        payButton.style.opacity = "1";
+    } else {
+        payButton.style.visibility = "hidden";
+        payButton.style.opacity = "0";
+    }
+});
+
+payButton.addEventListener("click", async () => {
+    try {
+        webApp.HapticFeedback.impactOccurred("medium");
+
+        // عنوان المستلم والمبلغ المطلوب إرساله
+        const transaction = {
+            messages: [
+                {
+                    address: "EQD8vZrKkRk...", // ضع هنا عنوان المستلم
+                    amount: "1000000000", // 1 TON (الوحدة هي nanotons)
+                },
+            ],
+        };
+
+        // إرسال المعاملة
+        const result = await tonConnect.sendTransaction(transaction);
+
+        console.log("تم إرسال المعاملة بنجاح:", result);
+        alert("تم إرسال 1 TON بنجاح!");
+    } catch (error) {
+        console.error("خطأ أثناء إرسال المعاملة:", error);
+        alert("فشل إرسال المعاملة!");
+    }
+});
+
