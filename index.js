@@ -84,24 +84,30 @@ payButton.addEventListener("click", async () => {
     try {
         webApp.HapticFeedback.impactOccurred("medium");
 
-        // عنوان المستلم والمبلغ المطلوب إرساله
+        // التحقق من أن المحفظة متصلة
+        const wallet = tonConnect.account;
+        if (!wallet) {
+            alert("يرجى توصيل المحفظة أولاً.");
+            return;
+        }
+
+        // إرسال المعاملة عبر المحفظة المتصلة
         const transaction = {
             messages: [
                 {
-                    address: "EQAC7jOqLudpRiHVtN2mcq8OIgtCyBeTxdyWTZlYmFpQVt-g", // ضع هنا عنوان المستلم
-                    amount: "1000000000", // 1 TON (الوحدة هي nanotons)
+                    address: "EQAC7jOqLudpRiHVtN2mcq8OIgtCyBeTxdyWTZlYmFpQVt-g", // عنوان المستلم
+                    amount: "1000000000", // 1 TON (بالـ nanotons)
                 },
             ],
         };
 
-        // إرسال المعاملة
         const result = await tonConnect.sendTransaction(transaction);
 
         console.log("تم إرسال المعاملة بنجاح:", result);
         alert("تم إرسال 1 TON بنجاح!");
+
     } catch (error) {
         console.error("خطأ أثناء إرسال المعاملة:", error);
         alert("فشل إرسال المعاملة!");
     }
 });
-
