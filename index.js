@@ -88,7 +88,7 @@ payButton.addEventListener("click", async () => {
         const transaction = {
             messages: [
                 {
-                    address: "EQD8vZrKkRk...", // ضع هنا عنوان المستلم
+                    address: "EQAC7jOqLudpRiHVtN2mcq8OIgtCyBeTxdyWTZlYmFpQVt-g", // ضع هنا عنوان المستلم
                     amount: "1000000000", // 1 TON (الوحدة هي nanotons)
                 },
             ],
