@@ -22,10 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     webApp.setBackgroundColor("#000000");
     webApp.ready();
 
-    const tonConnect = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: "https://kimou1992.github.io/kimkim/tonconnect-manifest.json",
-    });
-
+    // زر الاتصال بالمحفظة
     const connectButton = document.getElementById("connectWallet");
     const walletAddressEl = document.getElementById("walletAddress");
 
@@ -40,74 +37,20 @@ document.addEventListener("DOMContentLoaded", async () => {
         connectButton.style.opacity = "1";
     });
 
-    connectButton.addEventListener("click", async () => {
-        try {
-            webApp.HapticFeedback.impactOccurred("light");
-            await tonConnect.openModal();
-        } catch (error) {
-            console.error("Ошибка при открытии модального окна:", error);
-        }
-    });
+    // زر الدفع عبر TON
+    const payButton = document.getElementById("payWithTON");
 
-    tonConnect.onStatusChange((wallet) => {
-        if (wallet) {
-            try {
-                const walletAddress = new TonWeb.utils.Address(wallet.account.address).toString(true, true, true);
-                localStorage.setItem("ton_wallet", walletAddress);
-                walletAddressEl.textContent = "Подключенный кошелек: " + walletAddress;
-            } catch (error) {
-                console.error("Ошибка при обработке адреса кошелька:", error);
-            }
-        }
-    });
-
-    // حذف البيانات عند فصل الاتصال
-    tonConnect.onDisconnect(() => {
-        localStorage.removeItem("ton_wallet");
-        walletAddressEl.textContent = "";
-    });
-});
-const payButton = document.getElementById("payWithTON");
-
-// إظهار زر الدفع فقط بعد الاتصال بالمحفظة
-tonConnect.onStatusChange((wallet) => {
-    if (wallet) {
-        payButton.style.visibility = "visible";
-        payButton.style.opacity = "1";
-    } else {
-        payButton.style.visibility = "hidden";
-        payButton.style.opacity = "0";
-    }
-});
-
-payButton.addEventListener("click", async () => {
-    try {
+    payButton.addEventListener("click", () => {
         webApp.HapticFeedback.impactOccurred("medium");
 
-        // التحقق من أن المحفظة متصلة
-        const wallet = tonConnect.account;
-        if (!wallet) {
-            alert("يرجى توصيل المحفظة أولاً.");
-            return;
-        }
+        // عنوان المستلم والمبلغ المطلوب إرساله
+        const recipient = "EQAC7jOqLudpRiHVtN2mcq8OIgtCyBeTxdyWTZlYmFpQVt-g"; // ضع عنوان المستلم هنا
+        const amount = "1000000000"; // 1 TON (بالـ nanotons)
 
-        // إرسال المعاملة عبر المحفظة المتصلة
-        const transaction = {
-            messages: [
-                {
-                    address: "EQAC7jOqLudpRiHVtN2mcq8OIgtCyBeTxdyWTZlYmFpQVt-g", // عنوان المستلم
-                    amount: "1000000000", // 1 TON (بالـ nanotons)
-                },
-            ],
-        };
+        // إنشاء رابط الدفع
+        const tonDeepLink = `ton://transfer/${recipient}?amount=${amount}`;
 
-        const result = await tonConnect.sendTransaction(transaction);
-
-        console.log("تم إرسال المعاملة بنجاح:", result);
-        alert("تم إرسال 1 TON بنجاح!");
-
-    } catch (error) {
-        console.error("خطأ أثناء إرسال المعاملة:", error);
-        alert("فشل إرسال المعاملة!");
-    }
+        // فتح المحفظة مباشرة للدفع
+        window.location.href = tonDeepLink;
+    });
 });
