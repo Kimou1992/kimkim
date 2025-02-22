@@ -39,29 +39,19 @@
     <button class="button" id="getLocationBtn" onclick="getLocation()">الحصول على موقعي</button>
     <p id="location">إحداثياتك ستظهر هنا...</p>
 
+    <h3>أو أرسل موقعك يدويًا عبر Telegram:</h3>
+    <button class="button" onclick="sendLocationViaTelegram()">إرسال الموقع عبر Telegram</button>
+
     <script>
         function getLocation() {
             var locationElement = document.getElementById('location');
-            var getLocationBtn = document.getElementById('getLocationBtn');
-
-            // التأكد من أن Telegram Mini App جاهز
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.ready();
-
-                // تجربة طلب الموقع عبر Telegram API
-                Telegram.WebApp.requestLocation(function (location) {
-                    if (location) {
-                        locationElement.textContent = `خط العرض: ${location.latitude}, خط الطول: ${location.longitude}`;
-                    } else {
-                        locationElement.textContent = "لم يتمكن التطبيق من جلب موقعك.";
-                    }
-                });
-
-            } else if (navigator.geolocation) {
-                // في حالة عدم دعم Telegram WebApp، استخدم navigator.geolocation
+            
+            if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
-                        locationElement.textContent = `خط العرض: ${position.coords.latitude}, خط الطول: ${position.coords.longitude}`;
+                        var lat = position.coords.latitude;
+                        var lon = position.coords.longitude;
+                        locationElement.textContent = `خط العرض: ${lat}, خط الطول: ${lon}`;
                     },
                     function (error) {
                         locationElement.textContent = "فشل في تحديد الموقع: " + error.message;
@@ -70,6 +60,14 @@
                 );
             } else {
                 locationElement.textContent = "المتصفح لا يدعم تحديد الموقع.";
+            }
+        }
+
+        function sendLocationViaTelegram() {
+            if (Telegram.WebApp) {
+                Telegram.WebApp.showAlert("يرجى إرسال موقعك مباشرة في دردشة البوت!");
+            } else {
+                alert("يرجى إرسال موقعك يدويًا عبر Telegram.");
             }
         }
     </script>
