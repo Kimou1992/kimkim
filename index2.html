@@ -129,7 +129,12 @@
 
                 // رسم خط بين الموقعين
                 if (polyline) map.removeLayer(polyline);
-                polyline = L.polyline([[userLat, userLon], [placeLat, placeLon]], {color: 'blue'}).addTo(map);
+                polyline = L.polyline([[userLat, userLon], [placeLat, placeLon]], {
+    color: '#69b3e7',   // لون الخط
+    weight: 1.5,       // سمك الخط (يمكنك تغييره)
+    opacity: 1     // شفافية الخط
+}).addTo(map);
+
 
                 // حساب المسافة
                 calculateDistance(userLat, userLon, placeLat, placeLon);
