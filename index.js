@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // التحقق عند تحميل الصفحة إذا كان هناك عنوان محفظة محفوظ
     const savedWallet = localStorage.getItem("ton_wallet");
     if (savedWallet) {
-        walletAddressEl.textContent = "Подключенный кошелек: " + savedWallet;
+        walletAddressEl.textContent = savedWallet;
     }
 
     document.fonts.ready.then(() => {
