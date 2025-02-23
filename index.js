@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             try {
                 const walletAddress = new TonWeb.utils.Address(wallet.account.address).toString(true, true, true);
                 localStorage.setItem("ton_wallet", walletAddress);
-                walletAddressEl.textContent = "Подключенный кошелек: " + walletAddress;
+                walletAddressEl.textContent = walletAddress;
             } catch (error) {
                 console.error("Ошибка при обработке адреса кошелька:", error);
             }
