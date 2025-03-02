@@ -21,6 +21,15 @@
             border-radius: 10px;
             display: inline-block;
         }
+        .source {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #fff;
+            background: #444;
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -30,6 +39,7 @@
         <div class="box">
             <p><strong>User ID:</strong> <span id="userId">Loading...</span></p>
             <p><strong>First Name:</strong> <span id="firstName">Loading...</span></p>
+            <p class="source" id="dataSource">Checking source...</p>
         </div>
     </div>
 
@@ -40,11 +50,13 @@
         // التحقق مما إذا كانت البيانات مخزنة مسبقًا
         let storedUserId = localStorage.getItem("userId");
         let storedFirstName = localStorage.getItem("firstName");
+        let sourceText = document.getElementById("dataSource");
 
         if (storedUserId && storedFirstName) {
             // إذا كانت البيانات موجودة في الذاكرة، استخدمها
             document.getElementById("userId").innerText = storedUserId;
             document.getElementById("firstName").innerText = storedFirstName;
+            sourceText.innerText = "المصدر: الذاكرة الداخلية (Local Storage)";
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
             let userId = tg.initDataUnsafe.user.id;
@@ -57,10 +69,12 @@
             // تحديث العرض
             document.getElementById("userId").innerText = userId;
             document.getElementById("firstName").innerText = firstName;
+            sourceText.innerText = "المصدر: تم الجلب من Telegram";
         } else {
             // إذا لم تتوفر البيانات من Telegram
             document.getElementById("userId").innerText = "Not available";
             document.getElementById("firstName").innerText = "Not available";
+            sourceText.innerText = "المصدر: غير متوفر";
         }
     </script>
 
