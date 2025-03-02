@@ -3,146 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصميم مستطيلات وأيقونات</title>
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <title>Telegram Mini App</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tonweb@0.0.26/dist/tonweb.min.js"></script>
-    <script src="index.js" defer></script> 
-    <script src="Index(3)(2).js"></script>
-    <link rel="stylesheet" href="index3.css">
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <style>
-    body {
-      background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
-      color: #000000 !important; /* يجعل النص أسود */
-      font-family: 'Lora', serif;
-    }
-        #h2h {
-            border-bottom: 2px solid #d3d3d3;
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .box {
+            background: #0088cc;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
             display: inline-block;
-            padding-bottom: 4px;
         }
-        .adress-rect {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 5px;
-            text-align: left;
-            direction: ltr;
-        }
-        .labeled-row1{
-          font-size: 14px;
-          font-weight: bold ;
-          margin-bottom: 5px;
-        }
-        .labeled-row2{
-          font-size: 12px;            
-          word-wrap: break-word;
-          overflow-wrap: break-word;
-          white-space: normal; /* يسمح للنص بالانتقال إلى سطر جديد */            
-        }
-        .connect-button {
-          flex: 1;
-          text-align: center;
-          padding: 6px;
-          cursor: pointer;
-          font-size: 12px;
-          font-weight: bold;
-          transition: background-color 0.3s ease;
-          background-color: #69b3e7;
-          color: #fff;
-          border-radius: 8px;
-          margin : 8px;
-        }
-    
     </style>
 </head>
 <body>
-    <div class="rectangle">
-        <div class="text-with-icon">
-            <img src="https://i.ibb.co/crhnJYW/IMG-20241213-051319.png" alt="icon-left">
-            <span>USDT Exchange (DZ)</span>
-        </div>
-        <div class="icons">
-            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon" onclick="showAlert('تم الضغط على أيقونة القائمة')">
-        </div>
-    </div>
-    <div class="main-rectangle">
-        <div class="text-container">
-            <span class="toggle-text" onclick="fetchData()">H2H</span>
-            
-            <span class="toggle-text" onclick="navigateToPage3()">My Ads</span>
+
+    <h2>Welcome to Telegram Mini App</h2>
+    <div class="container">
+        <div class="box">
+            <p><strong>User ID:</strong> <span id="userId">Loading...</span></p>
+            <p><strong>First Name:</strong> <span id="firstName">Loading...</span></p>
         </div>
     </div>
-    <div class="line"></div>
-        <div id="connectWallet" class="connect-button">connect wallet </div>
-      
-    <div class="adress-rect">
-      <div class="labeled-row2">you are in trial version</div>
-    </div> 
-    <div class="adress-rect">
-      <div class="labeled-row1">Ton adress:</div>
-      <div id="walletAddress" class="labeled-row2">--</div>
-    </div> 
-    <div class="adress-rect">
-      <div class="labeled-row1">Balance:</div>
-      <div id="balance" class="labeled-row2">--</div>
-      <div id="usdt" class="labeled-row2">--</div>
-    </div> 
-    <div id="check-balance" class="connect-button" onclick="fetchBalances()">check balance</div>
-    <div class="adress-rect">
-      <div class="labeled-row1" id="hakim">Username:</div>
-      <div class="labeled-row2">--</div>
-    </div> 
-    <div id="check-balance" class="connect-button">add username</div>
-    <div class="adress-rect">
-      <div class="labeled-row1" id="hakim">Specific coordinates:</div>
-      <div class="labeled-row2">--</div>
-    </div> 
-    <div id="check-balance" class="connect-button">add coordinates</div>
-    <div class="adress-rect">
-      <div class="labeled-row1" id="hakim">Telegram ID:</div>
-      <div class="labeled-row2">717728821</div>
-    </div>
-    <div class="rectangle fifth-rectangle">
-        <div id="output"></div>
-    </div>
-    
-    
+
     <script>
-        
-        function displayDataFromLocalStorage() {
-            const outputContainer = document.getElementById('output');
-            outputContainer.innerHTML = "";
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // توسيع التطبيق المصغر لملء الشاشة
 
-            const storedData = localStorage.getItem('sheetData');
-            if (storedData) {
-                const data = JSON.parse(storedData);
-
-                // تصفية البيانات بناءً على القيمة المحددة في الصف الأول (row[0])
-                const filteredData = data.filter(row => row[0] === "7119877516");
-                
-                filteredData.forEach(row => {
-                    const valuesE = row[4];
-                    document.getElementById('hakim').nextElementSibling.innerText = valuesE;
-
-                });
-            } else {
-                outputContainer.innerText = "No data found in local storage!";
-            }
-        }
-
-        
-
-        document.addEventListener('DOMContentLoaded', () => {
-            displayDataFromLocalStorage();
-        });
-        function navigateToPage2() {
-            window.location.href = "index(1).html";
-        }
-        function navigateToPage3() {
-            window.location.href = "index(2).html";
+        // استخراج بيانات المستخدم
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById("userId").innerText = tg.initDataUnsafe.user.id;
+            document.getElementById("firstName").innerText = tg.initDataUnsafe.user.first_name;
+        } else {
+            document.getElementById("userId").innerText = "Not available";
+            document.getElementById("firstName").innerText = "Not available";
         }
     </script>
+
 </body>
 </html>
