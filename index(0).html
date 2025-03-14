@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصميم مستطيلات وأيقونات</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index(0)(1).css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <script src="index(0)(1).js"></script>
+    
+    <style>
+    body {
+      background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
+      color: #000000 !important; /* يجعل النص أسود */
+      font-family: 'Lora', serif;
+    }
+        #h2h {
+            border-bottom: 2px solid #d3d3d3; /* خط مخصص */
+            display: inline-block; /* لجعل العرض مطابقًا للنص فقط */
+            padding-bottom: 4px; /* مسافة بين النص والخط */
+        }
+    </style>
+</head>
+<body>
+    <!-- المستطيل الأول -->
+    <div class="rectangle">
+        <div class="text-with-icon">
+            <img src="https://i.ibb.co/crhnJYW/IMG-20241213-051319.png" alt="icon-left">
+            <span>USDT Exchange (DZ)</span>
+        </div>
+        <div class="icons">
+            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon" onclick="navigateToPage3()">
+        </div>
+    </div>
+    <div class="main-rectangle">
+        <div class="text-container">
+            <span class="toggle-text">H2H</span>
+            
+            <span class="toggle-text" onclick="navigateToPage1()">My Ads</span>
+            <span class="toggle-text" onclick="navigateToPage2()">Maps</span>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="rectangle third-rectangle">
+        <div class="button-container">
+            <button class="button">Buy</button>
+            <button class="button" onclick="showAlert()">Sell</button>
+        </div>
+    </div>
+    <div class="rectangle fourth-rectangle">
+        <button class="main-button" id="mainButton" onclick="toggleMenu()">
+            All
+            <span class="arrow-icon" id="arrowIcon">▼</span>
+        </button>
+        <div class="input-container">
+            <input type="number" id="filterInput" class="input-field" placeholder="Enter price range">
+            <div class="currency">DZD</div>
+        </div>
+    </div>
+    <div class="popup" id="popup">
+        <div class="input-group">
+            <div class="adress-rect">
+             <div class="labeled-row1">Balance:</div>
+            <div id="hhh" class="labeled-row2">--</div>
+            <div class="labeled-row1">Wallet adress:</div>
+            <div id="hhh1" class="labeled-row2">DZD</div>
+            <div class="labeled-row1">Coordinates:</div>
+            <div id="hhh2" class="labeled-row2">--</div>
+            <div class="labeled-row1">Link:</div>
+            <div id="hhh3" class="labeled-row2">DZD</div>
+            <div id="infoButton" onclick="showInstructions(event)" class="labeled-row2" style="color: #f3456c;">More!</div>
+           </div> 
+        </div>
+        
+        <div class="clickable-box">
+         <div class="clickable-text2 t21" onclick="closePopup();">Close</div>
+         <div id="copyButton" class="clickable-text2 t22" onclick="copyText(event)">Copy link</div>
+      </div>
+    </div>
+    <div class="rectangle fifth-rectangle">
+        <div id="output"></div>
+    </div>
+    <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+    <div class="bottom-menu" id="bottomMenu">
+        <ul id="menuList"></ul>
+    </div>
+    <div id="copyNotification" class="notification">copied successfully</div>
+       <div id="infoNotification" class="notification">انسخ الرابط والصقه في أي محادثة على التلجرام ثم اضغط عليه لتفتح محادثة مع البائع
+    </div>
+    <script>
+        function showAlert() {
+            alert("soon will be available");
+        }
+        
+        const jsonUrl = "wilayas.json";
+        let selectedWilaya = ""; 
+        function loadWilayas() {
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const menuList = document.getElementById("menuList");
+                    menuList.innerHTML = "";
+                    data.forEach(wilaya => {
+                        const listItem = document.createElement("li");
+                        listItem.textContent = wilaya.Wilaya;
+                        listItem.onclick = () => selectOption(wilaya);
+                        menuList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error("Error loading wilayas:", error));
+        }
+
+        // اختيار ولاية من القائمة
+        function selectOption(wilaya) {
+            selectedWilaya = wilaya.Wilaya;
+            const mainButton = document.getElementById("mainButton");
+            mainButton.firstChild.textContent = `${wilaya.Num} `;
+            closeMenu();
+            displayDataFromLocalStorage(); // تحديث البيانات بناءً على الولاية المختارة
+        }
+
+        // عرض البيانات مع التصفية بناءً على الولاية
+        function displayDataFromLocalStorage() {
+    const outputContainer = document.getElementById('output');
+    outputContainer.innerHTML = "";
+
+    const storedData = localStorage.getItem('sheetData');
+    if (storedData) {
+        const data = JSON.parse(storedData);
+        const filterValue = document.getElementById('filterInput').value;
+
+        const filteredData = data.filter(row => {
+            const valuesC = row[2].split('/');
+            const minmax = valuesC[2].split('-');
+            const minValue = parseFloat(minmax[0]);
+            const maxValue = parseFloat(minmax[1]);
+
+            // تصفية بناءً على الولاية والقيمة المدخلة
+            return (!filterValue || (filterValue >= minValue && filterValue <= maxValue)) &&
+                (!selectedWilaya || valuesC[3].includes(selectedWilaya));
+        });
+
+        // ترتيب البيانات بناءً على السعر (valuesC[1])
+        filteredData.sort((a, b) => {
+            const valuesA = a[2].split('/');
+            const valuesB = b[2].split('/');
+            const priceA = parseFloat(valuesA[0]);
+            const priceB = parseFloat(valuesB[0]);
+            return priceA - priceB; // ترتيب تصاعدي
+        });
+
+        filteredData.forEach(row => {
+            const valuesE = row[3].split('/');
+            const valuesC = row[2].split('/');
+            const valuesD = row[1];
+            const minmax = valuesC[2].split('-');
+            const newContainer = document.createElement('div');
+            newContainer.classList.add('container');
+            newContainer.innerHTML = `
+                <div class="footer-container">
+                    <div class="footer-text">${valuesE[0]}</div>
+                    <button class="footer-button" onclick="openPopup(15, '${valuesE[3]}', '${valuesE[2]}', '${valuesE[1]}');">Buy</button>
+                </div>
+                <div class="price-row">Price: ${valuesC[0]} DZD</div>
+                <div class="labeled-row">Available: ${valuesC[1]} USDT</div>
+                <div class="labeled-row">Limits: ${minmax[0]} DZD - ${minmax[1]} DZD</div>
+                <div class="labeled-row">${valuesC[3]}</div>
+            `;
+            outputContainer.appendChild(newContainer);
+        });
+    } else {
+        outputContainer.innerHTML = `<div class="welcome-cont">
+      <div class="welcome-text">Welcome to H2H (hand to hand) usdt exchange platform for Algerians on Ton Blockchain</div>
+     <div class="welcome-text">This is your first time …please wait for 5 minutes
+     </div>
+    </div>
+    <div class="welcome-cont">
+    <div class="welcome-text">Some data is stored in the internal memory. Please avoid clearing the cache to prevent losing this data
+    </div>
+    </div>` ;
+    }
+}
+        function toggleMenu() {
+            const menu = document.getElementById("bottomMenu");
+            const overlay = document.getElementById("overlay");
+            const arrowIcon = document.getElementById("arrowIcon");
+            if (menu.classList.contains("show")) {
+                closeMenu();
+            } else {
+                menu.classList.add("show");
+                overlay.style.display = "block";
+                arrowIcon.classList.add("open");
+            }
+        }
+
+        function closeMenu() {
+            const menu = document.getElementById("bottomMenu");
+            const overlay = document.getElementById("overlay");
+            const arrowIcon = document.getElementById("arrowIcon");
+            menu.classList.remove("show");
+            overlay.style.display = "none";
+            arrowIcon.classList.remove("open");
+        }
+
+        document.getElementById('filterInput').addEventListener('input', displayDataFromLocalStorage);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadWilayas();
+            displayDataFromLocalStorage();
+        });
+        function navigateToPage1() {
+            window.location.href = "index(1).html";
+        }
+        function navigateToPage2() {
+            window.location.href = "index(2).html";
+        }
+        function navigateToPage3() {
+            window.location.href = "index(3).html";
+        }
+    </script>
+    <script src="index(0)(2).js"></script>
+</body>
+    </html>
+    
