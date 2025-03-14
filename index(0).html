@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="index(0)(1).css">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <script src="index(0)(1).js"></script>
+    
     <style>
     body {
       background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
@@ -29,15 +30,15 @@
             <span>USDT Exchange (DZ)</span>
         </div>
         <div class="icons">
-            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon" onclick="showAlert('تم الضغط على أيقونة القائمة')">
+            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon" onclick="navigateToPage3()">
         </div>
     </div>
     <div class="main-rectangle">
         <div class="text-container">
-            <span class="toggle-text" onclick="fetchData()">H2H</span>
+            <span class="toggle-text">H2H</span>
             
-            <span class="toggle-text" onclick="navigateToPage3()">My Ads</span>
-            <span class="toggle-text" onclick="navigateToPage3()">Maps</span>
+            <span class="toggle-text" onclick="navigateToPage1()">My Ads</span>
+            <span class="toggle-text" onclick="navigateToPage2()">Maps</span>
         </div>
     </div>
     <div class="line"></div>
@@ -91,42 +92,33 @@
         function showAlert() {
             alert("soon will be available");
         }
-        const wilayas = [
-  { "Num": "01", "Wilaya": "Adrar" },
-  { "Num": "02", "Wilaya": "Chlef" },
-  { "Num": "03", "Wilaya": "Laghouat" },
-  { "Num": "04", "Wilaya": "Oum El Bouaghi" },
-  { "Num": "05", "Wilaya": "Batna" },
-  { "Num": "06", "Wilaya": "Béjaïa" },
-  { "Num": "07", "Wilaya": "Biskra" },
-  { "Num": "08", "Wilaya": "Béchar" },
-  { "Num": "09", "Wilaya": "Blida" },
-  { "Num": "10", "Wilaya": "Bouira" },
-  { "Num": "11", "Wilaya": "Tamanrasset" }];
+        
+        const jsonUrl = "wilayas.json";
+        let selectedWilaya = ""; 
+        function loadWilayas() {
+            fetch(jsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const menuList = document.getElementById("menuList");
+                    menuList.innerHTML = "";
+                    data.forEach(wilaya => {
+                        const listItem = document.createElement("li");
+                        listItem.textContent = wilaya.Wilaya;
+                        listItem.onclick = () => selectOption(wilaya);
+                        menuList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error("Error loading wilayas:", error));
+        }
 
-let selectedWilaya = ""; 
-
-function loadWilayas() {
-    const menuList = document.getElementById("menuList");
-    menuList.innerHTML = ""; // تفريغ القائمة قبل الإضافة
-
-    wilayas.forEach(wilaya => {
-        const listItem = document.createElement("li");
-        listItem.textContent = wilaya.Wilaya;
-        listItem.onclick = () => selectOption(wilaya);
-        menuList.appendChild(listItem);
-    });
-}
-
-function selectOption(wilaya) {
-    selectedWilaya = wilaya.Wilaya;
-    document.getElementById("mainButton").firstChild.textContent = `${wilaya.Num} `;
-    closeMenu();
-    displayDataFromLocalStorage();
-}
-
-
-
+        // اختيار ولاية من القائمة
+        function selectOption(wilaya) {
+            selectedWilaya = wilaya.Wilaya;
+            const mainButton = document.getElementById("mainButton");
+            mainButton.firstChild.textContent = `${wilaya.Num} `;
+            closeMenu();
+            displayDataFromLocalStorage(); // تحديث البيانات بناءً على الولاية المختارة
+        }
 
         // عرض البيانات مع التصفية بناءً على الولاية
         function displayDataFromLocalStorage() {
@@ -217,11 +209,14 @@ function selectOption(wilaya) {
             loadWilayas();
             displayDataFromLocalStorage();
         });
-        function navigateToPage2() {
+        function navigateToPage1() {
             window.location.href = "index(1).html";
         }
-        function navigateToPage3() {
+        function navigateToPage2() {
             window.location.href = "index(2).html";
+        }
+        function navigateToPage3() {
+            window.location.href = "index(3).html";
         }
     </script>
     <script src="index(0)(2).js"></script>
