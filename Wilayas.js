@@ -1,4 +1,4 @@
-const wilayas = [
+[
   { "Num": "01", "Wilaya": "Adrar" },
   { "Num": "02", "Wilaya": "Chlef" },
   { "Num": "03", "Wilaya": "Laghouat" },
@@ -57,4 +57,4 @@ const wilayas = [
   { "Num": "56", "Wilaya": "Djanet" },
   { "Num": "57", "Wilaya": "El M'Ghair" },
   { "Num": "58", "Wilaya": "El Menia" }
-];
+]
