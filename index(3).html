@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصميم مستطيلات وأيقونات</title>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tonweb@0.0.26/dist/tonweb.min.js"></script>
+    <script src="index(3).js" defer></script> 
+    <script src="Index(3)(2).js"></script>
+    <link rel="stylesheet" href="index3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+    body {
+      background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
+      color: #000000 !important; /* يجعل النص أسود */
+      font-family: 'Lora', serif;
+    }
+        #h2h {
+            border-bottom: 2px solid #d3d3d3;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+        .adress-rect {
+            border: 2px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: left;
+            direction: ltr;
+        }
+         .adress-rect2 {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: right;
+        }
+        .labeled-row1{
+          font-size: 14px;
+          font-weight: bold ;
+          margin-bottom: 5px;
+        }
+        .labeled-row2{
+          font-size: 12px;            
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          white-space: normal; 
+          margin-bottom: 5px;
+        }
+        .connect-button {
+          flex: 1;
+          text-align: center;
+          padding: 6px;
+          cursor: pointer;
+          font-size: 12px;
+          transition: background-color 0.3s ease;
+          background-color: #69b3e7;
+          color: #fff;
+          border-radius: 8px;
+          margin : 8px;
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="rectangle">
+        <div class="text-with-icon">
+            <img src="https://i.ibb.co/crhnJYW/IMG-20241213-051319.png" alt="icon-left">
+            <span>USDT Exchange (DZ)</span>
+        </div>
+        <div class="icons">
+            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon">
+        </div>
+    </div>
+    <div class="main-rectangle">
+        <div class="text-container">
+            <span class="toggle-text" onclick="navigateToPage0()">H2H</span>
+            <span class="toggle-text" onclick="navigateToPage1()">My Ads</span>
+            <span class="toggle-text" onclick="navigateToPage2()">Maps</span>
+        </div>
+    </div>
+    <div class="line"></div>
+        <div id="fortest" class="connect-button" onclick="openPopup()">connect wallet </div>
+      
+    <div class="adress-rect">
+      <div class="labeled-row2">you are in trial version</div>
+    </div> 
+    <div class="adress-rect">
+      <div class="labeled-row1">Ton adress:</div>
+      <div id="walletAddress" class="labeled-row2"></div>
+      <div class="labeled-row1">Balance:</div>
+      <div id="balance" class="labeled-row2">--</div>
+    </div> 
+
+    <div class="adress-rect">
+      <div class="labeled-row1">Username:</div>
+      <div id="tgusername" class="labeled-row2"></div>
+      <div class="labeled-row1">Telegram ID:</div>
+      <div id="tgid" class="labeled-row2"></div>
+    </div>
+    <div class="adress-rect">
+      <div class="labeled-row1">Specific coordinates:</div>
+      <div id="coord" class="labeled-row2"></div>
+    </div> 
+    <div class="adress-rect">
+      <div class="labeled-row1" id="hakim">Last update:</div>
+      <div id="storedTime" class="labeled-row2">--</div>
+    </div>
+    <div class="popup" id="popup">
+        <div class="input-group">
+            <div class="adress-rect2">
+             <div id="alerts" dir="rtl" class="labeled-row2"></div>
+           </div> 
+        </div>
+        <div class="clickable-box">
+         <div id="connectWallet" class="clickable-text2 t21" onclick="closePopup();">حسنا, لقد فهمت</div>
+      </div>
+    </div>
+        <div class="rectangle fifth-rectangle">
+        <div id="output"></div>
+    </div>
+    <script>
+      
+      document.getElementById("popup").style.display = 'none';
+      
+      const stadress = localStorage.getItem("stadress");
+      const stusername = localStorage.getItem("stusername");
+      const stcoord = localStorage.getItem("stcoord");
+      const stid = localStorage.getItem("stid");
+      const sttime = localStorage.getItem("storedTime");
+      
+      document.getElementById("walletAddress").textContent = stadress? stadress 
+                : "--";
+      document.getElementById("tgusername").textContent = stusername? stusername 
+                : "--";
+      document.getElementById("tgid").textContent = 
+       stid ? stid
+                : "--";
+      document.getElementById("coord").textContent = stcoord ? stcoord   : "--";         
+      
+      document.getElementById("storedTime").textContent = sttime 
+    ? new Date(parseInt(sttime)).toLocaleTimeString() 
+    : "--";
+
+        function navigateToPage0() {
+            window.location.href = "index(0).html";
+        }
+        function navigateToPage1() {
+            window.location.href = "index(1).html";
+        }
+        function navigateToPage2() {
+            window.location.href = "index(2).html";
+        }
+
+    </script>
+</body>
+</html>
