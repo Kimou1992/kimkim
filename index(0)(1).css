@@ -1,0 +1,16 @@
+.welcome-cont {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: left;
+            direction: ltr;
+        }
+        
+        .welcome-text{
+          font-size: 12px;            
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          white-space: normal; 
+          margin-bottom: 5px;
+        }
