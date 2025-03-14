@@ -93,32 +93,39 @@
             alert("soon will be available");
         }
         
-        const jsonUrl = "wilayas.json";
-        let selectedWilaya = ""; 
-        function loadWilayas() {
-            fetch(jsonUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const menuList = document.getElementById("menuList");
-                    menuList.innerHTML = "";
-                    data.forEach(wilaya => {
-                        const listItem = document.createElement("li");
-                        listItem.textContent = wilaya.Wilaya;
-                        listItem.onclick = () => selectOption(wilaya);
-                        menuList.appendChild(listItem);
-                    });
-                })
-                .catch(error => console.error("Error loading wilayas:", error));
-        }
+        const wilayas = [
+  { "Num": "01", "Wilaya": "Adrar" },
+  { "Num": "02", "Wilaya": "Chlef" },
+  { "Num": "03", "Wilaya": "Laghouat" },
+  { "Num": "04", "Wilaya": "Oum El Bouaghi" },
+  { "Num": "05", "Wilaya": "Batna" },
+  { "Num": "06", "Wilaya": "Béjaïa" },
+  { "Num": "07", "Wilaya": "Biskra" },
+  { "Num": "08", "Wilaya": "Béchar" },
+  { "Num": "09", "Wilaya": "Blida" },
+  { "Num": "10", "Wilaya": "Bouira" },
+  { "Num": "11", "Wilaya": "Tamanrasset" }];
 
-        // اختيار ولاية من القائمة
-        function selectOption(wilaya) {
-            selectedWilaya = wilaya.Wilaya;
-            const mainButton = document.getElementById("mainButton");
-            mainButton.firstChild.textContent = `${wilaya.Num} `;
-            closeMenu();
-            displayDataFromLocalStorage(); // تحديث البيانات بناءً على الولاية المختارة
-        }
+let selectedWilaya = ""; 
+
+function loadWilayas() {
+    const menuList = document.getElementById("menuList");
+    menuList.innerHTML = ""; // تفريغ القائمة قبل الإضافة
+
+    wilayas.forEach(wilaya => {
+        const listItem = document.createElement("li");
+        listItem.textContent = wilaya.Wilaya;
+        listItem.onclick = () => selectOption(wilaya);
+        menuList.appendChild(listItem);
+    });
+}
+
+function selectOption(wilaya) {
+    selectedWilaya = wilaya.Wilaya;
+    document.getElementById("mainButton").firstChild.textContent = `${wilaya.Num} `;
+    closeMenu();
+    displayDataFromLocalStorage();
+}
 
         // عرض البيانات مع التصفية بناءً على الولاية
         function displayDataFromLocalStorage() {
