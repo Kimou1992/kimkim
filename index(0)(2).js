@@ -79,7 +79,7 @@ if (!localStorage.getItem("userId") || !localStorage.getItem("fullName")) {
     if (tg.initDataUnsafe?.user) {
         localStorage.setItem("userId", tg.initDataUnsafe.user.id);
         let fullName = tg.initDataUnsafe.user.first_name + " " + (tg.initDataUnsafe.user.last_name || "");
-        localStorage.setItem("fullName", fullName.trim());
+        localStorage.setItem("fullName", fullName);
     }
 }
 init();
