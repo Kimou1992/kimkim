@@ -12,42 +12,52 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #ffffff;
-            color: #000000;
-            font-family: 'Lora', serif;
-        }
-        .rectangle {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
+      background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
+      color: #000000 !important; /* يجعل النص أسود */
+      font-family: 'Lora', serif;
+    }
+        #h2h {
             border-bottom: 2px solid #d3d3d3;
+            display: inline-block;
+            padding-bottom: 4px;
         }
-        .adress-rect, .adress-rect2 {
+        .adress-rect {
             border: 2px solid #ddd;
             padding: 10px;
             margin: 10px;
             border-radius: 5px;
             text-align: left;
+            direction: ltr;
+        }
+         .adress-rect2 {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: right;
+        }
+        .labeled-row1{
+          font-size: 14px;
+          font-weight: bold ;
+          margin-bottom: 5px;
+        }
+        .labeled-row2{
+          font-size: 12px;            
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          white-space: normal; 
+          margin-bottom: 5px;
         }
         .connect-button {
-            background-color: #69b3e7;
-            color: #fff;
-            padding: 6px;
-            text-align: center;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 8px;
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+          flex: 1;
+          text-align: center;
+          padding: 6px;
+          cursor: pointer;
+          font-size: 12px;
+          transition: background-color 0.3s ease;
+          background-color: #69b3e7;
+          color: #fff;
+          border-radius: 8px;
+          margin : 8px;
         }
     </style>
 </head>
