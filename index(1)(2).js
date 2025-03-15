@@ -49,9 +49,9 @@ function validateForm() {
         return;
     }
     
-    const stid = localStorage.getItem("userId");
+    const stuserId = localStorage.getItem("userId");
 
-    if (stid === null || stid.trim() === "") {
+    if (stuserId === null || stuserId.trim() === "") {
     errorMessage.textContent = "Please check your telegram ID";
     errorMessage.style.display = "block";
     return;
