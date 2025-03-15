@@ -120,8 +120,8 @@
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
-        let storedFirstName = localStorage.getItem("firstName");
-        document.getElementById("tgusername").innerText = storedFirstName;
+        let storedfullname = localStorage.getItem("fullName");
+        document.getElementById("tgusername").innerText = storedfullname;
         
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
