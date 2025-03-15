@@ -16,10 +16,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     webApp.expand();
-    webApp.lockOrientation();
-    webApp.disableVerticalSwipes();
-    webApp.setHeaderColor("#000000");
-    webApp.setBackgroundColor("#000000");
+    console.log("Skipping unsupported WebApp features in Telegram version 6.0");
     webApp.ready();
 
     const tonConnect = new TON_CONNECT_UI.TonConnectUI({
