@@ -1,45 +1,4 @@
-async function fetchBalances() {
-    const accountId = document.getElementById("walletAddress").innerText.trim();
-    if (!accountId) {
-        alert("يرجى إدخال عنوان TON!");
-        return;
-    }
 
-    const tonBalance = await fetchTONBalance(accountId);
-    const usdtBalance = await fetchUSDTBalance(accountId);
-
-    document.getElementById("balance").innerText = `${usdtBalance} USDT, ${tonBalance} TON`;
-    document.getElementById("balanceforad").innerText = `${usdtBalance} USDT, ${tonBalance} TON`;
-}
-
-async function fetchTONBalance(accountId) {
-    const url = `https://tonapi.io/v2/accounts/${accountId}`;
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        return (parseInt(data.balance) / 1e9).toFixed(2);
-    } catch (error) {
-        console.error("Error fetching TON balance:", error);
-        return "0.00";
-    }
-}
-
-async function fetchUSDTBalance(accountId) {
-    const url = `https://tonapi.io/v2/accounts/${accountId}/jettons`;
-    try {
-        const response = await fetch(url);
-        const data = await response.json();
-        const usdt = data.balances.find(j => j.jetton.symbol === "USD₮");
-        return usdt ? (parseInt(usdt.balance) / Math.pow(10, usdt.jetton.decimals)).toFixed(2) : "0.00";
-    } catch (error) {
-        console.error("Error fetching USDT balance:", error);
-        return "0.00";
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    fetchBalances(); // تشغيل الدالة تلقائيًا عند تحميل الصفحة
-});
         
         function openPopup() {
         document.getElementById("popup").style.display = "block";document.getElementById("alerts").innerHTML = `
