@@ -63,10 +63,23 @@
 </head>
 <body>
     <div class="rectangle">
-        <span>USDT Exchange (DZ)</span>
-        <img src="https://i.ibb.co/gZWqXwD/account.png" alt="Account">
+        <div class="text-with-icon">
+            <img src="https://i.ibb.co/crhnJYW/IMG-20241213-051319.png" alt="icon-left">
+            <span>USDT Exchange (DZ)</span>
+        </div>
+        <div class="icons">
+            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon">
+        </div>
     </div>
-    <div class="connect-button" onclick="openPopup()">Connect Wallet</div>
+    <div class="main-rectangle">
+        <div class="text-container">
+            <span class="toggle-text" onclick="navigateToPage0()">H2H</span>
+            <span class="toggle-text" onclick="navigateToPage1()">My Ads</span>
+            <span class="toggle-text" onclick="navigateToPage2()">Maps</span>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div id="fortest" class="connect-button" onclick="openPopup()">Connect Wallet</div>
 
     <div class="adress-rect">
         <div>Trial Version</div>
