@@ -75,11 +75,11 @@ function init() {
 let tg = window.Telegram.WebApp;
 
 // التحقق مما إذا كانت البيانات غير مخزنة مسبقًا
-if (!localStorage.getItem("userId") || !localStorage.getItem("fullName")) {
+if (!localStorage.getItem("userId") || !localStorage.getItem("username")) {
     if (tg.initDataUnsafe?.user) {
         localStorage.setItem("userId", tg.initDataUnsafe.user.id);
-        let fullName = tg.initDataUnsafe.user.first_name + " " + (tg.initDataUnsafe.user.last_name || "");
-        localStorage.setItem("fullName", fullName);
+        localStorage.setItem("username", tg.initDataUnsafe.user.username || "NoUsername");
     }
 }
+
 init();
