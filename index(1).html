@@ -145,14 +145,7 @@
     fetchBalances();
 }
 
-    
-
-  function addTag(event) {
-    if (event.target.tagName === 'LI') {
-      const tagsContainer = event.target.closest('.dropdown').querySelector('.tags');
-      const selectedTag = event.target.textContent;
-      const existingTags = [...tagsContainer.querySelectorAll('.tag')].map(tag => tag.textContent.split(' ×')[0].trim());
-      if (existingfunction toggleWilayasDropdown(event) {
+    function toggleWilayasDropdown(event) {
     const dropdown = document.getElementById('wilayasDropdown');
 
     if (!dropdown.dataset.loaded) {
@@ -181,8 +174,14 @@
 
     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
 }
-        
-Tags.includes(selectedTag)) return;
+
+
+  function addTag(event) {
+    if (event.target.tagName === 'LI') {
+      const tagsContainer = event.target.closest('.dropdown').querySelector('.tags');
+      const selectedTag = event.target.textContent;
+      const existingTags = [...tagsContainer.querySelectorAll('.tag')].map(tag => tag.textContent.split(' ×')[0].trim());
+      if (existingTags.includes(selectedTag)) return;
       if (tagsContainer.children.length < 5) {
         const tag = document.createElement('div');
         tag.className = 'tag';
