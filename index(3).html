@@ -120,6 +120,9 @@
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
+        const storedFirstName = localStorage.getItem("storedFirstName");
+        document.getElementById("tgusername").textContent = storedFirstName? storedFirstName 
+                : "--";
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
             if (!accountId || accountId === "--") {
