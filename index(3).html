@@ -81,39 +81,39 @@
     <div class="line"></div>
     <div id="fortest" class="connect-button" onclick="openPopup()">Connect Wallet</div>
 
+  <div class="adress-rect">
+      <div class="labeled-row2">you are in trial version</div>
+    </div> 
     <div class="adress-rect">
-        <div>Trial Version</div>
-    </div>
-    <div class="adress-rect">
-        <div>Ton Address:</div>
-        <div id="walletAddress">--</div>
-        <div>Balance:</div>
-        <div id="balance">--</div>
-    </div>
-    <div class="adress-rect">
-        <div>Username:</div>
-        <div id="tgusername">--</div>
-        <div>Telegram ID:</div>
-        <div id="tgid">--</div>
-    </div>
-    <div class="adress-rect">
-        <div>Specific coordinates:</div>
-        <div id="coord">--</div>
-    </div>
-    <div class="adress-rect">
-        <div>Last update:</div>
-        <div id="storedTime">--</div>
-    </div>
+      <div class="labeled-row1">Ton adress:</div>
+      <div id="walletAddress" class="labeled-row2"></div>
+      <div class="labeled-row1">Balance:</div>
+      <div id="balance" class="labeled-row2">--</div>
+    </div> 
 
+    <div class="adress-rect">
+      <div class="labeled-row1">Username:</div>
+      <div id="tgusername" class="labeled-row2">--</div>
+      <div class="labeled-row1">Telegram ID:</div>
+      <div id="tgid" class="labeled-row2">--</div>
+    </div>
+    <div class="adress-rect">
+      <div class="labeled-row1">Specific coordinates:</div>
+      <div id="coord" class="labeled-row2">--</div>
+    </div> 
+    <div class="adress-rect">
+      <div class="labeled-row1" id="hakim">Last update:</div>
+      <div id="storedTime" class="labeled-row2">--</div>
+    </div>
     <div class="popup" id="popup">
-        <div>
-            <b>1- احتفظ بعبارة الاسترداد في مكان آمن ⚠️</b><br>
-            <b>2- لا تشارك مفتاحك الخاص 🔒</b><br>
-            <b>3- لا تحفظ عبارة الاسترداد على الإنترنت ⚠️</b><br>
-            <b>4- بدون عبارة الاسترداد، لا يمكنك استرجاع محفظتك 🔑</b><br>
-            <b>5- تحقق من المحفظة قبل ربطها بالشبكة 🌐</b>
+        <div class="input-group">
+            <div class="adress-rect2">
+             <div id="alerts" dir="rtl" class="labeled-row2"></div>
+           </div> 
         </div>
-        <button id="connectWallet" onclick="closePopup()">حسنا, لقد فهمت</button>
+        <div class="clickable-box">
+         <div id="connectWallet" class="clickable-text2 t21" onclick="closePopup();">حسنا, لقد فهمت</div>
+      </div>
     </div>
 
     <script>
