@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تخزين النص وإظهاره</title>
+</head>
+<body>
+    
+    
+    <h4>id stored text:</h4>
+    <p id="storedTextDisplay">no stored text</p>
+    <script>
+        const stadress = "UQAMl6BVegC0IOZPLhLzWBHCnK4iO4G5eNu4qn_NKQnoIXYj";
+                localStorage.setItem("stadress", stadress);
+         const stusername = "kimou";
+                localStorage.setItem("stusername", stusername);
+        const stcoord = "1.24, 26.13";
+                localStorage.setItem("stcoord", stcoord);
+        const stid = 883;
+                localStorage.setItem("stid", stid);
+        const stlstupdate = "15-02";
+                localStorage.setItem("stlstupdate", stlstupdate);    
+                updateDisplayedText();
+        // دالة لتحديث النص المعروض
+        function updateDisplayedText() {
+            const stadress = localStorage.getItem("stadress");
+            document.getElementById("storedTextDisplay").textContent = stadress 
+                ? stadress 
+                : "--";
+        }
+        // عرض النص المخزن عند تحميل الصفحة
+        document.addEventListener("DOMContentLoaded", updateDisplayedText);
+    </script>
+</body>
+</html>
