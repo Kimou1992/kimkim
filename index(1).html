@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محفظة TON</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+        }
+        #walletAddress {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .balance {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            max-width: 300px;
+        }
+        .popup button {
+            background-color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>رصيد المحفظة</h2>
+        <div id="walletAddress">UQAMl6BVegC0IOZPLhLzWBHCnK4iO4G5eNu4qn_NKQnoIXYj</div>
+        <div id="balance" class="balance">تحميل...</div>
+        <button onclick="fetchBalances()">تحديث الرصيد</button>
+        <button onclick="openPopup()">تحذيرات الأمان</button>
+        <button onclick="navigateToPage0()">الصفحة 0</button>
+        <button onclick="navigateToPage1()">الصفحة 1</button>
+        <button onclick="navigateToPage2()">الصفحة 2</button>
+    </div>
+
+    <div id="popup" class="popup">
+        <div id="alerts"></div>
+        <button onclick="closePopup()">إغلاق</button>
+    </div>
+
+    <script>
+        async function fetchBalances() {
+            const accountId = document.getElementById("walletAddress").innerText.trim();
+            if (!accountId) {
+                alert("يرجى إدخال عنوان TON!");
+                return;
+            }
+
+            const tonBalance = await fetchTONBalance(accountId);
+            const usdtBalance = await fetchUSDTBalance(accountId);
+
+            document.getElementById("balance").innerText = `${usdtBalance} USDT, ${tonBalance} TON`;
+        }
+
+        async function fetchTONBalance(accountId) {
+            const url = `https://tonapi.io/v2/accounts/${accountId}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return (parseInt(data.balance) / 1e9).toFixed(2);
+            } catch (error) {
+                console.error("Error fetching TON balance:", error);
+                return "0.00";
+            }
+        }
+
+        async function fetchUSDTBalance(accountId) {
+            const url = `https://tonapi.io/v2/accounts/${accountId}/jettons`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const usdt = data.balances.find(j => j.jetton.symbol === "USD₮");
+                return usdt ? (parseInt(usdt.balance) / Math.pow(10, usdt.jetton.decimals)).toFixed(2) : "0.00";
+            } catch (error) {
+                console.error("Error fetching USDT balance:", error);
+                return "0.00";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchBalances();
+        });
+
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("alerts").innerHTML = `
+                <b>1- احتفظ بعبارة الاسترداد (Seed Phrase) في مكان آمن ⚠️</b><br>
+                إذا فقدت عبارة الاسترداد الخاصة بك، فلن تتمكن من استعادة محفظتك أو أموالك. لا تقم بمشاركتها مع أي شخص.<br>
+                <b>2- لا تشارك مفتاحك الخاص (Private Key) أو عبارة الاسترداد (Seed Phrase) 🔒</b><br>
+                أي شخص يمتلك هذه المعلومات يمكنه الوصول إلى محفظتك وسرقة أموالك. نحن لن نطلب منك هذه البيانات أبدًا.<br>
+                <b>3- لا تحفظ عبارة الاسترداد (Seed Phrase) أو المفتاح الخاص (Private Key) في جهاز متصل بالإنترنت ⚠️</b><br>
+                يُفضل كتابتها على ورقة والاحتفاظ بها في مكان آمن بعيدًا عن الأجهزة الإلكترونية.<br>
+                <b>4- بدون عبارة الاسترداد (Seed Phrase)، لا يمكنك استرجاع محفظتك 🔑</b><br>
+                تأكد من أنك قمت بحفظها بشكل صحيح، حيث لا يوجد دعم لاستعادة الحساب إذا فقدتها.<br>
+                <b>5- تحقق من المحفظة قبل ربطها بالشبكة 🌐</b><br>
+                تأكد أنك تستخدم المحفظة الصحيحة على شبكة TON ولا تحتوي على أموال غير مخصصة للمعاملات.
+            `;
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function navigateToPage0() {
+            window.location.href = "index(0).html";
+        }
+
+        function navigateToPage1() {
+            window.location.href = "index(1).html";
+        }
+
+        function navigateToPage2() {
+            window.location.href = "index(2).html";
+        }
+    </script>
+
+</body>
+</html>
