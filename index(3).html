@@ -3,157 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تصميم مستطيلات وأيقونات</title>
+    <title>USDT Exchange (DZ)</title>
     <script src="https://cdn.jsdelivr.net/npm/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tonweb@0.0.26/dist/tonweb.min.js"></script>
-    <script src="index.js" defer></script> 
-    
-    <link rel="stylesheet" href="index3.css">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <style>
-    body {
-      background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
-      color: #000000 !important; /* يجعل النص أسود */
-      font-family: 'Lora', serif;
-    }
-        #h2h {
-            border-bottom: 2px solid #d3d3d3;
-            display: inline-block;
-            padding-bottom: 4px;
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Lora', serif;
         }
-        .adress-rect {
+        .rectangle {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 2px solid #d3d3d3;
+        }
+        .adress-rect, .adress-rect2 {
             border: 2px solid #ddd;
             padding: 10px;
             margin: 10px;
             border-radius: 5px;
             text-align: left;
-            direction: ltr;
-        }
-         .adress-rect2 {
-            padding: 10px;
-            margin: 10px;
-            border-radius: 5px;
-            text-align: right;
-        }
-        .labeled-row1{
-          font-size: 14px;
-          font-weight: bold ;
-          margin-bottom: 5px;
-        }
-        .labeled-row2{
-          font-size: 12px;            
-          word-wrap: break-word;
-          overflow-wrap: break-word;
-          white-space: normal; 
-          margin-bottom: 5px;
         }
         .connect-button {
-          flex: 1;
-          text-align: center;
-          padding: 6px;
-          cursor: pointer;
-          font-size: 12px;
-          transition: background-color 0.3s ease;
-          background-color: #69b3e7;
-          color: #fff;
-          border-radius: 8px;
-          margin : 8px;
+            background-color: #69b3e7;
+            color: #fff;
+            padding: 6px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px;
         }
-    
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <div class="rectangle">
-        <div class="text-with-icon">
-            <img src="https://i.ibb.co/crhnJYW/IMG-20241213-051319.png" alt="icon-left">
-            <span>USDT Exchange (DZ)</span>
-        </div>
-        <div class="icons">
-            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon">
-        </div>
+        <span>USDT Exchange (DZ)</span>
+        <img src="https://i.ibb.co/gZWqXwD/account.png" alt="Account">
     </div>
-    <div class="main-rectangle">
-        <div class="text-container">
-            <span class="toggle-text" onclick="navigateToPage0()">H2H</span>
-            <span class="toggle-text" onclick="navigateToPage1()">My Ads</span>
-            <span class="toggle-text" onclick="navigateToPage2()">Maps</span>
-        </div>
-    </div>
-    <div class="line"></div>
-        <div id="fortest" class="connect-button" onclick="openPopup()">connect wallet </div>
-      
-    <div class="adress-rect">
-      <div class="labeled-row2">you are in trial version</div>
-    </div> 
-    <div class="adress-rect">
-      <div class="labeled-row1">Ton adress:</div>
-      <div id="walletAddress" class="labeled-row2"></div>
-      <div class="labeled-row1">Balance:</div>
-      <div id="balance" class="labeled-row2">--</div>
-    </div> 
+    <div class="connect-button" onclick="openPopup()">Connect Wallet</div>
 
     <div class="adress-rect">
-      <div class="labeled-row1">Username:</div>
-      <div id="tgusername" class="labeled-row2"></div>
-      <div class="labeled-row1">Telegram ID:</div>
-      <div id="tgid" class="labeled-row2"></div>
+        <div>Trial Version</div>
     </div>
     <div class="adress-rect">
-      <div class="labeled-row1">Specific coordinates:</div>
-      <div id="coord" class="labeled-row2"></div>
-    </div> 
-    <div class="adress-rect">
-      <div class="labeled-row1" id="hakim">Last update:</div>
-      <div id="storedTime" class="labeled-row2">--</div>
+        <div>Ton Address:</div>
+        <div id="walletAddress">--</div>
+        <div>Balance:</div>
+        <div id="balance">--</div>
     </div>
+    <div class="adress-rect">
+        <div>Username:</div>
+        <div id="tgusername">--</div>
+        <div>Telegram ID:</div>
+        <div id="tgid">--</div>
+    </div>
+    <div class="adress-rect">
+        <div>Specific coordinates:</div>
+        <div id="coord">--</div>
+    </div>
+    <div class="adress-rect">
+        <div>Last update:</div>
+        <div id="storedTime">--</div>
+    </div>
+
     <div class="popup" id="popup">
-        <div class="input-group">
-            <div class="adress-rect2">
-             <div id="alerts" dir="rtl" class="labeled-row2"></div>
-           </div> 
+        <div>
+            <b>1- احتفظ بعبارة الاسترداد في مكان آمن ⚠️</b><br>
+            <b>2- لا تشارك مفتاحك الخاص 🔒</b><br>
+            <b>3- لا تحفظ عبارة الاسترداد على الإنترنت ⚠️</b><br>
+            <b>4- بدون عبارة الاسترداد، لا يمكنك استرجاع محفظتك 🔑</b><br>
+            <b>5- تحقق من المحفظة قبل ربطها بالشبكة 🌐</b>
         </div>
-        <div class="clickable-box">
-         <div id="connectWallet" class="clickable-text2 t21" onclick="closePopup();">حسنا, لقد فهمت</div>
-      </div>
+        <button onclick="closePopup()">حسنا, لقد فهمت</button>
     </div>
-        <div class="rectangle fifth-rectangle">
-        <div id="output"></div>
-    </div>
+
     <script>
-      
-      document.getElementById("popup").style.display = 'none';
-      
-      const stadress = localStorage.getItem("stadress");
-      const stusername = localStorage.getItem("stusername");
-      const stcoord = localStorage.getItem("stcoord");
-      const stid = localStorage.getItem("stid");
-      const sttime = localStorage.getItem("storedTime");
-      
-      document.getElementById("walletAddress").textContent = stadress? stadress 
-                : "--";
-      document.getElementById("tgusername").textContent = stusername? stusername 
-                : "--";
-      document.getElementById("tgid").textContent = 
-       stid ? stid
-                : "--";
-      document.getElementById("coord").textContent = stcoord ? stcoord   : "--";         
-      
-      document.getElementById("storedTime").textContent = sttime 
-    ? new Date(parseInt(sttime)).toLocaleTimeString() 
-    : "--";
+        async function fetchBalances() {
+            const accountId = document.getElementById("walletAddress").innerText.trim();
+            if (!accountId || accountId === "--") {
+                console.log("عنوان المحفظة غير صالح.");
+                return;
+            }
 
-        function navigateToPage0() {
-            window.location.href = "index(0).html";
-        }
-        function navigateToPage1() {
-            window.location.href = "index(1).html";
-        }
-        function navigateToPage2() {
-            window.location.href = "index(2).html";
+            console.log(`Fetching balances for: ${accountId}`);
+            const tonBalance = await fetchTONBalance(accountId);
+            const usdtBalance = await fetchUSDTBalance(accountId);
+
+            document.getElementById("balance").innerText = `${usdtBalance} USDT, ${tonBalance} TON`;
         }
 
+        async function fetchTONBalance(accountId) {
+            const url = `https://tonapi.io/v2/accounts/${accountId}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return (parseInt(data.balance) / 1e9).toFixed(2);
+            } catch (error) {
+                console.error("Error fetching TON balance:", error);
+                return "0.00";
+            }
+        }
+
+        async function fetchUSDTBalance(accountId) {
+            const url = `https://tonapi.io/v2/accounts/${accountId}/jettons`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                const usdt = data.balances.find(j => j.jetton.symbol === "USD₮");
+                return usdt ? (parseInt(usdt.balance) / Math.pow(10, usdt.jetton.decimals)).toFixed(2) : "0.00";
+            } catch (error) {
+                console.error("Error fetching USDT balance:", error);
+                return "0.00";
+            }
+        }
+
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const stadress = localStorage.getItem("stadress");
+            const stusername = localStorage.getItem("stusername");
+            const stcoord = localStorage.getItem("stcoord");
+            const stid = localStorage.getItem("stid");
+            const sttime = localStorage.getItem("storedTime");
+
+            document.getElementById("walletAddress").textContent = stadress ? stadress : "--";
+            document.getElementById("tgusername").textContent = stusername ? stusername : "--";
+            document.getElementById("tgid").textContent = stid ? stid : "--";
+            document.getElementById("coord").textContent = stcoord ? stcoord : "--";
+            document.getElementById("storedTime").textContent = sttime ? new Date(parseInt(sttime)).toLocaleTimeString() : "--";
+
+            if (stadress) {
+                await fetchBalances();
+            }
+        });
     </script>
-    <script src="Index(3)(2).js"></script>
 </body>
 </html>
