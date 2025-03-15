@@ -134,13 +134,13 @@ let firstName = localStorage.getItem("firstName");
 if (!userId || !firstName) {
     if (tg.initDataUnsafe?.user) {
         userId = tg.initDataUnsafe.user.id;
-        firstName = tg.initDataUnsafe.user.first_name || "Not available";
+        firstName = tg.initDataUnsafe.user.first_name || "";
 
         localStorage.setItem("userId", userId);
         localStorage.setItem("firstName", firstName);
     } else {
-        userId = "Not available";
-        firstName = "Not available";
+        userId = "";
+        firstName = "";
     }
 }
 
