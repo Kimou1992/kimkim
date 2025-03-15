@@ -1,5 +1,5 @@
 async function fetchBalances() {
-    const accountId = document.getElementById("walletAddress").innerText.trim();
+    const accountId = "UQAMl6BVegC0IOZPLhLzWBHCnK4iO4G5eNu4qn_NKQnoIXYj";
     if (!accountId) {
         alert("يرجى إدخال عنوان TON!");
         return;
