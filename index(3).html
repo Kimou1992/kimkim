@@ -117,6 +117,9 @@
     </div>
 
     <script>
+        const stadress = localStorage.getItem("stadress");
+        document.getElementById("walletAddress").textContent = stadress? stadress 
+                : "--";
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
             if (!accountId || accountId === "--") {
