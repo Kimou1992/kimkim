@@ -1,5 +1,5 @@
 async function fetchBalances() {
-    const accountId = "UQAMl6BVegC0IOZPLhLzWBHCnK4iO4G5eNu4qn_NKQnoIXYj";
+    const accountId = stadress;
     if (!accountId) {
         alert("يرجى إدخال عنوان TON!");
         return;
