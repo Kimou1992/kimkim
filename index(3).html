@@ -61,7 +61,7 @@
     </div>
     <div class="adress-rect">
         <div>Ton Address:</div>
-        <div id="walletAddress">--</div>
+        <div id="walletAddress">UQAMl6BVegC0IOZPLhLzWBHCnK4iO4G5eNu4qn_NKQnoIXYj</div>
         <div>Balance:</div>
         <div id="balance">--</div>
     </div>
@@ -95,7 +95,7 @@
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
             if (!accountId || accountId === "--") {
-                console.log("عنوان المحفظة غير صالح.");
+                console.log("عنوان المحفظة غير متوفر.");
                 return;
             }
 
@@ -140,21 +140,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", async () => {
-            const stadress = localStorage.getItem("stadress");
-            const stusername = localStorage.getItem("stusername");
-            const stcoord = localStorage.getItem("stcoord");
-            const stid = localStorage.getItem("stid");
-            const sttime = localStorage.getItem("storedTime");
-
-            document.getElementById("walletAddress").textContent = stadress ? stadress : "--";
-            document.getElementById("tgusername").textContent = stusername ? stusername : "--";
-            document.getElementById("tgid").textContent = stid ? stid : "--";
-            document.getElementById("coord").textContent = stcoord ? stcoord : "--";
-            document.getElementById("storedTime").textContent = sttime ? new Date(parseInt(sttime)).toLocaleTimeString() : "--";
-
-            if (stadress) {
-                await fetchBalances();
-            }
+            await fetchBalances();
         });
     </script>
 </body>
