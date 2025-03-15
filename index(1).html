@@ -1,156 +1,313 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محفظة TON</title>
+    <title>تصميم مستطيلات وأيقونات</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="index1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <script src="index(1)(2).js"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: auto;
-        }
-        #walletAddress {
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        .balance {
-            margin-top: 20px;
-            font-size: 18px;
-        }
-        button {
-            padding: 10px;
-            margin: 10px;
-            border: none;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            max-width: 300px;
-        }
-        .popup button {
-            background-color: red;
-            margin-top: 10px;
-        }
+    body {
+      background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
+      color: #000000 !important; /* يجعل النص أسود */
+      font-family: 'Lora', serif;
+    }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h2>رصيد المحفظة</h2>
-        <div id="walletAddress">UQAMl6BVegC0IOZPLhLzWBHCnK4iO4G5eNu4qn_NKQnoIXYj</div>
-        <div id="balance" class="balance">تحميل...</div>
-        <button onclick="fetchBalances()">تحديث الرصيد</button>
-        <button onclick="openPopup()">تحذيرات الأمان</button>
-        <button onclick="navigateToPage0()">الصفحة 0</button>
-        <button onclick="navigateToPage1()">الصفحة 1</button>
-        <button onclick="navigateToPage2()">الصفحة 2</button>
+    <!-- المستطيل الأول -->
+    <div class="rectangle">
+        <div class="text-with-icon">
+            <img src="https://i.ibb.co/crhnJYW/IMG-20241213-051319.png" alt="icon-left">
+            <span>USDT Exchange (DZ)</span>
+        </div>
+        <div class="icons">
+            <img src="https://i.ibb.co/gZWqXwD/account.png" alt="menu-icon" onclick="navigateToPage3()">
+        </div>
     </div>
-
-    <div id="popup" class="popup">
-        <div id="alerts"></div>
-        <button onclick="closePopup()">إغلاق</button>
+    <div class="main-rectangle">
+        <!-- النصوص مع شريط الحالة -->
+        <div class="text-container">
+            <span class="toggle-text" id="h2h" onclick="navigateToPage0()">H2H</span>
+            
+            </span>
+            <span class="toggle-text" id="myads">My Ads</span>
+            <span class="toggle-text" id="myads" onclick="navigateToPage2()">Maps</span>
+        </div>
     </div>
-
+    <!-- خط رفيع -->
+    <div class="line"></div>
+    
+    <div id="check-balance1" class="container-order">
+      <div class="clickable-text1">I want to buy USDT</div>
+      <div id="check-balance" class="clickable-text1" onclick="openPopup()">I want to sell USDT</div>
+    </div>
+    <div class="popup" id="popup">
+    <div class="input-group">
+      
+      <div class="input-row">
+        <label class="input-text">Balance :</label>
+      <div id="balance" class="input-text2">--</div>
+        </div>
+      <div class="input-row">
+        <label class="input-text">Day limit:</label>
+      <div id="daylimit" class="input-text2">--</div>
+        </div>
+      <label class="input-text">Price for 1 USDT</label>
+      <div class="input-row">
+        <input id="priceInput" type="number" class="input-field" placeholder="Price" oninput="updatePrice(event, 'priceLabel', 'Price')">
+        <label class="input-label">DZD</label>
+      </div>
+        <label id="priceLabel" class="input-text2">Price :</label> 
+        <label class="input-text">Min and Max amount of order</label>
+      <div class="input-row">
+        <input id="minInput" type="number" class="input-field" placeholder="Min" oninput="updatePrice(event, 'minAmountLabel', 'Min Amount')">
+        <label class="input-label">DZD</label>
+      </div>
+      <div class="input-row">
+      <input id="maxInput" type="number" class="input-field" placeholder="Max" oninput="updatePrice(event, 'maxAmountLabel', 'Max Amount')">
+        <label class="input-label">DZD</label>
+      </div>
+      <label id="minAmountLabel" class="input-text2">Min Amount:</label>
+      <label id="maxAmountLabel" class="input-text2">Max Amount:</label>
+      <button class="main-button" id="mainButton2" onclick="toggleWilayasDropdown(event)">
+        Select your wilayas
+        <span class="arrow-icon">▼</span>
+      </button>
+    </div>
+    <div class="dropdown">
+      <ul class="dropdown-list" id="wilayasDropdown" style="display: none;" onclick="addTag(event)">
+      </ul>
+      <div class="tags"></div>
+    </div>
+    <label id="error-message" class="error"></label>
+    <div class="clickable-box">
+      <div class="clickable-text2 t21" onclick="closePopup();">Cancel</div>
+      <div class="clickable-text2 t22" onclick="validateForm();">Update</div>
+      </div>
+  </div>
+  <div class="popup" id="popup2">
+        <div class="input-group">
+            <div class="adress-rect">
+             <div class="labeled-row2">Are you sure you want to delete this ad?</div>
+           </div> 
+        </div>
+        <div class="clickable-box">
+         <div class="clickable-text2 t21" onclick="closePopup2();">Cancel</div>
+         <div id="copyButton" class="clickable-text2 t22" onclick="deletead()">yes, delete it</div>
+      </div>
+    </div>
+    <div class="rectangle fifth-rectangle">
+        <div id="output"></div>
+    </div>
+    </body>
     <script>
-        async function fetchBalances() {
-            const accountId = document.getElementById("walletAddress").innerText.trim();
-            if (!accountId) {
-                alert("يرجى إدخال عنوان TON!");
-                return;
-            }
+    
+    function closePopup() {
+      popup.style.display = 'none';
+    }
+    function openPopup() {
+    document.getElementById("popup").style.display = "block";
 
-            const tonBalance = await fetchTONBalance(accountId);
-            const usdtBalance = await fetchUSDTBalance(accountId);
+    if (selectedRowData.length === 0) {
+        console.warn("No selected data available");
+        return;
+    }
 
-            document.getElementById("balance").innerText = `${usdtBalance} USDT, ${tonBalance} TON`;
-        }
+    let valuesC = selectedRowData[1]; // استرجاع بيانات valuesC المخزنة
+    let minmax = selectedRowData[2]; // استرجاع بيانات minmax المخزنة
+    let daylim = selectedRowData[3];
+    
+    document.getElementById("priceInput").value = valuesC[0]; 
+    document.getElementById("minInput").value = minmax[0];
+    document.getElementById("maxInput").value = minmax[1];
+    
+    document.getElementById("daylimit").innerText = daylim;
+    document.getElementById("priceLabel").innerText = "Price: " + valuesC[0] + " DZD";
+    document.getElementById("minAmountLabel").innerText = "Min Amount: " + minmax[0] + " DZD";
+    document.getElementById("maxAmountLabel").innerText = "Max Amount: " + minmax[1] + " DZD";
 
-        async function fetchTONBalance(accountId) {
-            const url = `https://tonapi.io/v2/accounts/${accountId}`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                return (parseInt(data.balance) / 1e9).toFixed(2);
-            } catch (error) {
-                console.error("Error fetching TON balance:", error);
-                return "0.00";
-            }
-        }
+    // إظهار العلامات (tags) من النص المفصول بـ "/"
+    const tagsContainer = document.querySelector('.tags');
+    tagsContainer.innerHTML = ""; // تفريغ المحتوى السابق
 
-        async function fetchUSDTBalance(accountId) {
-            const url = `https://tonapi.io/v2/accounts/${accountId}/jettons`;
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                const usdt = data.balances.find(j => j.jetton.symbol === "USD₮");
-                return usdt ? (parseInt(usdt.balance) / Math.pow(10, usdt.jetton.decimals)).toFixed(2) : "0.00";
-            } catch (error) {
-                console.error("Error fetching USDT balance:", error);
-                return "0.00";
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            fetchBalances();
+    if (valuesC[3]) { // التحقق من وجود البيانات
+        const tags = valuesC[3].split('-'); // تقسيم النص
+        tags.forEach(tagText => {
+            const tag = document.createElement('div');
+            tag.className = 'tag';
+            tag.innerHTML = `${tagText.trim()} <button onclick="removeTag(event)">×</button>`;
+            tagsContainer.appendChild(tag);
         });
+    }
+    fetchBalances();
+}
 
-        function openPopup() {
-            document.getElementById("popup").style.display = "block";
-            document.getElementById("alerts").innerHTML = `
-                <b>1- احتفظ بعبارة الاسترداد (Seed Phrase) في مكان آمن ⚠️</b><br>
-                إذا فقدت عبارة الاسترداد الخاصة بك، فلن تتمكن من استعادة محفظتك أو أموالك. لا تقم بمشاركتها مع أي شخص.<br>
-                <b>2- لا تشارك مفتاحك الخاص (Private Key) أو عبارة الاسترداد (Seed Phrase) 🔒</b><br>
-                أي شخص يمتلك هذه المعلومات يمكنه الوصول إلى محفظتك وسرقة أموالك. نحن لن نطلب منك هذه البيانات أبدًا.<br>
-                <b>3- لا تحفظ عبارة الاسترداد (Seed Phrase) أو المفتاح الخاص (Private Key) في جهاز متصل بالإنترنت ⚠️</b><br>
-                يُفضل كتابتها على ورقة والاحتفاظ بها في مكان آمن بعيدًا عن الأجهزة الإلكترونية.<br>
-                <b>4- بدون عبارة الاسترداد (Seed Phrase)، لا يمكنك استرجاع محفظتك 🔑</b><br>
-                تأكد من أنك قمت بحفظها بشكل صحيح، حيث لا يوجد دعم لاستعادة الحساب إذا فقدتها.<br>
-                <b>5- تحقق من المحفظة قبل ربطها بالشبكة 🌐</b><br>
-                تأكد أنك تستخدم المحفظة الصحيحة على شبكة TON ولا تحتوي على أموال غير مخصصة للمعاملات.
-            `;
-        }
+    function toggleWilayasDropdown(event) {
+    const dropdown = document.getElementById('wilayasDropdown');
+    if (!dropdown.dataset.loaded) {
+      fetch('wilayas.json')
+        .then(response => response.json())
+        .then(data => {
+          data.forEach(wilaya => {
+            const li = document.createElement('li');
+            li.textContent = wilaya.Wilaya;
+            dropdown.appendChild(li);
+          });
+          dropdown.dataset.loaded = "true";
+        })
+        .catch(error => {
+          console.error('Error loading wilayas data:', error);
+        });
+    }
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
 
-        function closePopup() {
-            document.getElementById("popup").style.display = "none";
-        }
+  function addTag(event) {
+    if (event.target.tagName === 'LI') {
+      const tagsContainer = event.target.closest('.dropdown').querySelector('.tags');
+      const selectedTag = event.target.textContent;
+      const existingTags = [...tagsContainer.querySelectorAll('.tag')].map(tag => tag.textContent.split(' ×')[0].trim());
+      if (existingTags.includes(selectedTag)) return;
+      if (tagsContainer.children.length < 5) {
+        const tag = document.createElement('div');
+        tag.className = 'tag';
+        tag.innerHTML = `${selectedTag} <button onclick="removeTag(event)">×</button>`;
+        tagsContainer.appendChild(tag);
+      }
+    }
+  }
+  function removeTag(event) {
+    event.target.parentElement.remove();
+  }
+  
+  function updatePrice(event, labelId, labelPrefix) {
+    // الحصول على القيمة المدخلة في الحقل
+    let value = event.target.value;
 
-        function navigateToPage0() {
-            window.location.href = "index(0).html";
-        }
+    // إذا كانت القيمة فارغة، إعادة النص الافتراضي
+    if (!value) {
+      document.getElementById(labelId).textContent = `${labelPrefix}:`;
+      return;
+    }
+    if (!value.includes('.')) {
+      value = parseFloat(value).toFixed(2);
+    } else {
+      value = parseFloat(value).toFixed(2);
+    }
+    document.getElementById(labelId).textContent = `${labelPrefix}: ${value} DZD`;
+  }
+  
+  let selectedRowData = []; // مصفوفة لتخزين بيانات الصف المحدد
+  const adbutton = document.getElementById("check-balance");
+  const adbutton1 = document.getElementById("check-balance1");
+  
+function displayDataFromLocalStorage() {
+    const outputContainer = document.getElementById('output');
+    outputContainer.innerHTML = "";
 
-        function navigateToPage1() {
-            window.location.href = "index(1).html";
-        }
+    // الحصول على البيانات من Local Storage
+    const storedData = localStorage.getItem('sheetData');
 
-        function navigateToPage2() {
-            window.location.href = "index(2).html";
+    if (storedData) {
+        const data = JSON.parse(storedData);
+        const stid = Number(localStorage.getItem("stid"));
+        const filteredData = data.filter(row => row[0] === stid); // تصفية البيانات
+        console.log(stid);
+        if (filteredData.length > 0) {
+            filteredData.forEach(row => {
+                const valuesE = row[3].split('/');
+                const valuesC = row[2].split('/');
+                const daylim = row[1];
+                const minmax = valuesC[2].split('-');
+
+                // تخزين القيم في المصفوفة لاستخدامها لاحقًا
+                selectedRowData = [valuesE, valuesC, minmax, daylim];
+
+                // إنشاء عنصر HTML لعرض البيانات
+                const newContainer = document.createElement('div');
+                newContainer.classList.add('container');
+                newContainer.innerHTML = `
+                    <div class="footer-container">
+                        <div class="footer-text">${valuesE[0]}</div>
+                    </div>
+                    <div class="price-row">Price: ${valuesC[0]} DZD</div>
+                    <div class="labeled-row">Available: ${valuesC[1]} USDT</div>
+                    <div class="labeled-row">Limits: ${minmax[0]} DZD - ${minmax[1]} DZD</div>
+                    <div class="labeled-row">${valuesC[3]}</div>
+                    <div class="clickable-box">
+                        <div class="clickable-text2 t21" onclick="openPopup2();">Delete</div>
+                        <div class="clickable-text2 t22" onclick="openPopup();">Edit</div>
+                    </div>
+                `;
+                outputContainer.appendChild(newContainer);
+            });
+            adbutton.style.display = "none";
+        } else {
+            // إذا لم يتم العثور على البيانات، قم بتعيين قيم افتراضية
+            selectedRowData = [
+                ["Default Text"], // بديل لـ valuesE
+                ["0", "0", "0-0", "Alger"], // بديل لـ valuesC
+                ["0", "0"], // بديل لـ minmax
+               [20]
+            ];
+
+            console.log("No matching data found. Using default values:", selectedRowData);
         }
+    } else {
+        outputContainer.innerText = "please wait 5 minutes and try again";
+        adbutton.style.display = "none";
+        adbutton1.style.display = "none";
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayDataFromLocalStorage();
+    document.getElementById("popup2").style.display = "none";
+});
+
+        async function fetchBalances() {
+    const accountId = localStorage.getItem("storedText");
+    if (!accountId) {
+        alert("please add your Ton adress");
+        return;
+    }
+
+    const tonBalance = await fetchTONBalance(accountId);
+    const usdtBalance = await fetchUSDTBalance(accountId);
+    
+    document.getElementById("balance").innerText = `${usdtBalance} USDT, ${tonBalance} TON`;
+    
+    
+}
+
+async function fetchTONBalance(accountId) {
+    const url = `https://tonapi.io/v2/accounts/${accountId}`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return (parseInt(data.balance) / 1e9).toFixed(2);
+    } catch (error) {
+        console.error("Error fetching TON balance:", error);
+        return "0.00";
+    }
+    
+}
+
+async function fetchUSDTBalance(accountId) {
+    const url = `https://tonapi.io/v2/accounts/${accountId}/jettons`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        const usdt = data.balances.find(j => j.jetton.symbol === "USD₮");
+        return usdt ? (parseInt(usdt.balance) / Math.pow(10, usdt.jetton.decimals)).toFixed(2) : "0.00";
+    } catch (error) {
+        console.error("Error fetching USDT balance:", error);
+        return "0.00";
+    }
+}
+
     </script>
-
-</body>
 </html>
