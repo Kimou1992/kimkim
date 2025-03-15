@@ -130,8 +130,32 @@ if (!localStorage.getItem("userId") || !localStorage.getItem("firstName")) {
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
-        let storedFirstName = localStorage.getItem("firstName");
-        document.getElementById("tgusername").innerText = storedFirstName;
+
+        let tg = window.Telegram.WebApp;
+tg.expand();
+
+let userIdEl = document.getElementById("tgid");
+let firstNameEl = document.getElementById("tgusername");
+
+let userId = localStorage.getItem("userId");
+let firstName = localStorage.getItem("firstName");
+
+if (!userId || !firstName) {
+    if (tg.initDataUnsafe?.user) {
+        userId = tg.initDataUnsafe.user.id;
+        firstName = tg.initDataUnsafe.user.first_name || "Not available";
+
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("firstName", firstName);
+    } else {
+        userId = "Not available";
+        firstName = "Not available";
+    }
+}
+
+userIdEl.innerText = userId;
+firstNameEl.innerText = firstName;
+        
         
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
