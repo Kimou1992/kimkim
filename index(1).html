@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
         async function fetchBalances() {
-    const accountId = localStorage.getItem("storedText");
+    const accountId = localStorage.getItem("ton_wallet");
     if (!accountId) {
         alert("please add your Ton adress");
         return;
