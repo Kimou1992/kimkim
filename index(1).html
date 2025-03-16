@@ -225,7 +225,7 @@ function displayDataFromLocalStorage() {
     if (storedData) {
         const data = JSON.parse(storedData);
         let userid = Number(localStorage.getItem("userId"));
-        const filteredData = data.filter(row => row[0] == userid); // تصفية البيانات
+        const filteredData = data.filter(row => row[0] == 99); // تصفية البيانات
         console.log(stid);
         if (filteredData.length > 0) {
             filteredData.forEach(row => {
