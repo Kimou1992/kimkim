@@ -195,27 +195,37 @@
         });
       document.addEventListener("DOMContentLoaded", function () {
     let tg = window.Telegram.WebApp;
-    tg.expand(); // توسيع التطبيق المصغر
+        tg.expand(); // توسيع التطبيق المصغر لملء الشاشة
 
-    let storedUserId = localStorage.getItem("userId");
-    let storedUsername = localStorage.getItem("username");
+        // التحقق مما إذا كانت البيانات مخزنة مسبقًا
+        let storedUserId = localStorage.getItem("userId");
+        let storedFirstName = localStorage.getItem("firstName");
+        
 
-    if (storedUserId && storedUsername) {
-        document.getElementById("tgid").innerText = storedUserId;
-        document.getElementById("tgusername").innerText = storedUsername;
-    } else if (tg.initDataUnsafe?.user) {
-        let userId = tg.initDataUnsafe.user.id;
-        let username = tg.initDataUnsafe.user.first_name || "";
+        if (storedUserId && storedFirstName) {
+            // إذا كانت البيانات موجودة في الذاكرة، استخدمها
+            document.getElementById("stid").innerText = storedUserId;
+            document.getElementById("stusername").innerText = storedFirstName;
+            
+        } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            // جلب البيانات من Telegram إذا لم تكن مخزنة
+            let userId = tg.initDataUnsafe.user.id;
+            let firstName = tg.initDataUnsafe.user.first_name;
 
-        localStorage.setItem("userId", userId);
-        localStorage.setItem("username", username);
+            // تخزين البيانات في localStorage
+            localStorage.setItem("userId", userId);
+            localStorage.setItem("firstName", firstName);
 
-        document.getElementById("tgid").innerText = userId;
-        document.getElementById("tgusername").innerText = username;
-    } else {
-        document.getElementById("tgid").innerText = "";
-        document.getElementById("tgusername").innerText = "";
-    }
+            // تحديث العرض
+            document.getElementById("userId").innerText = userId;
+            document.getElementById("firstName").innerText = firstName;
+            
+        } else {
+            // إذا لم تتوفر البيانات من Telegram
+            document.getElementById("userId").innerText = "N";
+            document.getElementById("firstName").innerText = "";
+            
+        }
 });
         
 </script>
