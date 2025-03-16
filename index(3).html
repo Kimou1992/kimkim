@@ -126,31 +126,26 @@
 tg.expand();
 
 let userIdEl = document.getElementById("tgid");
-let usernameEl = document.getElementById("tgusername");
+let firstNameEl = document.getElementById("tgusername");
 
 let userId = localStorage.getItem("userId");
-let username = localStorage.getItem("username");
+let firstName = localStorage.getItem("firstName");
 
-if (!userId || !username) {
+if (!userId || !firstName) {
     if (tg.initDataUnsafe?.user) {
-        userId = tg.initDataUnsafe.user.id || "";
-        username = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name || "noUsername";
+        userId = tg.initDataUnsafe.user.id;
+        firstName = tg.initDataUnsafe.user.first_name || "";
 
         localStorage.setItem("userId", userId);
-        localStorage.setItem("username", username);
+        localStorage.setItem("firstName", firstName);
     } else {
         userId = "";
-        username = "noUsername";
-
-        localStorage.setItem("userId", userId);
-        localStorage.setItem("username", username);
+        firstName = "";
     }
 }
 
 userIdEl.innerText = userId;
-usernameEl.innerText = username;
-        
-        
+firstNameEl.innerText = firstName;
         
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
