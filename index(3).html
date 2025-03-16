@@ -121,7 +121,7 @@
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
-
+    
         let tg = window.Telegram.WebApp;
 tg.expand();
 
@@ -146,6 +146,7 @@ if (!userId || !firstName) {
 
 userIdEl.innerText = userId;
 firstNameEl.innerText = firstName;
+        
         
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
