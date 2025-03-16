@@ -204,8 +204,8 @@
 
         if (storedUserId && storedFirstName) {
             // إذا كانت البيانات موجودة في الذاكرة، استخدمها
-            document.getElementById("stid").innerText = storedUserId;
-            document.getElementById("stusername").innerText = storedFirstName;
+            document.getElementById("tgid").innerText = storedUserId;
+            document.getElementById("tgusername").innerText = storedFirstName;
             
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
@@ -217,13 +217,13 @@
             localStorage.setItem("firstName", firstName);
 
             // تحديث العرض
-            document.getElementById("userId").innerText = userId;
-            document.getElementById("firstName").innerText = firstName;
+            document.getElementById("tgid").innerText = userId;
+            document.getElementById("tgusername").innerText = firstName;
             
         } else {
             // إذا لم تتوفر البيانات من Telegram
-            document.getElementById("userId").innerText = "N";
-            document.getElementById("firstName").innerText = "";
+            document.getElementById("tgid").innerText = "";
+            document.getElementById("tgusername").innerText = "";
             
         }
 });
