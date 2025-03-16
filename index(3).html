@@ -121,31 +121,6 @@
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
-    
-        let userIdEl = document.getElementById("tgid");
-let firstNameEl = document.getElementById("tgusername");
-
-let userId = localStorage.getItem("userId");
-let username = localStorage.getItem("username");
-
-if (!userId || !username) {
-    let tg = window.Telegram.WebApp;
-    if (tg.initDataUnsafe?.user) {
-        userId = tg.initDataUnsafe.user.id;
-        username = tg.initDataUnsafe.user.username || "noUsername";
-
-        localStorage.setItem("userId", userId);
-        localStorage.setItem("username", username);
-    } else {
-        userId = "";
-        username = "noUsername";
-    }
-}
-
-userIdEl.innerText = userId;
-firstNameEl.innerText = username;
-        
-        
         
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
@@ -218,6 +193,32 @@ firstNameEl.innerText = username;
         document.addEventListener("DOMContentLoaded", async () => {
             await fetchBalances();
         });
-    </script>
+    
+document.addEventListener("DOMContentLoaded", function () {
+    let userIdEl = document.getElementById("tgid");
+    let usernameEl = document.getElementById("tgusername");
+
+    let userId = localStorage.getItem("userId");
+    let username = localStorage.getItem("username");
+
+    let tg = window.Telegram.WebApp;
+
+    if (!userId || !username) {
+        if (tg.initDataUnsafe?.user) {
+            userId = tg.initDataUnsafe.user.id;
+            username = tg.initDataUnsafe.user.username || "noUsername";
+
+            localStorage.setItem("userId", userId);
+            localStorage.setItem("username", username);
+        } else {
+            userId = "";
+            username = "noUsername";
+        }
+    }
+
+    if (userIdEl) userIdEl.innerText = userId;
+    if (usernameEl) usernameEl.innerText = username;
+});
+</script>
 </body>
 </html>
