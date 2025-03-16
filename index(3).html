@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!userId || !username) {
         if (tg.initDataUnsafe?.user) {
             userId = tg.initDataUnsafe.user.id;
-            username = tg.initDataUnsafe.user.username || "noUsername";
+            username = tg.initDataUnsafe.user.username || "";
 
             localStorage.setItem("userId", userId);
             localStorage.setItem("username", username);
