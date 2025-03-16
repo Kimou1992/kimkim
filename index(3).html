@@ -122,30 +122,29 @@
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
     
-        let tg = window.Telegram.WebApp;
-tg.expand();
-
-let userIdEl = document.getElementById("tgid");
+        let userIdEl = document.getElementById("tgid");
 let firstNameEl = document.getElementById("tgusername");
 
 let userId = localStorage.getItem("userId");
-let firstName = localStorage.getItem("firstName");
+let username = localStorage.getItem("username");
 
-if (!userId || !firstName) {
+if (!userId || !username) {
+    let tg = window.Telegram.WebApp;
     if (tg.initDataUnsafe?.user) {
         userId = tg.initDataUnsafe.user.id;
-        firstName = tg.initDataUnsafe.user.first_name || "";
+        username = tg.initDataUnsafe.user.username || "noUsername";
 
         localStorage.setItem("userId", userId);
-        localStorage.setItem("firstName", firstName);
+        localStorage.setItem("username", username);
     } else {
         userId = "";
-        firstName = "";
+        username = "noUsername";
     }
 }
 
 userIdEl.innerText = userId;
-firstNameEl.innerText = firstName;
+firstNameEl.innerText = username;
+        
         
         
         async function fetchBalances() {
