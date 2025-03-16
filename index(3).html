@@ -134,7 +134,7 @@ let username = localStorage.getItem("username");
 if (!userId || !username) {
     if (tg.initDataUnsafe?.user) {
         userId = tg.initDataUnsafe.user.id || "";
-        username = tg.initDataUnsafe.user.username || "noUsername";
+        username = tg.initDataUnsafe.user.first_name + " " + tg.initDataUnsafe.user.last_name || "noUsername";
 
         localStorage.setItem("userId", userId);
         localStorage.setItem("username", username);
