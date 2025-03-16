@@ -193,32 +193,31 @@
         document.addEventListener("DOMContentLoaded", async () => {
             await fetchBalances();
         });
-    
-document.addEventListener("DOMContentLoaded", function () {
-    let userIdEl = document.getElementById("tgid");
-    let usernameEl = document.getElementById("tgusername");
-
-    let userId = localStorage.getItem("userId");
-    let username = localStorage.getItem("username");
-
+      document.addEventListener("DOMContentLoaded", function () {
     let tg = window.Telegram.WebApp;
+    tg.expand(); // توسيع التطبيق المصغر
 
-    if (!userId || !username) {
-        if (tg.initDataUnsafe?.user) {
-            userId = tg.initDataUnsafe.user.id;
-            username = tg.initDataUnsafe.user.username || "";
+    let storedUserId = localStorage.getItem("userId");
+    let storedUsername = localStorage.getItem("username");
 
-            localStorage.setItem("userId", userId);
-            localStorage.setItem("username", username);
-        } else {
-            userId = "";
-            username = "noUsername";
-        }
+    if (storedUserId && storedUsername) {
+        document.getElementById("tgid").innerText = storedUserId;
+        document.getElementById("tgusername").innerText = storedUsername;
+    } else if (tg.initDataUnsafe?.user) {
+        let userId = tg.initDataUnsafe.user.id;
+        let username = tg.initDataUnsafe.user.username || "noUsername";
+
+        localStorage.setItem("userId", userId);
+        localStorage.setItem("username", username);
+
+        document.getElementById("tgid").innerText = userId;
+        document.getElementById("tgusername").innerText = username;
+    } else {
+        document.getElementById("tgid").innerText = "";
+        document.getElementById("tgusername").innerText = "noUsername";
     }
-
-    if (userIdEl) userIdEl.innerText = userId;
-    if (usernameEl) usernameEl.innerText = username;
 });
+        
 </script>
 </body>
 </html>
