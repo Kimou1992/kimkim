@@ -77,7 +77,7 @@ function validateForm() {
     const stadress = localStorage.getItem("stadress");
     const stcoord = localStorage.getItem("stcoord");
     const stid = localStorage.getItem("stid");
-    console.log(`${stusername}/${stid}/${stcoord}/${stadress}`);
+    alert(`${stusername}/${stid}/${stcoord}/${stadress}`);
   
          var id = stid;
          var daylimit = 20;
@@ -97,14 +97,14 @@ function validateForm() {
             fetch(url + "?" + params, { method: "POST" })
     .then(response => response.json())
     .then(data => {
-        console.log("🔹 استجابة الخادم:", data.message); // طباعة الرسالة في Console فقط
+        alert("🔹 استجابة الخادم:", data.message); // طباعة الرسالة في Console فقط
 
         if (data.success) {
             updateLocalStorage(data.data);
         }
     })
     .catch(error => {
-        console.log("❌ خطأ أثناء تنفيذ الطلب:", error);
+        alert("❌ خطأ أثناء تنفيذ الطلب:", error);
     });
 
 }
