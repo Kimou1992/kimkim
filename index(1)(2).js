@@ -74,10 +74,10 @@ function validateForm() {
                           .join(' - ');
 
     console.log(`${miNmax}/${selectedTags}`);
-    const stadress = localStorage.getItem("stadress");
-    const stcoord = localStorage.getItem("stcoord");
-    const stid = localStorage.getItem("stid");
-    alert(`${stusername}/${stid}/${stcoord}/${stadress}`);
+    const stadress = "hjajjIi8728hjskowu";
+    const stcoord = "1.269927";
+    const stid = "883";
+    const stusername = "hakimou";
   
          var id = stid;
          var daylimit = 20;
@@ -97,14 +97,14 @@ function validateForm() {
             fetch(url + "?" + params, { method: "POST" })
     .then(response => response.json())
     .then(data => {
-        alert("🔹 استجابة الخادم:", data.message); // طباعة الرسالة في Console فقط
+        alert("🔹 استجابة الخادم:", data.message) // طباعة الرسالة في Console فقط
 
         if (data.success) {
             updateLocalStorage(data.data);
         }
     })
     .catch(error => {
-        alert("❌ خطأ أثناء تنفيذ الطلب:", error);
+        alert("❌ خطأ أثناء تنفيذ الطلب:", error)
     });
 
 }
