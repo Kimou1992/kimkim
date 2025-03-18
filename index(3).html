@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>USDT Exchange (DZ)</title>
+    <script src="index(3)(1).js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tonweb@0.0.26/dist/tonweb.min.js"></script>
@@ -200,53 +201,6 @@
             await fetchBalances();
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
-    let tg = window.Telegram.WebApp;
-    tg.expand(); // توسيع التطبيق المصغر لملء الشاشة
-
-    let storedUserId = localStorage.getItem("userId");
-    let storedFirstName = localStorage.getItem("firstName");
-
-    if (storedUserId && storedFirstName) {
-        document.getElementById("tgid").textContent = storedUserId;
-        document.getElementById("tgusername").textContent = storedFirstName;
-    } else {
-        let attempts = 0;
-        let maxAttempts = 10;
-
-        function fetchTelegramData() {
-            console.log(`محاولة ${attempts + 1} لجلب البيانات...`);
-
-            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-                let userId = tg.initDataUnsafe.user.id;
-                let firstName = tg.initDataUnsafe.user.first_name;
-
-                // تخزين البيانات في localStorage
-                localStorage.setItem("userId", userId);
-                localStorage.setItem("firstName", firstName);
-
-                // تحديث العرض
-                document.getElementById("tgid").textContent = userId;
-                document.getElementById("tgusername").textContent = firstName;
-                console.log("✅ تم جلب البيانات من Telegram:", userId, firstName);
-            } else if (attempts < maxAttempts) {
-                attempts++;
-                setTimeout(fetchTelegramData, 500);
-            } else {
-                document.getElementById("tgid").textContent = "--";
-                document.getElementById("tgusername").textContent = "--";
-                localStorage.removeItem("userId");
-                localStorage.removeItem("firstName");
-                console.warn("⚠️ تعذر جلب البيانات بعد عدة محاولات.");
-            }
-        }
-
-        // تأخير المحاولة الأولى 300ms قبل البدء
-        setTimeout(fetchTelegramData, 300);
-    }
-});
-                                  
-        
         
 </script>
 </body>
