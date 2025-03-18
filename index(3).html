@@ -121,6 +121,12 @@
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
+        const stcoord = localStorage.getItem("ton_wallet");
+        document.getElementById("walletAddress").textContent = stadress? stadress 
+                : "--";
+        const lastupdate = localStorage.getItem("ton_wallet");
+        document.getElementById("walletAddress").textContent = stadress? stadress 
+                : "--";
         
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
