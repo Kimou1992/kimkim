@@ -227,11 +227,11 @@
                 // تحديث العرض
                 document.getElementById("tgid").innerText = userId;
                 document.getElementById("tgusername").innerText = firstName;
-                console.log("تم جلب البيانات من Telegram:", userId, firstName);
+                alert("تم جلب البيانات من Telegram:", userId, firstName)
             } else if (attempts < maxAttempts) {
                 // إعادة المحاولة بعد 500ms
                 attempts++;
-                console.log(`محاولة ${attempts} لجلب البيانات...`);
+                alert(`محاولة ${attempts} لجلب البيانات...`)
                 setTimeout(fetchTelegramData, 500);
             } else {
                 // إذا لم تتوفر البيانات بعد الحد الأقصى من المحاولات
@@ -239,7 +239,7 @@
                 document.getElementById("tgusername").innerText = "--";
                 localStorage.removeItem("userId");
                 localStorage.removeItem("firstName");
-                console.warn("تعذر جلب البيانات بعد عدة محاولات.");
+                alert("تعذر جلب البيانات بعد عدة محاولات.")
             }
         }
 
