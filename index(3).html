@@ -208,14 +208,15 @@
     let storedFirstName = localStorage.getItem("firstName");
 
     if (storedUserId && storedFirstName) {
-        // إذا كانت البيانات موجودة في الذاكرة، استخدمها
-        document.getElementById("tgid").innerText = storedUserId;
-        document.getElementById("tgusername").innerText = storedFirstName;
+        document.getElementById("tgid").textContent = storedUserId;
+        document.getElementById("tgusername").textContent = storedFirstName;
     } else {
-        let attempts = 0; // عدد المحاولات
-        let maxAttempts = 10; // الحد الأقصى للمحاولات
+        let attempts = 0;
+        let maxAttempts = 10;
 
         function fetchTelegramData() {
+            console.log(`محاولة ${attempts + 1} لجلب البيانات...`);
+
             if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
                 let userId = tg.initDataUnsafe.user.id;
                 let firstName = tg.initDataUnsafe.user.first_name;
@@ -225,27 +226,26 @@
                 localStorage.setItem("firstName", firstName);
 
                 // تحديث العرض
-                document.getElementById("tgid").innerText = userId;
-                document.getElementById("tgusername").innerText = firstName;
-                alert("تم جلب البيانات من Telegram:", userId, firstName)
+                document.getElementById("tgid").textContent = userId;
+                document.getElementById("tgusername").textContent = firstName;
+                console.log("✅ تم جلب البيانات من Telegram:", userId, firstName);
             } else if (attempts < maxAttempts) {
-                // إعادة المحاولة بعد 500ms
                 attempts++;
-                alert(`محاولة ${attempts} لجلب البيانات...`)
                 setTimeout(fetchTelegramData, 500);
             } else {
-                // إذا لم تتوفر البيانات بعد الحد الأقصى من المحاولات
-                document.getElementById("tgid").innerText = "";
-                document.getElementById("tgusername").innerText = "--";
+                document.getElementById("tgid").textContent = "--";
+                document.getElementById("tgusername").textContent = "--";
                 localStorage.removeItem("userId");
                 localStorage.removeItem("firstName");
-                alert("تعذر جلب البيانات بعد عدة محاولات.")
+                console.warn("⚠️ تعذر جلب البيانات بعد عدة محاولات.");
             }
         }
 
-        fetchTelegramData(); // بدء المحاولات
+        // تأخير المحاولة الأولى 300ms قبل البدء
+        setTimeout(fetchTelegramData, 300);
     }
 });
+                                  
         
         
 </script>
