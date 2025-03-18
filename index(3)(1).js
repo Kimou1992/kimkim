@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function () {
 let tg = window.Telegram.WebApp;
         // توسيع التطبيق المصغر لملء الشاشة
 
@@ -25,3 +26,5 @@ let tg = window.Telegram.WebApp;
             // إذا لم تتوفر البيانات من Telegram
             
         }
+        
+});
