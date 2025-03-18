@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (storedUserId && storedFirstName) {
             // إذا كانت البيانات موجودة في الذاكرة، استخدمها
-            document.getElementById("tgid").innerText = storedUserId;
-            document.getElementById("tgusername").innerText = storedFirstName;
+            
             
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
@@ -22,13 +21,11 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("firstName", firstName);
 
             // تحديث العرض
-            document.getElementById("tgid").innerText = userId;
-            document.getElementById("tgusername").innerText = firstName;
+            
             
         } else {
             // إذا لم تتوفر البيانات من Telegram
-            document.getElementById("tgid").innerText = "";
-            document.getElementById("tgusername").innerText = "--";
+            
             localStorage.removeItem("userId");
             localStorage.removeItem("firstName");
             
