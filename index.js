@@ -26,46 +26,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     const connectButton = document.getElementById("connectWallet");
     const walletAddressEl = document.getElementById("walletAddress");
 
-    // قائمة المحافظ المدعومة
-    const wallets = [
-        { name: "Tonkeeper", id: "tonkeeper" },
-        { name: "Binance Wallet", id: "binance" },
-        { name: "MyTonWallet", id: "mytonwallet" },
-        { name: "TonHub", id: "tonhub" },
-        { name: "TonCoinWallet", id: "toncoinwallet" }
-    ];
-
     // التحقق عند تحميل الصفحة إذا كان هناك عنوان محفظة محفوظ
     const savedWallet = localStorage.getItem("ton_wallet");
     if (savedWallet) {
-        walletAddressEl.textContent = savedWallet;
+        walletAddressEl.textContent = `المحفظة المتصلة: ${savedWallet}`;
     }
-
-    document.fonts.ready.then(() => {
-        connectButton.style.visibility = "visible";
-        connectButton.style.opacity = "1";
-    });
 
     connectButton.addEventListener("click", async () => {
         try {
             webApp.HapticFeedback.impactOccurred("light");
 
-            // فتح قائمة اختيار المحفظة
-            const walletList = wallets.map((w, index) => `${index + 1} - ${w.name}`).join("\n");
-            const choice = prompt(`اختر محفظة:\n${walletList}`);
-
-            const selectedWallet = wallets[parseInt(choice) - 1];
-
-            if (!selectedWallet) {
-                alert("محفظة غير مدعومة!");
-                return;
-            }
-
-            console.log(`Trying to connect to: ${selectedWallet.name}`);
-            await tonConnect.openModal({ wallets: [selectedWallet.id] });
+            console.log("Trying to connect to Binance Wallet...");
+            await tonConnect.openModal({ wallets: ["binance"] });
 
         } catch (error) {
-            console.error("خطأ عند فتح المحفظة:", error);
+            console.error("خطأ عند فتح محفظة Binance:", error);
         }
     });
 
