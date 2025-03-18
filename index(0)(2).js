@@ -75,3 +75,4 @@ function init() {
 
 
 init();
+alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storedFirstName}`);
