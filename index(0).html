@@ -223,7 +223,7 @@ function selectOption(wilaya) {
 
         // التحقق مما إذا كانت البيانات مخزنة مسبقًا
         let storedUserId = localStorage.getItem("userId");
-        let storedFirstName = localStorage.getItem("firstName");
+        let storeduserName = localStorage.getItem("userName");
         
 
         if (storedUserId && storedFirstName) {
@@ -234,14 +234,14 @@ function selectOption(wilaya) {
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
             let userId = tg.initDataUnsafe.user.id;
-            let firstName = tg.initDataUnsafe.user.first_name;
+            let userName = tg.initDataUnsafe.user.username;
 
             // تخزين البيانات في localStorage
             localStorage.setItem("userId", userId);
-            localStorage.setItem("firstName", firstName);
+            localStorage.setItem("userName", userName);
 
             // تحديث العرض
-            alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storedFirstName}`);
+            alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storeduserName}`);
                 
         } else {
             // إذا لم تتوفر البيانات من Telegram
