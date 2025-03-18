@@ -74,15 +74,14 @@ function validateForm() {
                           .join(' - ');
 
     console.log(`${miNmax}/${selectedTags}`);
-    const stadress = "hjajjIi8728hjskowu";
-    const stcoord = "1.269927";
-    const stid = "883";
-    const stusername = "hakimou";
+    const stadress = localStorage.getItem("userId");
+    const stcoord = localStorage.getItem("userId");
+    const stusername = localStorage.getItem("userId");
   
          var id = stid;
          var daylimit = 20;
          var sellad = `${miNmax}/${selectedTags}`;
-         var otherinfo = `${stusername}/${stid}/${stcoord}/${stadress}`;
+         var otherinfo = `${stusername}/${stusserid}/${stcoord}/${stadress}`;
 
          var url = "https://script.google.com/macros/s/AKfycbwwLdUsb1npbJ5luDi6wVyYRMWxctC8H-JQjWZUzZW5GYHe_6Q3DJ5R2WJflv5-CHqhVw/exec";
             
