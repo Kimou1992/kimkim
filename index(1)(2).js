@@ -49,7 +49,7 @@ function validateForm() {
         return;
     }
     
-    const stuserId = localStorage.getItem("userId");
+    const stuserId = localStorage.getItem("userId") || "";
 
     if (stuserId === null || stuserId.trim() === "") {
     errorMessage.textContent = "Please check your telegram ID";
@@ -74,14 +74,14 @@ function validateForm() {
                           .join(' - ');
 
     console.log(`${miNmax}/${selectedTags}`);
-    const stadress = localStorage.getItem("ton_wallet");
-    const stcoord = localStorage.getItem("stcoord");
-    const stusername = localStorage.getItem("userId");
+    const stadress = localStorage.getItem("ton_wallet") || "--";
+    const stcoord = localStorage.getItem("stcoord") || "--";
+    const stusername = localStorage.getItem("firstName") || "--";
   
          var id = stid;
          var daylimit = 20;
          var sellad = `${miNmax}/${selectedTags}`;
-         var otherinfo = `${stusername}/${stusserid}/${stcoord}/${stadress}`;
+         var otherinfo = `${stusername}/${stuserId}/${stcoord}/${stadress}`;
 
          var url = "https://script.google.com/macros/s/AKfycbwwLdUsb1npbJ5luDi6wVyYRMWxctC8H-JQjWZUzZW5GYHe_6Q3DJ5R2WJflv5-CHqhVw/exec";
             
