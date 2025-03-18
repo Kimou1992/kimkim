@@ -1,6 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
-    let tg = window.Telegram.WebApp;
-        tg.expand(); // توسيع التطبيق المصغر لملء الشاشة
+let tg = window.Telegram.WebApp;
+        // توسيع التطبيق المصغر لملء الشاشة
 
         // التحقق مما إذا كانت البيانات مخزنة مسبقًا
         let storedUserId = localStorage.getItem("userId");
@@ -9,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (storedUserId && storedFirstName) {
             // إذا كانت البيانات موجودة في الذاكرة، استخدمها
-            
+            document.getElementById("userId").innerText = storedUserId;
+            document.getElementById("firstName").innerText = storedFirstName;
             
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
@@ -21,15 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("firstName", firstName);
 
             // تحديث العرض
-            
-            
+            ;
         } else {
             // إذا لم تتوفر البيانات من Telegram
             
-            localStorage.removeItem("userId");
-            localStorage.removeItem("firstName");
-            
-            
-            
         }
-}); 
