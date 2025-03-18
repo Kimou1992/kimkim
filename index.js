@@ -3,14 +3,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     document.documentElement.style.setProperty(
         "--tg-viewport-stable-height",
-        `${webApp.viewportStableHeight}px`
+        ${webApp.viewportStableHeight}px
     );
 
     webApp.onEvent("viewportChanged", (event) => {
         if (event.isStateStable) {
             document.documentElement.style.setProperty(
                 "--tg-viewport-stable-height",
-                `${webApp.viewportStableHeight}px`
+                ${webApp.viewportStableHeight}px
             );
         }
     });
