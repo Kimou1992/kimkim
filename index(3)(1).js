@@ -26,7 +26,7 @@ let tg = window.Telegram.WebApp;
                 
         } else {
             // إذا لم تتوفر البيانات من Telegram
-            
+            alert("no data sorry");
         }
         
 });
