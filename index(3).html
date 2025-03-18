@@ -230,6 +230,10 @@
             // إذا لم تتوفر البيانات من Telegram
             document.getElementById("tgid").innerText = "";
             document.getElementById("tgusername").innerText = "--";
+            localStorage.removeItem("userId");
+            localStorage.removeItem("firstName");
+            
+            
             
         }
 });
