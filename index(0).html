@@ -229,5 +229,15 @@ function selectOption(wilaya) {
         }
     </script>
     <script src="index(0)(2).js"></script>
+    <script>
+    let storedUserId = localStorage.getItem("userId");
+let storedFirstName = localStorage.getItem("firstName");
+
+if (storedUserId && storedFirstName) {
+    // إذا كانت البيانات موجودة في الذاكرة، استخدمها
+    // عرض alert بالقيم المخزنة
+    alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storedFirstName}`);
+}
+    </script>
 </body>
 </html>
