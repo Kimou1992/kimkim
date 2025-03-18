@@ -121,8 +121,13 @@
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
-
+        const userId = localStorage.getItem("userId");
+        document.getElementById("tgid").textContent = userId? userId 
+                : "--";
         
+        const firstName = localStorage.getItem("firstName");
+        document.getElementById("tgusername").textContent = firstName? firstName 
+                : "--";
         
         const lastupdate = localStorage.getItem("storedTime");
         document.getElementById("storedTime").textContent = lastupdate? lastupdate 
