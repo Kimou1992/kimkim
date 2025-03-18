@@ -8,8 +8,7 @@ let tg = window.Telegram.WebApp;
 
         if (storedUserId && storedFirstName) {
             // إذا كانت البيانات موجودة في الذاكرة، استخدمها
-            document.getElementById("userId").innerText = storedUserId;
-            document.getElementById("firstName").innerText = storedFirstName;
+            
             
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
