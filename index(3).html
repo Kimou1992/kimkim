@@ -121,11 +121,12 @@
         const stadress = localStorage.getItem("ton_wallet");
         document.getElementById("walletAddress").textContent = stadress? stadress 
                 : "--";
-        const stcoord = localStorage.getItem("ton_wallet");
-        document.getElementById("walletAddress").textContent = stadress? stadress 
-                : "--";
-        const lastupdate = localStorage.getItem("ton_wallet");
-        document.getElementById("walletAddress").textContent = stadress? stadress 
+        const stcoord = localStorage.getItem("stcoord") || "--";
+        localStorage.setItem("stcoord", stcoord); // إذا لم تكن موجودة، يتم تعيين "--"
+        document.getElementById("coord").textContent = stcoord;
+
+        const lastupdate = localStorage.getItem("lastupdate");
+        document.getElementById("storedTime").textContent = lastupdate? lastupdate 
                 : "--";
         
         async function fetchBalances() {
