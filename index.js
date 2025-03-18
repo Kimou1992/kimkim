@@ -26,6 +26,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     const connectButton = document.getElementById("connectWallet");
     const walletAddressEl = document.getElementById("walletAddress");
 
+    // قائمة المحافظ المدعومة
+    const wallets = [
+        { name: "Tonkeeper", id: "tonkeeper" },
+        { name: "Binance Wallet", id: "binance" },
+        { name: "MyTonWallet", id: "mytonwallet" },
+        { name: "TonHub", id: "tonhub" },
+        { name: "TonCoinWallet", id: "toncoinwallet" }
+    ];
+
     // التحقق عند تحميل الصفحة إذا كان هناك عنوان محفظة محفوظ
     const savedWallet = localStorage.getItem("ton_wallet");
     if (savedWallet) {
@@ -40,20 +49,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     connectButton.addEventListener("click", async () => {
         try {
             webApp.HapticFeedback.impactOccurred("light");
-            await tonConnect.openModal();
+
+            // فتح قائمة اختيار المحفظة
+            const walletList = wallets.map((w, index) => `${index + 1} - ${w.name}`).join("\n");
+            const choice = prompt(`اختر محفظة:\n${walletList}`);
+
+            const selectedWallet = wallets[parseInt(choice) - 1];
+
+            if (!selectedWallet) {
+                alert("محفظة غير مدعومة!");
+                return;
+            }
+
+            console.log(`Trying to connect to: ${selectedWallet.name}`);
+            await tonConnect.openModal({ wallets: [selectedWallet.id] });
+
         } catch (error) {
-            console.error("Ошибка при открытии модального окна:", error);
+            console.error("خطأ عند فتح المحفظة:", error);
         }
     });
 
     tonConnect.onStatusChange((wallet) => {
         if (wallet) {
             try {
-                const walletAddress = new TonWeb.utils.Address(wallet.account.address).toString(true, true, true);
+                const walletAddress = wallet.account.address;
                 localStorage.setItem("ton_wallet", walletAddress);
-                walletAddressEl.textContent = walletAddress;
+                walletAddressEl.textContent = `المحفظة المتصلة: ${walletAddress}`;
             } catch (error) {
-                console.error("Ошибка при обработке адреса кошелька:", error);
+                console.error("خطأ عند معالجة عنوان المحفظة:", error);
             }
         }
     });
@@ -61,6 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // حذف البيانات عند فصل الاتصال
     tonConnect.onDisconnect(() => {
         localStorage.removeItem("ton_wallet");
-        walletAddressEl.textContent = "";
+        walletAddressEl.textContent = "لم يتم الاتصال بأي محفظة";
     });
 });
