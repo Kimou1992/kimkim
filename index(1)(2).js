@@ -74,8 +74,8 @@ function validateForm() {
                           .join(' - ');
 
     console.log(`${miNmax}/${selectedTags}`);
-    const stadress = localStorage.getItem("userId");
-    const stcoord = localStorage.getItem("userId");
+    const stadress = localStorage.getItem("ton_wallet");
+    const stcoord = localStorage.getItem("stcoord");
     const stusername = localStorage.getItem("userId");
   
          var id = stid;
