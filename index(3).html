@@ -199,44 +199,54 @@
         document.addEventListener("DOMContentLoaded", async () => {
             await fetchBalances();
         });
-      document.addEventListener("DOMContentLoaded", function () {
+
+        document.addEventListener("DOMContentLoaded", function () {
     let tg = window.Telegram.WebApp;
-        tg.expand(); // توسيع التطبيق المصغر لملء الشاشة
+    tg.expand(); // توسيع التطبيق المصغر لملء الشاشة
 
-        // التحقق مما إذا كانت البيانات مخزنة مسبقًا
-        let storedUserId = localStorage.getItem("userId");
-        let storedFirstName = localStorage.getItem("firstName");
-        
+    let storedUserId = localStorage.getItem("userId");
+    let storedFirstName = localStorage.getItem("firstName");
 
-        if (storedUserId && storedFirstName) {
-            // إذا كانت البيانات موجودة في الذاكرة، استخدمها
-            document.getElementById("tgid").innerText = storedUserId;
-            document.getElementById("tgusername").innerText = storedFirstName;
-            
-        } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            // جلب البيانات من Telegram إذا لم تكن مخزنة
-            let userId = tg.initDataUnsafe.user.id;
-            let firstName = tg.initDataUnsafe.user.first_name;
+    if (storedUserId && storedFirstName) {
+        // إذا كانت البيانات موجودة في الذاكرة، استخدمها
+        document.getElementById("tgid").innerText = storedUserId;
+        document.getElementById("tgusername").innerText = storedFirstName;
+    } else {
+        let attempts = 0; // عدد المحاولات
+        let maxAttempts = 10; // الحد الأقصى للمحاولات
 
-            // تخزين البيانات في localStorage
-            localStorage.setItem("userId", userId);
-            localStorage.setItem("firstName", firstName);
+        function fetchTelegramData() {
+            if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+                let userId = tg.initDataUnsafe.user.id;
+                let firstName = tg.initDataUnsafe.user.first_name;
 
-            // تحديث العرض
-            document.getElementById("tgid").innerText = userId;
-            document.getElementById("tgusername").innerText = firstName;
-            
-        } else {
-            // إذا لم تتوفر البيانات من Telegram
-            document.getElementById("tgid").innerText = "";
-            document.getElementById("tgusername").innerText = "--";
-            localStorage.removeItem("userId");
-            localStorage.removeItem("firstName");
-            
-            
-            
+                // تخزين البيانات في localStorage
+                localStorage.setItem("userId", userId);
+                localStorage.setItem("firstName", firstName);
+
+                // تحديث العرض
+                document.getElementById("tgid").innerText = userId;
+                document.getElementById("tgusername").innerText = firstName;
+                console.log("تم جلب البيانات من Telegram:", userId, firstName);
+            } else if (attempts < maxAttempts) {
+                // إعادة المحاولة بعد 500ms
+                attempts++;
+                console.log(`محاولة ${attempts} لجلب البيانات...`);
+                setTimeout(fetchTelegramData, 500);
+            } else {
+                // إذا لم تتوفر البيانات بعد الحد الأقصى من المحاولات
+                document.getElementById("tgid").innerText = "";
+                document.getElementById("tgusername").innerText = "--";
+                localStorage.removeItem("userId");
+                localStorage.removeItem("firstName");
+                console.warn("تعذر جلب البيانات بعد عدة محاولات.");
+            }
         }
+
+        fetchTelegramData(); // بدء المحاولات
+    }
 });
+        
         
 </script>
 </body>
