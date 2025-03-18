@@ -10,7 +10,8 @@ let tg = window.Telegram.WebApp;
         if (storedUserId && storedFirstName) {
             // إذا كانت البيانات موجودة في الذاكرة، استخدمها
             
-            
+            alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storedFirstName}`);
+
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
             let userId = tg.initDataUnsafe.user.id;
@@ -21,7 +22,8 @@ let tg = window.Telegram.WebApp;
             localStorage.setItem("firstName", firstName);
 
             // تحديث العرض
-            ;
+            alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storedFirstName}`);
+                
         } else {
             // إذا لم تتوفر البيانات من Telegram
             
