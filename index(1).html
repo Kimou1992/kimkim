@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="index1.css">
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
     <script src="index(1)(2).js"></script>
+    <script src="Wilayas.js"></script>
     <style>
     body {
       background-color: #ffffff !important; /* يجعل الخلفية بيضاء */
@@ -149,25 +150,6 @@
     const dropdown = document.getElementById('wilayasDropdown');
 
     if (!dropdown.dataset.loaded) {
-        const wilayas = [
-            { "Num": "01", "Wilaya": "Adrar" },
-            { "Num": "02", "Wilaya": "Chlef" },
-            { "Num": "03", "Wilaya": "Laghouat" },
-            { "Num": "04", "Wilaya": "Oum El Bouaghi" },
-            { "Num": "05", "Wilaya": "Batna" },
-            { "Num": "06", "Wilaya": "Béjaïa" },
-            { "Num": "07", "Wilaya": "Biskra" },
-            { "Num": "08", "Wilaya": "Béchar" },
-            { "Num": "09", "Wilaya": "Blida" },
-            { "Num": "10", "Wilaya": "Bouira" },
-  { "Num": "11", "Wilaya": "Tamanrasset" },
-  { "Num": "12", "Wilaya": "Tébessa" },
-  { "Num": "13", "Wilaya": "Tlemcen" },
-  { "Num": "14", "Wilaya": "Tiaret" },
-  { "Num": "15", "Wilaya": "Tizi Ouzou" },
-  { "Num": "16", "Wilaya": "Alger" },
-  { "Num": "17", "Wilaya": "Djelfa" }
-        ];
 
         wilayas.forEach(wilaya => {
             const li = document.createElement('li');
