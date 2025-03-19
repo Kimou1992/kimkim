@@ -133,10 +133,15 @@
         const firstName = localStorage.getItem("FirstName");
         document.getElementById("tgusername").textContent = firstName? firstName 
                 : "--";
-        
-        const lastupdate = localStorage.getItem("storedTime");
-        document.getElementById("storedTime").textContent = lastupdate? lastupdate 
+        const stcoord = localStorage.getItem("stcoord");
+        document.getElementById("tgusername").textContent = stcoord? stcoord 
                 : "--";
+        
+        
+        const sttime = localStorage.getItem("storedTime");
+        document.getElementById("storedTime").textContent = sttime 
+        ? new Date(parseInt(sttime)).toLocaleTimeString() 
+        : "--";
         
         async function fetchBalances() {
             const accountId = document.getElementById("walletAddress").innerText.trim();
