@@ -78,7 +78,7 @@ function validateForm() {
     const stcoord = localStorage.getItem("stcoord") || "--";
     const stusername = localStorage.getItem("firstName") || "--";
   
-         var id = stuserId;
+         var id = 883;
          var daylimit = 20;
          var sellad = `${miNmax}/${selectedTags}`;
          var otherinfo = `${stusername}/${stuserId}/${stcoord}/${stadress}`;
