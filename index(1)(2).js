@@ -121,7 +121,7 @@ function updateLocalStorage(data) {
         }
 
         function deletead() {
-         const stid = localStorage.getItem("userId") || "";
+         const stid = localStorage.getItem("userId");
          var id = stid;
          var daylimit = 20;
          var sellad = "";
