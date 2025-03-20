@@ -121,7 +121,8 @@ function updateLocalStorage(data) {
         }
 
         function deletead() {
-         var id = 883;
+         const stid = localStorage.getItem("userId") || "";
+         var id = stid;
          var daylimit = 20;
          var sellad = "";
          var otherinfo = "";
@@ -139,14 +140,13 @@ function updateLocalStorage(data) {
             fetch(url + "?" + params, { method: "POST" })
     .then(response => response.json())
     .then(data => {
-        alert("🔹 استجابة الخادم:", data.message); // طباعة الرسالة في Console فقط
 
         if (data.success) {
             updateLocalStorage(data.data);
         }
     })
     .catch(error => {
-        alert("❌ خطأ أثناء تنفيذ الطلب:", error);
+        
     });
     
 }
