@@ -121,7 +121,7 @@ function updateLocalStorage(data) {
         }
 
         function deletead() {
-         var id = stuserId;
+         var id = 883;
          var daylimit = 20;
          var sellad = "";
          var otherinfo = "";
