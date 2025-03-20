@@ -104,7 +104,7 @@ function validateForm() {
     .catch(error => {
         
     });
-     
+    closePopup();
 }
 function updateLocalStorage(data) {
             localStorage.removeItem('sheetData');
@@ -148,7 +148,7 @@ function updateLocalStorage(data) {
     .catch(error => {
         
     });
-    
+    closePopup2();
 }
         function navigateToPage0() {
             window.location.href = "index(0).html";
