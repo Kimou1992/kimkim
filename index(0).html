@@ -47,7 +47,7 @@
     <div class="rectangle third-rectangle">
         <div class="button-container">
             <button class="button">Buy</button>
-            <button class="button" onclick="showAlert()">Sell</button>
+            <button class="button">Sell</button>
         </div>
     </div>
     <div class="rectangle fourth-rectangle">
@@ -91,9 +91,6 @@
        <div id="infoNotification" class="notification">انسخ الرابط والصقه في أي محادثة على التلجرام ثم اضغط عليه لتفتح محادثة مع البائع
     </div>
     <script>
-        function showAlert() {
-            alert("soon will be available");
-        }
         
 let selectedWilaya = ""; 
 
@@ -215,26 +212,15 @@ function selectOption(wilaya) {
         
 
         if (storedUserId && storedFirstName) {
-            // إذا كانت البيانات موجودة في الذاكرة، استخدمها
             
-            alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storedFirstName}`);
-
         } else if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
             // جلب البيانات من Telegram إذا لم تكن مخزنة
             let userId = tg.initDataUnsafe.user.id;
             let firstName = tg.initDataUnsafe.user.first_name;
-
-            // تخزين البيانات في localStorage
             localStorage.setItem("userId", userId);
             localStorage.setItem("FirstName", firstName);
-
-            // تحديث العرض
-            alert(`المعرف المخزن: ${storedUserId}\nالاسم المخزن: ${storedFirstName}`);
-                
-        } else {
-            // إذا لم تتوفر البيانات من Telegram
-            alert("no data sorry");
-        }
+           
+        } 
         
 });
         
