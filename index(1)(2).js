@@ -103,6 +103,7 @@ function validateForm() {
     })
     .catch(error => {
         
+        alert("❌ خطأ أثناء تنفيذ الطلب:", error);
     });
 
 }
