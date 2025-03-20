@@ -96,8 +96,7 @@ function validateForm() {
             fetch(url + "?" + params, { method: "POST" })
     .then(response => response.json())
     .then(data => {
-        alert("🔹 استجابة الخادم:", data.message) // طباعة الرسالة في Console فقط
-
+        
         if (data.success) {
             updateLocalStorage(data.data);
         }
