@@ -76,7 +76,7 @@ function validateForm() {
     console.log(`${miNmax}/${selectedTags}`);
     const stadress = localStorage.getItem("ton_wallet") || "--";
     const stcoord = localStorage.getItem("stcoord") || "--";
-    const stusername = localStorage.getItem("firstName") || "--";
+    const stusername = localStorage.getItem("FirstName") || "--";
   
          var id = stuserId;
          var daylimit = 20;
@@ -103,9 +103,8 @@ function validateForm() {
     })
     .catch(error => {
         
-        alert("❌ خطأ أثناء تنفيذ الطلب:", error);
     });
-
+     closePopup2()
 }
 function updateLocalStorage(data) {
             localStorage.removeItem('sheetData');
