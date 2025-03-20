@@ -86,7 +86,7 @@
     <label id="error-message" class="error"></label>
     <div class="clickable-box">
       <div class="clickable-text2 t21" onclick="closePopup();">Cancel</div>
-      <div class="clickable-text2 t22" onclick="validateForm();">Update</div>
+      <div class="clickable-text2 t22" onclick="validateForm(); closePopup();">Update</div>
       </div>
   </div>
   <div class="popup" id="popup2">
@@ -97,7 +97,7 @@
         </div>
         <div class="clickable-box">
          <div class="clickable-text2 t21" onclick="closePopup2();">Cancel</div>
-         <div id="copyButton" class="clickable-text2 t22" onclick="deletead()">yes, delete it</div>
+         <div id="copyButton" class="clickable-text2 t22" onclick="deletead(); closePopup2();">yes, delete it</div>
       </div>
     </div>
     <div class="rectangle fifth-rectangle">
