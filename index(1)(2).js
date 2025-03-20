@@ -67,7 +67,7 @@ function validateForm() {
         return;
     }
     
-    alert("تم التحديث بنجاح!")
+    
     const miNmax = `${price.toFixed(2)}/${balance}/${min.toFixed(2)}-${max.toFixed(2)}`;  
     const selectedTags = Array.from(tagsContainer.children)
                           .map(tag => tag.textContent.replace("×", "").trim())
@@ -103,7 +103,7 @@ function validateForm() {
         }
     })
     .catch(error => {
-        alert("❌ خطأ أثناء تنفيذ الطلب:", error)
+        
     });
 
 }
