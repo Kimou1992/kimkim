@@ -78,7 +78,7 @@ function validateForm() {
     const stcoord = localStorage.getItem("stcoord") || "--";
     const stusername = localStorage.getItem("firstName") || "--";
   
-         var id = stid;
+         var id = stuserId;
          var daylimit = 20;
          var sellad = `${miNmax}/${selectedTags}`;
          var otherinfo = `${stusername}/${stuserId}/${stcoord}/${stadress}`;
@@ -122,7 +122,7 @@ function updateLocalStorage(data) {
 
         function deletead() {
          const stid = Number(localStorage.getItem("stid"));
-         var id = 883;
+         var id = stuserId;
          var daylimit = 20;
          var sellad = "";
          var otherinfo = "";
