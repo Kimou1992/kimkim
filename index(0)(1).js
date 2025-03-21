@@ -12,7 +12,7 @@ function openPopup(balance, wallet, coordinates, link) {
 
 async function fetchBalances(wallet) {
     if (!wallet) {
-        alert("Please provide a valid TON address");
+        console.log("Please provide a valid TON address");
         return;
     }
 
