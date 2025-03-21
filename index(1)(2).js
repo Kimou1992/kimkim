@@ -26,7 +26,7 @@ function validateForm() {
     }
 
     // التحقق من الرصيد
-    if (isNaN(balance) || balance <= 10) {
+    if (isNaN(balance) || balance >= 10) {
         errorMessage.textContent = "balance should be more than 10 USDT";
         errorMessage.style.display = "block";
         return;
