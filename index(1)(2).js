@@ -26,11 +26,7 @@ function validateForm() {
     }
 
     // التحقق من الرصيد
-    if (isNaN(balance) || balance <= 10) {
-        errorMessage.textContent = "balance should be more than 10 USDT";
-        errorMessage.style.display = "block";
-        return;
-    }
+    
 
     // التحقق من الحد الأدنى
     if (isNaN(min) || min <= (price * 10)) {
