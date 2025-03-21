@@ -130,7 +130,7 @@
             // جلب إحداثيات المكان المدخل من المستخدم
             var input = document.getElementById('coordinates').value.trim();
             if (!input) {
-                alert("يرجى إدخال الإحداثيات أولاً.");
+                console.log("يرجى إدخال الإحداثيات أولاً.");
                 return;
             }
 
@@ -159,13 +159,13 @@
                 // ضبط عرض الخريطة لاحتواء الموقعين
                 map.fitBounds(L.latLngBounds([userMarker.getLatLng(), inputMarker.getLatLng()]));
             } else {
-                alert("يرجى إدخال إحداثيات صحيحة بصيغة: خط العرض, خط الطول");
+                console.log("يرجى إدخال إحداثيات صحيحة بصيغة: خط العرض, خط الطول");
             }
         }, function(error) {
-            alert("تعذر تحديد الموقع: " + error.message);
+            console.log("تعذر تحديد الموقع: " + error.message);
         });
     } else {
-        alert("المتصفح لا يدعم تحديد الموقع الجغرافي.");
+        console.log("المتصفح لا يدعم تحديد الموقع الجغرافي.");
     }
 }
 
@@ -178,7 +178,7 @@
         function getCoordinates() {
     var place = document.getElementById('place').value;
     if (place.trim() === "") {
-        alert("يرجى إدخال اسم المكان.");
+        console.log("يرجى إدخال اسم المكان.");
         return;
     }
 
@@ -192,11 +192,11 @@
                 var lon = data[0].lon;
                 document.getElementById('coordinates').value = `${lat},${lon}`;
             } else {
-                alert("لم يتم العثور على نتائج.");
+                console.log("لم يتم العثور على نتائج.");
             }
         })
         .catch(error => {
-            alert("حدث خطأ أثناء البحث عن الإحداثيات.");
+            console.log("حدث خطأ أثناء البحث عن الإحداثيات.");
         });
 }
     
@@ -211,7 +211,7 @@
                 this.innerText = "save as specific coordinates"; // إرجاع النص بعد ثانيتين
             }, 2000);
         } else {
-            alert("No valid coordinates to save!"); // تنبيه إذا لم تكن هناك قيمة صالحة
+            console.log("No valid coordinates to save!"); // تنبيه إذا لم تكن هناك قيمة صالحة
         }
     });
         function navigateToPage0() {
