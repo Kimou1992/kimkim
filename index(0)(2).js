@@ -3,7 +3,7 @@ function getCurrentTime() {
 }
 
 function shouldUpdateStoredTime(storedTime, currentTime) {
-    return (currentTime - storedTime) >= 60000; // الفرق دقيقة واحدة (60000 مللي ثانية)
+    return (currentTime - storedTime) >= 300000; // الفرق دقيقة واحدة (60000 مللي ثانية)
 }
 
 function checkAndUpdateTime() {
