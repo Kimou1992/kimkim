@@ -3,7 +3,7 @@ function openPopup(balance, wallet, coordinates, link) {
 
     document.getElementById("hhh").innerText = `${balance}`;
     document.getElementById("hhh1").innerText = shortenText(wallet);
-    document.getElementById("hhh2").innerText = `Price: ${coordinates} DZD`; 
+    document.getElementById("hhh2").innerText = `${coordinates}`; 
     document.getElementById("hhh3").innerText = `tg://openmessage?user_id=${link}`;
     
     // استدعاء fetchBalances وتمرير wallet بدلاً من استخدام localStorage
